@@ -1,24 +1,42 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+import {
+  createBrowserRouter,
+  RouterProvider
+} from 'react-router-dom';
+import Home from '@src/pages/Home';
+import Login from '@src/pages/Login';
+import ThemeProvider, { themeMode } from '@src/theme';
+import { useDarkMode } from '@hooks/useDarkMode';
+import { themes } from '@src/constants';
+import Toggle from '@components/Toggler';
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Home />
+  },
+  {
+    path: '/login',
+    element: <Login />
+  }
+]);
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={'https://blog-app-seeder.s3.ap-southeast-1.amazonaws.com/images/avatar.svg'} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const [
+    theme,
+    themeToggler,
+    mountedComponent
+  ] = useDarkMode();
+  const themeObject = useMemo(() => themeMode(theme === themes.darkMode), [ theme ]);
+
+  return mountedComponent ? (
+    <ThemeProvider themeObject={themeObject}>
+      <main className={'main'}>
+        <RouterProvider router={router} />
+        <Toggle theme={theme} toggleTheme={themeToggler} />
+      </main>
+    </ThemeProvider>
+  ) : <div/>;
 }
 
 export default App;

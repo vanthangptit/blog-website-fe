@@ -10,7 +10,8 @@
       "@store/*": ["./src/redux/*"],
       "@models/*": ["./src/models/*"],
       "@apis/*": ["./src/apis/*"],
-      "@hooks/*": ["./src/hooks/*"]
+      "@hooks/*": ["./src/hooks/*"],
+      "@theme/*": ["./src/theme/*"]
     }
   }
 }

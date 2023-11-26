@@ -30,7 +30,7 @@ module.exports = {
     // ** Variables
     'no-use-before-define': ['error', {
       'functions': true,
-      'variables': true
+      'variables': false
     }],
     'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z]' }],
     'no-useless-return': 'error',
