@@ -1,13 +1,13 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { api } from '@src/apis';
+// import { api } from '@src/apis';
 
-import { USER } from '@src/constants';
+// import { USER } from '@src/constants';
 
 interface IFUserState {}
 
 const initialState: IFUserState = {};
 
-export const getUserApi = createAsyncThunk<any>(USER.ACTION_TYPES.GET_USER, async (_, thunkAPI) => {
+export const getUserApi = createAsyncThunk<any>('USER.ACTION_TYPES.GET_USER', async (_, thunkAPI) => {
   try {
     return true
   } catch (error: any) {

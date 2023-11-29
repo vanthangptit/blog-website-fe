@@ -16,6 +16,7 @@ export interface Colors {
   bg1: Color
   bg2: Color
   bg3: Color
+  bg4: Color
 
   // primaries
   primary1: Color
@@ -28,6 +29,8 @@ export interface Colors {
   secondary2: Color
   secondary3: Color
   secondary4: Color
+
+  inputPlaceholder: Color
 }
 
 export type FontSize = string

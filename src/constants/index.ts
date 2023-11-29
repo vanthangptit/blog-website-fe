@@ -1,15 +1,8 @@
 
-export const API_CONTACT_URL = process.env.REACT_APP_API_CONTACT_URL;
 export const GOOGLE_ACCOUNTS_URL = process.env.REACT_APP_GOOGLE_ACCOUNTS_URL;
 export const GOOGLE_OAUTH_REDIRECT = process.env.REACT_APP_GOOGLE_OAUTH_REDIRECT;
 export const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 export const GOOGLE_CLIENT_SECRET = process.env.REACT_APP_GOOGLE_CLIENT_SECRET;
-
-export const API_AUTH_URL = process.env.REACT_APP_API_USER_URL + 'auth';
-export const API_USER_URL = process.env.REACT_APP_API_USER_URL + 'user';
-
-export const API_POST_URL = process.env.REACT_APP_API_POST_URL;
-// export const API_POST_URL = 'http://localhost:9400/api';
 
 export const AWS_S3_REGION = process.env.REACT_APP_AWS_S3_REGION;
 export const AWS_S3_NAME = process.env.REACT_APP_AWS_S3_NAME;
@@ -21,70 +14,6 @@ export const MODE_CV = process.env.REACT_APP_MODE_CV;
 export const ACCESS_TOKEN = 'accessToken';
 export const IMAGE_URL_COOKIE = 'imageUrl';
 // export const REMEMBER_ME_COOKIE = 'rememberMe';
-
-export const SEARCH = {
-  ACTION_TYPES: {
-    SEARCH_POST: 'APPS/SEARCH_POST'
-  },
-  URL_API: {
-    SEARCH_POST: `${API_POST_URL}/search`
-  }
-};
-
-export const POST = {
-  ACTION_TYPES: {
-    GET_ALL_POST: 'APPS/GET_ALL_POST',
-    GET_BY_URL_POST: 'APPS/GET_BY_URL_POST',
-    GET_POST_BY_CREATOR: 'APPS/GET_POST_BY_CREATOR',
-    GET_BY_TYPE_POST: 'APPS/GET_BY_TYPE_POST',
-    CREATE_POST: 'APPS/CREATE_POST',
-    EDIT_POST: 'APPS/EDIT_POST',
-    DELETE_POST: 'APPS/DELETE_POST'
-  },
-  URL_API: {
-    GET_ALL_POST: `${API_POST_URL}/all`,
-    GET_BY_URL_POST: `${API_POST_URL}/get-by-short-url`,
-    GET_POST_BY_CREATOR: `${API_POST_URL}/get-by-creator`,
-    GET_BY_TYPE_POST: `${API_POST_URL}/get-by-type`,
-    CREATE_POST_API: `${API_POST_URL}/create-blog`,
-    EDIT_POST_API: `${API_POST_URL}/edit-blog`,
-    DELETE_POST: `${API_POST_URL}/delete-blog`
-  }
-};
-
-export const USER = {
-  ACTION_TYPES: {
-    GET_USER: 'APPS/GET_USER',
-    ADD_USER: 'APPS/ADD_USER',
-    UPDATE_USER: 'APPS/UPDATE_USER',
-    UPDATE_USER_BY_ID: 'APPS/UPDATE_USER_BY_ID',
-    LOGIN_API: 'APPS/LOGIN',
-    LOGIN_GOOGLE_API: 'APPS/LOGIN_GOOGLE',
-    CHECK_USERNAME: 'APPS/CHECK_USERNAME',
-    CHECK_EMAIL: 'APPS/CHECK_EMAIL',
-    FORGOT_PASSWORD: 'APPS/FORGOT_PASSWORD'
-  },
-  URL_API: {
-    GET_USER_API: `${API_USER_URL}`,
-    ADD_USER_API: `${API_AUTH_URL}/register`,
-    LOGIN_API: `${API_AUTH_URL}/login`,
-    LOGIN_GOOGLE_API: `${API_AUTH_URL}/login/google`,
-    CHECK_USERNAME: `${API_AUTH_URL}/check-username`,
-    CHECK_EMAIL: `${API_AUTH_URL}/check-email`,
-    FORGOT_PASSWORD: `${API_AUTH_URL}/forgot-password`,
-    RESET_PASSWORD: `${API_AUTH_URL}/reset-password`,
-    CHECK_CODE_FORGOT_PASSWORD: `${API_AUTH_URL}/check-code-forgot-password`
-  }
-};
-
-export const GUEST_CONTACT = {
-  ACTION_TYPES: {
-    GUEST_CONTACT_API: 'APPS/CONTACT_API'
-  },
-  URL_API: {
-    GUEST_CONTACT_API: `${API_CONTACT_URL}`
-  }
-};
 
 export const SITES_URL = {
   HOME: '/',

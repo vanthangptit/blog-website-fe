@@ -28,6 +28,7 @@ function colors(darkMode: boolean): Colors {
     bg1: darkMode ? white : black,
     bg2: darkMode ? '#222222' : '#F9F9F9',
     bg3: darkMode ? '#222222' : '#F9F9F9',
+    bg4: darkMode ? '#bc2e1d' : '#bc2e1d',
 
     //primary colors
     primary1: darkMode ? white : black,
@@ -39,7 +40,9 @@ function colors(darkMode: boolean): Colors {
     secondary1: darkMode ? black : white,
     secondary2: darkMode ? white : black,
     secondary3: darkMode ? '#F4F4F4' : '#545454',
-    secondary4: darkMode ? '#EFEFEF' : '#7F7F7F'
+    secondary4: darkMode ? '#EFEFEF' : '#7F7F7F',
+
+    inputPlaceholder: '#7F7F7F'
   };
 }
 
