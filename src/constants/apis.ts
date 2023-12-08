@@ -7,15 +7,17 @@ export const API_ROOT_URL = process.env.REACT_APP_API_ROOT;
 // export const API_POST_URL = process.env.REACT_APP_API_POST_URL;
 // export const API_POST_URL = 'http://localhost:9400/api';
 
-export const ACTION_TYPES = {
-  SEARCH_POST: 'APPS/SEARCH_POST'
+export const LOGIN = {
+  ACTION_TYPES: 'APPS/LOGIN',
+  URL_API: `${API_ROOT_URL}auth/login`
 };
 
-export const URL_API = {
-  LOGIN: `${API_ROOT_URL}auth/login`,
-  GET_CSRF_TOKEN: `${API_ROOT_URL}csrf`,
-  SEARCH_POST: `${API_ROOT_URL}/search`
+export const REFRESH_TOKEN = {
+  ACTION_TYPES: 'APPS/REFRESH_TOKEN',
+  URL_API: `${API_ROOT_URL}auth/refresh-token`
 };
+
+export const API_REGISTER_URL = `${API_ROOT_URL}auth/register`;
 
 // export const POST = {
 //   ACTION_TYPES: {

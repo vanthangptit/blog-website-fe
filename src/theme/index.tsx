@@ -42,7 +42,8 @@ function colors(darkMode: boolean): Colors {
     secondary3: darkMode ? '#F4F4F4' : '#545454',
     secondary4: darkMode ? '#EFEFEF' : '#7F7F7F',
 
-    inputPlaceholder: '#7F7F7F'
+    inputPlaceholder: '#7F7F7F',
+    colorEyes: '#9f9f9f'
   };
 }
 

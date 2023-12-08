@@ -31,6 +31,7 @@ export interface Colors {
   secondary4: Color
 
   inputPlaceholder: Color
+  colorEyes: Color
 }
 
 export type FontSize = string

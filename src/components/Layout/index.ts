@@ -105,51 +105,51 @@ export const CustomRow = styled('div')<{ styles?: any }>(({ styles }) => ({
 }));
 
 export const CustomColumn = styled('div')<{
-  lgWidth?: string
-  mdWidth?: string
-  smWidth?: string
-  xsWidth?: string
-  justify?: 'flex-start' | 'flex-end' | 'center' | 'space-around' | 'space-between' | 'stretch'
+  $lgWidth?: string
+  $mdWidth?: string
+  $smWidth?: string
+  $xsWidth?: string
+  $justify?: 'flex-start' | 'flex-end' | 'center' | 'space-around' | 'space-between' | 'stretch'
 }>(({
-  lgWidth,
-  mdWidth,
-  smWidth,
-  xsWidth,
-  justify
+  $lgWidth,
+  $mdWidth,
+  $smWidth,
+  $xsWidth,
+  $justify
 }) => ({
   display: 'flex',
   flexDirection: 'column',
-  justifyContent: `${justify}`,
+  justifyContent: `${$justify}`,
   paddingLeft: '15px',
   paddingRight: '15px',
   flex: '0 0 100%',
   maxWidth: '100%',
 
-  ...(xsWidth && {
+  ...($xsWidth && {
     '@media (min-width: 576px)': {
-      flex: `${xsWidth && `0 0 ${xsWidth}`}`,
-      maxWidth: `${xsWidth}`
+      flex: `${$xsWidth && `0 0 ${$xsWidth}`}`,
+      maxWidth: `${$xsWidth}`
     }
   }),
 
-  ...(smWidth && {
+  ...($smWidth && {
     '@media (min-width: 768px)': {
-      flex: `${smWidth && `0 0 ${smWidth}`}`,
-      maxWidth: `${smWidth}`
+      flex: `${$smWidth && `0 0 ${$smWidth}`}`,
+      maxWidth: `${$smWidth}`
     }
   }),
 
-  ...(mdWidth && {
+  ...($mdWidth && {
     '@media (min-width: 992px)': {
-      flex: `${mdWidth && `0 0 ${mdWidth}`}`,
-      maxWidth: `${mdWidth}`
+      flex: `${$mdWidth && `0 0 ${$mdWidth}`}`,
+      maxWidth: `${$mdWidth}`
     }
   }),
 
-  ...(lgWidth && {
+  ...($lgWidth && {
     '@media (min-width: 1200px)': {
-      flex: `${lgWidth && `0 0 ${lgWidth}`}`,
-      maxWidth: `${lgWidth}`
+      flex: `${$lgWidth && `0 0 ${$lgWidth}`}`,
+      maxWidth: `${$lgWidth}`
     }
   })
 }));

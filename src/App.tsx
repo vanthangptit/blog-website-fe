@@ -1,32 +1,15 @@
 import React, { useMemo } from 'react';
-import {
-  createBrowserRouter,
-  RouterProvider
-} from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import styled from 'styled-components';
-import Home from '@src/pages/Home';
-import Login from '@src/pages/Login';
+
 import ThemeProvider, { themeMode } from '@src/theme';
 import SwitchToggle from '@components/Toggler';
 import Footer from '@components/Footer';
 import { themes } from '@constants/theme';
 
 import { useDarkMode } from '@hooks/useDarkMode';
-
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <Home />
-  },
-  {
-    path: '/login',
-    element: <Login />
-  },
-  {
-    path: '*',
-    element: <div /> // Page Not Found
-  }
-]);
+import { AuthProvider } from '@src/infra/context/AuthContext';
+import Routes from '@src/Routes';
 
 function App() {
   const [
@@ -39,7 +22,12 @@ function App() {
   return mountedComponent ? (
     <ThemeProvider themeObject={themeObject}>
       <LayoutMain>
-        <RouterProvider router={router} />
+        <BrowserRouter>
+          <AuthProvider>
+            <Routes />
+          </AuthProvider>
+        </BrowserRouter>
+
         <Footer>
           <SwitchToggle isDarkMode={theme === themes.darkMode} toggleTheme={themeToggler} />
         </Footer>
