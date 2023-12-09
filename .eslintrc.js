@@ -26,7 +26,7 @@ module.exports = {
       'allow': ['info', 'warn', 'error'],
     }],
     'no-debugger': 'off',
-
+    "react/display-name": "off",
     // ** Variables
     'no-use-before-define': ['error', {
       'functions': true,

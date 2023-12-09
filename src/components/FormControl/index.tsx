@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Input } from '@components/Imput';
 import { MessageError } from '@components/MessageError';
-import { FormState, UseFormRegister } from 'react-hook-form';
+import { FormState, RegisterOptions, UseFormRegister } from 'react-hook-form';
 import styled from 'styled-components';
 import { NameFieldRegister } from '@models/IFRegister';
 import { BsEye, BsEyeSlash } from 'react-icons/bs';
 import { NameFieldLogin } from '@models/IFAuth';
+import { NameFieldCreatePost } from '@models/IFPosts';
 
 const FormControl = ({
   register,
@@ -14,20 +15,49 @@ const FormControl = ({
   typeField,
   nameField,
   placeholder,
+  isRequired= true,
   $with,
-  $height
+  $height,
+  $minLength,
+  $maxLength,
+  $pattern
 }: {
   register: UseFormRegister<any>
   formState: FormState<any>
   textEr: string
   typeField: 'email' | 'password' | 'text' | 'textarea'
-  nameField: NameFieldRegister | NameFieldLogin
+  nameField: NameFieldRegister | NameFieldLogin | NameFieldCreatePost
   placeholder: string
+  isRequired?: boolean
   $with: string
   $height: string
+  $minLength?: number
+  $maxLength?: number
+  $pattern?: any
 }) => {
   const [ isHiddenPassword, setHiddenPassword ] = useState<boolean>(true);
   const handleHiddenPassword = () => setHiddenPassword(!isHiddenPassword);
+  let options: RegisterOptions = {
+    required: isRequired
+  };
+
+  if ($minLength) {
+    options = {
+      minLength: $minLength
+    };
+  }
+
+  if ($maxLength) {
+    options = {
+      minLength: $maxLength
+    };
+  }
+
+  if ($maxLength) {
+    options = {
+      pattern: $pattern
+    };
+  }
 
   return (
     <>
@@ -37,7 +67,7 @@ const FormControl = ({
           placeholder={placeholder}
           $with={$with}
           $height={$height}
-          {...register(nameField, { required: true })}
+          {...register(nameField, options)}
         />
 
         {typeField === 'password' && (

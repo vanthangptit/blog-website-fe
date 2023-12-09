@@ -6,11 +6,13 @@ import {
   Outlet,
   useLocation
 } from 'react-router-dom';
+import { AuthContext } from '@src/infra/context/AuthContext';
+
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from '@src/pages/Register';
-
-import { AuthContext } from '@src/infra/context/AuthContext';
+import Featured from '@src/pages/Featured';
+import CreatePost from '@src/pages/CreatePost';
 
 type Props = {
   data?: any
@@ -41,9 +43,11 @@ const Routes = (props: Props) => {
     <Router>
       <Route path='/login' element={<Login />} />
       <Route path='/register' element={<Register />} />
+      <Route path='/featured' element={<Featured />} />
 
       <Route element={<PrivateRoutes />}>
         <Route path='/' element={<Home />} />
+        <Route path='/create' element={<CreatePost />} />
       </Route>
 
       <Route path='*' element={<div>Page Not Found</div>} />
