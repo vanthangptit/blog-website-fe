@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { heightFooter } from '@constants/footer';
 
-export const LayoutMiddle = styled('div')<{ styles?: any }>(({ styles }) => ({
+export const LayoutMiddle = styled('section')<{ styles?: any }>(({ styles }) => ({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',

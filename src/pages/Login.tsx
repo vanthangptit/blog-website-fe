@@ -1,13 +1,13 @@
 import React, { useContext, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { LayoutMiddle } from '@components/Layout';
-import { BtnSubmit } from '@components/Buttons/BtnSubmit';
+import { LayoutMiddle } from '@components/atoms/Layout';
+import { BtnSubmit } from '@components/atoms/Buttons/BtnSubmit';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { IFLogin } from '@models/IFAuth';
-import { MessageError } from '@components/MessageError';
-import SectionTitleForm from '@components/SectionTitleForm';
-import FormControl from '@components/FormControl';
+import { MessageError } from '@components/atoms/MessageError';
+import SectionTitleForm from '@components/atoms/SectionTitleForm';
+import FormControl from '@components/molecules/FormControl';
 import { useAuth } from '@hooks/useAuth';
 import { AuthContext } from '@src/infra/context/AuthContext';
 
@@ -47,10 +47,8 @@ const Login = () => {
   return (
     <LayoutMiddle>
       <LoginBox>
-        <SectionTitleForm
-          iconSize={20}
-          text={'Sign in'}
-        />
+        <SectionTitleForm iconSize={20} text={'Sign in'} />
+
         <FormElement onSubmit={handleSubmit(onSubmit)}>
           <FormControl
             register={register}
@@ -95,7 +93,7 @@ const Login = () => {
 
 export default Login;
 
-const LoginBox = styled.div`
+const LoginBox = styled.article`
   background-color: ${({ theme }) => theme.white};
   padding: 30px 45px;
   box-shadow: 0 0px 7px 0px rgba(0, 0, 0, 0.2);

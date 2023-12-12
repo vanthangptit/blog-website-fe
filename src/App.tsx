@@ -3,8 +3,8 @@ import { BrowserRouter } from 'react-router-dom';
 import styled from 'styled-components';
 
 import ThemeProvider, { themeMode } from '@src/theme';
-import SwitchToggle from '@components/Toggler';
-import Footer from '@components/Footer';
+import SwitchToggle from '@components/atoms/Toggler';
+import Footer from '@components/atoms/Footer';
 import { themes } from '@constants/theme';
 
 import { useDarkMode } from '@hooks/useDarkMode';

@@ -3,14 +3,14 @@ import {
   CustomColumn,
   CustomRow,
   LayoutMiddle
-} from '@components/Layout';
+} from '@components/atoms/Layout';
 import styled from 'styled-components';
-import SectionTitleForm from '@components/SectionTitleForm';
+import SectionTitleForm from '@components/atoms/SectionTitleForm';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { IFRegister } from '@models/IFRegister';
-import FormControl from '@components/FormControl';
-import { BtnSubmit } from '@components/Buttons/BtnSubmit';
-import { MessageError } from '@components/MessageError';
+import FormControl from '@components/molecules/FormControl';
+import { BtnSubmit } from '@components/atoms/Buttons/BtnSubmit';
+import { MessageError } from '@components/atoms/MessageError';
 import { API_REGISTER_URL } from '@constants/apis';
 import { useNavigate } from 'react-router-dom';
 
@@ -132,7 +132,7 @@ const Register = () => {
 
 export default Register;
 
-const RegisterBox = styled.div`
+const RegisterBox = styled.article`
   background-color: ${({ theme }) => theme.white};
   padding: 30px 45px;
   box-shadow: 0 0px 7px 0px rgba(0, 0, 0, 0.2);

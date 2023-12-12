@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Input } from '@components/Imput';
-import { MessageError } from '@components/MessageError';
+import { Input } from '@components/atoms/Imput';
+import { MessageError } from '@components/atoms/MessageError';
 import { FormState, RegisterOptions, UseFormRegister } from 'react-hook-form';
 import styled from 'styled-components';
 import { NameFieldRegister } from '@models/IFRegister';

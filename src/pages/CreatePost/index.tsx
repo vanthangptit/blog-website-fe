@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { MessageError } from '@components/MessageError';
+import { MessageError } from '@components/atoms/MessageError';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { IPostForm, IPostParams } from '@models/IFPosts';
-import FormControl from '@components/FormControl';
+import FormControl from '@components/molecules/FormControl';
 import { AWS_S3_URL_BLOG, VISIBILITY } from '@src/constants/post';
-import Select from '@components/select';
+import Select from '@components/atoms/select';
 import { IFColourOption } from '@models/SelectOptions';
 import { deleteFile, uploadFile } from '@utils/uploadFile';
 import { ManagedUpload } from 'aws-sdk/clients/s3';
