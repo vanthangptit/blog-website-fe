@@ -12,3 +12,14 @@ export const REFRESH_TOKEN = {
 };
 
 export const API_REGISTER_URL = `${API_ROOT_URL}auth/register`;
+
+export const API_CATEGORY = {
+  URL_API: `${API_ROOT_URL}categories`,
+  ACTION_TYPES: {
+    GET: 'APPS/GET_CATEGORY',
+    GET_ID: 'APPS/GET_CATEGORY_ID',
+    POST: 'APPS/POST_CATEGORY',
+    PUT: 'APPS/PUT_CATEGORY',
+    DELETE: 'APPS/DELETE_CATEGORY'
+  }
+};
