@@ -1,10 +1,14 @@
-import React, { lazy } from 'react';
+import React, { lazy, Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 
 import { store } from '@store/configureStore';
 import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import { persistStore } from 'redux-persist';
 
 const LazyApp = lazy(() => import('./App'));
+
+const persistor = persistStore(store);
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -13,7 +17,14 @@ const root = ReactDOM.createRoot(
 const App: React.FC = () => {
   return (
     <Provider store={store}>
-      <LazyApp />
+      <PersistGate loading={null} persistor={persistor}>
+        {/*
+          @todo: Create Loading Component
+        */}
+        <Suspense fallback={<div>Loading... </div>}>
+          <LazyApp />
+        </Suspense>
+      </PersistGate>
     </Provider>
   );
 };

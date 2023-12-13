@@ -13,6 +13,7 @@ import Login from './pages/Login';
 import Register from '@src/pages/Register';
 import Featured from '@src/pages/Featured';
 import CreatePost from '@src/pages/CreatePost';
+import Categories from '@src/pages/Categories';
 
 type Props = {
   data?: any
@@ -22,15 +23,10 @@ const PrivateRoutes = () => {
   const { authenticated } = useContext(AuthContext);
   const location = useLocation();
 
-  // eslint-disable-next-line no-console
-  console.log(authenticated);
-
   if (!authenticated) {
     return <Navigate to='/login' state={{ from: location }} replace />;
   }
 
-  // eslint-disable-next-line no-console
-  console.log(111111);
   return <Outlet />;
 };
 
@@ -48,6 +44,7 @@ const Routes = (props: Props) => {
       <Route element={<PrivateRoutes />}>
         <Route path='/' element={<Home />} />
         <Route path='/create' element={<CreatePost />} />
+        <Route path='/categories' element={<Categories />} />
       </Route>
 
       <Route path='*' element={<div>Page Not Found</div>} />
