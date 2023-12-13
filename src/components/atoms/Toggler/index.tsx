@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { toggler } from '@constants/toggler';
+import css from '@constants/styles';
 
 const SwitchToggle = ({ toggleTheme, isDarkMode  }: { toggleTheme: any; isDarkMode: boolean }) => {
   return (
@@ -16,23 +16,23 @@ const SwitchToggleButton = styled.div<{ $isDarkMode: boolean }>`
   background-color: ${({ theme }) => theme.bg1};
   border-radius: 40px;
   position: relative;
-  width: ${toggler.widthBg}px;
-  height: ${toggler.heightBg}px;
+  width: ${css.toggler.widthBg}px;
+  height: ${css.toggler.heightBg}px;
   cursor: pointer;
   margin: auto;
 
   & span {
     position: absolute;
     transition: all 0.3s;
-    left: ${toggler.transitionLeft}px;
-    top: ${(toggler.heightBg - toggler.heightCircle) / 2}px;
-    width: ${toggler.heightCircle}px;
-    height: ${toggler.heightCircle}px;
+    left: ${css.toggler.transitionLeft}px;
+    top: ${(css.toggler.heightBg - css.toggler.heightCircle) / 2}px;
+    width: ${css.toggler.heightCircle}px;
+    height: ${css.toggler.heightCircle}px;
     border-radius: 50%;
     background-color: ${({ theme }) => theme.bg0};
     transform: translateX(
     ${({ $isDarkMode }) => $isDarkMode 
-    ? `${toggler.widthBg - toggler.heightCircle - (toggler.transitionLeft * 2)}px` 
+    ? `${css.toggler.widthBg - css.toggler.heightCircle - (css.toggler.transitionLeft * 2)}px` 
     : '0px'}
     );
   }

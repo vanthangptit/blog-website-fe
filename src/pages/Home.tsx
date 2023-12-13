@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useAuth } from '@hooks/useAuth';
 
 const Home = () => {
@@ -6,13 +6,6 @@ const Home = () => {
 
   // eslint-disable-next-line no-console
   console.log('accessToken: ', accessToken);
-
-  useEffect(() => {
-    (async () => {
-      // await getAccessTokenApi();
-    })();
-    /* eslint-disable */
-  }, []);
 
   return (
     <h1>

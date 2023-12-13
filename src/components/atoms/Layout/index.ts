@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { heightFooter } from '@constants/footer';
+import css from '@constants/styles';
 
 export const LayoutMiddle = styled('section')<{ styles?: any }>(({ styles }) => ({
   display: 'flex',
@@ -7,8 +7,8 @@ export const LayoutMiddle = styled('section')<{ styles?: any }>(({ styles }) => 
   alignItems: 'center',
   overflowX: 'hidden',
   overflowY: 'auto',
-  height: `calc(100vh - ${heightFooter}px)`,
-  minHeight: `calc(575px + ${heightFooter}px)`,
+  height: `calc(100vh - ${css.heightFooter}px)`,
+  minHeight: `calc(575px + ${css.heightFooter}px)`,
 
   ...(styles && { ...styles }),
 
@@ -95,7 +95,7 @@ export const CustomContainer = styled('div')<{ styles?: any, flexMiddle?: boolea
   })
 }));
 
-export const CustomRow = styled('div')<{ styles?: any }>(({ styles }) => ({
+export const Row = styled('div')<{ styles?: any }>(({ styles }) => ({
   display: 'flex',
   flexWrap: 'wrap',
   marginRight: '-15px',
@@ -104,17 +104,19 @@ export const CustomRow = styled('div')<{ styles?: any }>(({ styles }) => ({
   ...(styles && { ...styles })
 }));
 
-export const CustomColumn = styled('div')<{
+export const Column = styled('div')<{
   $lgWidth?: string
   $mdWidth?: string
   $smWidth?: string
   $xsWidth?: string
+  $width?: string
   $justify?: 'flex-start' | 'flex-end' | 'center' | 'space-around' | 'space-between' | 'stretch'
 }>(({
   $lgWidth,
   $mdWidth,
   $smWidth,
   $xsWidth,
+  $width,
   $justify
 }) => ({
   display: 'flex',
@@ -122,8 +124,8 @@ export const CustomColumn = styled('div')<{
   justifyContent: `${$justify}`,
   paddingLeft: '15px',
   paddingRight: '15px',
-  flex: '0 0 100%',
-  maxWidth: '100%',
+  flex: `0 0 ${$width ?? '100%'}`,
+  maxWidth: $width ?? '100%',
 
   ...($xsWidth && {
     '@media (min-width: 576px)': {

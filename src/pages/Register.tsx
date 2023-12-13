@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import {
-  CustomColumn,
-  CustomRow,
+  Column,
+  Row,
   LayoutMiddle
-} from '@components/atoms/Layout';
+} from '@components/./atoms/Layout';
 import styled from 'styled-components';
 import SectionTitleForm from '@components/atoms/SectionTitleForm';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -63,8 +63,8 @@ const Register = () => {
         />
 
         <FormElement onSubmit={handleSubmit(onSubmit)}>
-          <CustomRow>
-            <CustomColumn $smWidth={'50%'}>
+          <Row>
+            <Column $smWidth={'50%'}>
               <FormControl
                 register={register}
                 formState={formState}
@@ -75,8 +75,8 @@ const Register = () => {
                 $with={'100%'}
                 $height={'45px'}
               />
-            </CustomColumn>
-            <CustomColumn $smWidth={'50%'}>
+            </Column>
+            <Column $smWidth={'50%'}>
               <FormControl
                 register={register}
                 formState={formState}
@@ -87,8 +87,8 @@ const Register = () => {
                 $with={'100%'}
                 $height={'45px'}
               />
-            </CustomColumn>
-          </CustomRow>
+            </Column>
+          </Row>
           <FormControl
             register={register}
             formState={formState}

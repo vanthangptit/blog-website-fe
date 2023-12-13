@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { heightFooter } from '@constants/footer';
+import css from '@constants/styles';
 
 const Footer = ({ children }: { children: React.ReactNode}) => {
   return (
@@ -20,7 +20,7 @@ const FooterElement = styled.footer`
   font-style: italic;
   text-align: center;
   padding: 20px 0 30px;
-  height: ${heightFooter}px;
+  height: ${css.heightFooter}px;
 `;
 
 const NoCopyright = styled.p`
