@@ -4,22 +4,18 @@ import styled from 'styled-components';
 import { LayoutMiddle } from '@components/atoms/Layout';
 import { BtnSubmit } from '@components/atoms/Buttons/BtnSubmit';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { IFLogin } from '@models/IFAuth';
+import { IFLogin, IFLoginResponse } from '@models/IFAuth';
 import { MessageError } from '@components/atoms/MessageError';
 import SectionTitleForm from '@components/atoms/SectionTitleForm';
 import FormControl from '@components/molecules/FormControl';
 import { useAuth } from '@hooks/useAuth';
-import { AuthContext } from '@src/infra/context/AuthContext';
+import { AuthContext } from '@infra/context/AuthContext';
 
 const Login = () => {
   const location = useLocation();
-  const { setAuthenticated } = useContext(AuthContext);
   const navigate = useNavigate();
-  const {
-    loginApi,
-    errorMessage,
-    loading
-  } = useAuth();
+  const { setAuthenticated } = useContext(AuthContext);
+  const { loginApi, errorMessage, loading } = useAuth();
   const {
     register,
     formState,
@@ -30,8 +26,8 @@ const Login = () => {
   const onSubmit: SubmitHandler<IFLogin> = async (data) => {
     await loginApi(data)
       .unwrap()
-      .then(() => {
-        setAuthenticated(true);
+      .then((rs: IFLoginResponse) => {
+        setAuthenticated(rs?.auth);
         setTimeout(() => {
           reset();
           navigate('/');

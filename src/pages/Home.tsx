@@ -2,10 +2,10 @@ import React from 'react';
 import { useAuth } from '@hooks/useAuth';
 
 const Home = () => {
-  const { accessToken } = useAuth();
+  const { auth } = useAuth();
 
   // eslint-disable-next-line no-console
-  console.log('accessToken: ', accessToken);
+  console.log('accessToken: ', auth);
 
   return (
     <h1>

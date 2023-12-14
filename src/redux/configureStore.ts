@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+// import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 import { combineReducers } from 'redux';
 
 import { appUsersSlice } from './user';
@@ -11,8 +12,9 @@ import { appCategoriesSlice } from './categories';
 const persistConfig = {
   key: 'root',
   version: 1,
-  storage,
-  whitelist: [ 'auth' ]
+  whitelist: [ 'auth' ],
+  // stateReconciler: autoMergeLevel2,
+  storage
 };
 
 const reducers = combineReducers({

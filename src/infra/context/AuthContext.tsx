@@ -1,25 +1,27 @@
 import React, { createContext, ReactNode, useState } from 'react';
+import { IFAuthResponse } from '@models/IFAuth';
+import { useAuth } from '@hooks/useAuth';
 
 type Props = {
   children?: ReactNode;
 }
 
 type IAuthContext = {
-  authenticated: boolean;
+  authenticated: IFAuthResponse | undefined;
   /* eslint-disable */
-  setAuthenticated: (newState: boolean) => void
+  setAuthenticated: (newState: IFAuthResponse | undefined) => void
 }
 
 const initialValue = {
-  authenticated: false,
+  authenticated: undefined,
   setAuthenticated: () => {}
 };
 
 const AuthContext = createContext<IAuthContext>(initialValue);
 
 const AuthProvider = ({ children }: Props) => {
-  //Initializing an auth state with false value (unauthenticated)
-  const [ authenticated, setAuthenticated ] = useState(initialValue.authenticated);
+  const { auth } = useAuth();
+  const [ authenticated, setAuthenticated ] = useState(auth);
 
   return (
     <AuthContext.Provider value={{ authenticated, setAuthenticated }}>

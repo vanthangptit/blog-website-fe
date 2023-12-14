@@ -9,15 +9,11 @@ import {
 import { AuthContext } from '@src/infra/context/AuthContext';
 
 import Home from './pages/Home';
-import Login from './pages/Login';
+import Index from './pages/Login';
 import Register from '@src/pages/Register';
 import Featured from '@src/pages/Featured';
 import CreatePost from '@src/pages/CreatePost';
 import Categories from '@src/pages/Categories';
-
-type Props = {
-  data?: any
-}
 
 const PrivateRoutes = () => {
   const { authenticated } = useContext(AuthContext);
@@ -30,14 +26,10 @@ const PrivateRoutes = () => {
   return <Outlet />;
 };
 
-const Routes = (props: Props) => {
-  const { authenticated } = useContext(AuthContext);
-  // eslint-disable-next-line no-console
-  console.log({ props, authenticated });
-
+const Routes = () => {
   return (
     <Router>
-      <Route path='/login' element={<Login />} />
+      <Route path='/login' element={<Index />} />
       <Route path='/register' element={<Register />} />
       <Route path='/featured' element={<Featured />} />
 

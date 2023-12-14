@@ -1,11 +1,22 @@
+import { Roles } from '@models/IFUser';
+
 export type NameFieldLogin = 'email' | 'password';
 
-export interface IFTokens {
+export interface IFResponse {
+  statusCode: number
+  message: string
+}
+
+export interface IFAuthResponse {
+  roles: Roles,
+  fullName: string
   accessToken: string
 }
 
-export interface ITokenResponse extends ILoginResponse {
-  accessToken: string
+export interface ITokenResponse extends IFResponse {
+  auth: {
+    accessToken: string
+  }
 }
 
 export interface IFLogin {
@@ -13,8 +24,6 @@ export interface IFLogin {
   password: string
 }
 
-export interface ILoginResponse {
-  data?: IFTokens
-  statusCode: number
-  message: string
+export interface IFLoginResponse extends IFResponse {
+  auth: IFAuthResponse
 }
