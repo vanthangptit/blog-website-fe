@@ -5,6 +5,8 @@
       "@src/*": ["./src/*"],
       "@configs/*": ["./src/configs/*"],
       "@constants/*": ["./src/constants/*"],
+      "@pages/*": ["./src/pages/*"],
+      "@infra/*": ["./src/infra/*"],
       "@components/*": ["./src/components/*"],
       "@utils/*": ["./src/utils/*"],
       "@store/*": ["./src/redux/*"],
