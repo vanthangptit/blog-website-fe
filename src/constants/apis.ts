@@ -23,3 +23,12 @@ export const API_CATEGORY = {
     DELETE: 'APPS/DELETE_CATEGORY'
   }
 };
+
+export const USER = {
+  URL_API: {
+    PROFILE: `${API_ROOT_URL}users/profile`
+  },
+  ACTION_TYPES: {
+    PROFILE: 'APPS/PROFILE'
+  }
+};

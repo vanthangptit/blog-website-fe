@@ -3,7 +3,7 @@ import { BrowserRouter } from 'react-router-dom';
 import styled from 'styled-components';
 
 import ThemeProvider, { themeMode } from '@src/theme';
-import SwitchToggle from '@components/atoms/Toggler';
+import SwitchToggle from '@components/molecules/Toggler';
 import Footer from '@components/atoms/Footer';
 import { themes } from '@constants/theme';
 

@@ -5,7 +5,7 @@ import { FormState, RegisterOptions, UseFormRegister } from 'react-hook-form';
 import styled from 'styled-components';
 import { NameFieldRegister } from '@models/IFRegister';
 import { BsEye, BsEyeSlash } from 'react-icons/bs';
-import { NameFieldLogin } from '@models/IFAuth';
+import { NameFieldLogin } from '@models/IFAuthenticated';
 import { NameFieldCreatePost } from '@models/IFPosts';
 
 const FormControl = ({

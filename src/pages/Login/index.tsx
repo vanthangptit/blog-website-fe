@@ -1,42 +1,53 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { LayoutMiddle } from '@components/atoms/Layout';
 import { BtnSubmit } from '@components/atoms/Buttons/BtnSubmit';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { IFLogin, IFLoginResponse } from '@models/IFAuth';
+import { IFLogin, IFLoginResponse } from '@models/IFAuthenticated';
 import { MessageError } from '@components/atoms/MessageError';
-import SectionTitleForm from '@components/atoms/SectionTitleForm';
+import SectionTitleForm from '@components/molecules/SectionTitleForm';
 import FormControl from '@components/molecules/FormControl';
 import { useAuth } from '@hooks/useAuth';
 import { AuthContext } from '@infra/context/AuthContext';
+import { useCookies } from '@hooks/useCookies';
 
 const Login = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { addCookies } = useCookies();
   const { setAuthenticated } = useContext(AuthContext);
-  const { loginApi, errorMessage, loading } = useAuth();
+  const { loginApi } = useAuth();
+  const [ isLoading, setLoading ] = useState<boolean>(false);
+  const [ isErrorMessage, setErrorMessage ] = useState<string>();
+
   const {
+    setValue,
     register,
     formState,
-    handleSubmit,
-    setValue,
-    reset
+    handleSubmit
   } = useForm<IFLogin>();
-  const onSubmit: SubmitHandler<IFLogin> = async (data) => {
-    await loginApi(data)
+  const onSubmit: SubmitHandler<IFLogin> = (data) => {
+    setLoading(true);
+    loginApi(data)
       .unwrap()
       .then((rs: IFLoginResponse) => {
-        setAuthenticated(rs?.auth);
+        setAuthenticated(rs.user);
+        addCookies('user', JSON.stringify(rs.user));
         setTimeout(() => {
-          reset();
+          setLoading(false);
           navigate('/');
         }, 500);
+      })
+      .catch((error) => {
+        setLoading(false);
+        setErrorMessage(error?.data?.message ?? 'An error occurred. Please try again!');
       });
   };
 
   useEffect(() => {
     setValue('email', location?.state?.email ?? '');
+    setValue('password', location?.state?.password ?? '');
     /* eslint-disable */
   }, [ location ]);
 
@@ -70,12 +81,12 @@ const Login = () => {
           <BtnSubmit
             type={'submit'}
             $with={'100px'}
-            disabled={loading}
+            disabled={isLoading}
           >
             Submit
           </BtnSubmit>
-          {(errorMessage && errorMessage.length) && (
-            <MessageError $align={'center'}>{errorMessage}</MessageError>
+          {(isErrorMessage && isErrorMessage.length) && (
+            <MessageError $align={'center'}>{isErrorMessage}</MessageError>
           )}
         </FormElement>
         <RedirectBox>

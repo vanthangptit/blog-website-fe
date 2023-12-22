@@ -3,37 +3,25 @@ import {
   useAppDispatch,
   useAppSelector
 } from '@store/configureStore';
-import * as authStores from '@store/auth';
-import { IFLogin } from '@models/IFAuth';
-import { AxiosRequestConfig } from 'axios';
+import * as authStore from '@store/auth';
+import { IFLogin } from '@models/IFAuthenticated';
+import api from '@infra/apis';
 
 export const useAuth = () => {
   const dispatch = useAppDispatch();
-  const authStore = useAppSelector((state: RootState) => state.auth);
+  const authStates = useAppSelector((state: RootState) => state.auth);
 
-  const getConfig = (isAuthorization?: boolean): AxiosRequestConfig => {
-    return {
-      withCredentials: true,
-      headers: {
-        Accept: 'applicaiton/json',
-        'Content-Type': 'application/json',
-        Authorization: isAuthorization ? 'Bearer ' + authStore?.auth?.accessToken : null
-      }
-    };
+  const login = (params: IFLogin) => {
+    return api.loginApi(params);
   };
 
   const loginApi = (params: IFLogin) => {
-    return dispatch(authStores.loginApi({ params, config: getConfig() }));
-  };
-
-  const getAccessTokenApi = () => {
-    return dispatch(authStores.getAccessTokenApi({ config: getConfig() }));
+    return dispatch(authStore.loginApi(params));
   };
 
   return {
-    ...authStore,
+    ...authStates,
     loginApi,
-    getAccessTokenApi,
-    getConfig
+    login
   };
 };

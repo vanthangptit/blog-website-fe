@@ -7,16 +7,8 @@ export interface IFResponse {
   message: string
 }
 
-export interface IFAuthResponse {
-  roles: Roles,
-  fullName: string
+export interface IFTokenResponse extends IFResponse {
   accessToken: string
-}
-
-export interface ITokenResponse extends IFResponse {
-  auth: {
-    accessToken: string
-  }
 }
 
 export interface IFLogin {
@@ -24,6 +16,11 @@ export interface IFLogin {
   password: string
 }
 
-export interface IFLoginResponse extends IFResponse {
-  auth: IFAuthResponse
+export interface IFAuth {
+  roles: Roles,
+  fullName: string
+}
+
+export interface IFLoginResponse extends IFTokenResponse {
+  user: IFAuth
 }

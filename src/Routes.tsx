@@ -8,12 +8,12 @@ import {
 } from 'react-router-dom';
 import { AuthContext } from '@src/infra/context/AuthContext';
 
-import Home from './pages/Home';
-import Index from './pages/Login';
-import Register from '@src/pages/Register';
-import Featured from '@src/pages/Featured';
-import CreatePost from '@src/pages/CreatePost';
-import Categories from '@src/pages/Categories';
+import Home from '@pages/Home';
+import Login from '@pages/Login';
+import Register from '@pages/Register';
+import Featured from '@pages/Featured';
+import CreatePost from '@pages/CreatePost';
+import Categories from '@pages/Categories';
 
 const PrivateRoutes = () => {
   const { authenticated } = useContext(AuthContext);
@@ -29,7 +29,7 @@ const PrivateRoutes = () => {
 const Routes = () => {
   return (
     <Router>
-      <Route path='/login' element={<Index />} />
+      <Route path='/login' element={<Login />} />
       <Route path='/register' element={<Register />} />
       <Route path='/featured' element={<Featured />} />
 
