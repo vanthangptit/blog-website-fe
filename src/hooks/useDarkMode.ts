@@ -17,8 +17,8 @@ export const useDarkMode = () => {
   };
 
   useEffect(() => {
-    const localTheme = getCookies('theme');
-    localTheme ? setTheme(localTheme) : setMode(themes.lightMode);
+    const cookieTheme = getCookies([ 'theme' ]);
+    cookieTheme && cookieTheme?.theme ? setTheme(cookieTheme.theme) : setMode(themes.lightMode);
     setMountedComponent(true);
     /* eslint-disable */
   }, []);
