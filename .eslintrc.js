@@ -32,7 +32,23 @@ module.exports = {
       'functions': true,
       'variables': false
     }],
-    'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z]' }],
+    // 'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z]' }],
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': [
+      'error',
+      {
+        argsIgnorePattern: '^_',
+        varsIgnorePattern: '^[A-Z]',
+        caughtErrorsIgnorePattern: '^_'
+      }
+    ],
+    'no-empty-function': 'off',
+    '@typescript-eslint/no-empty-function': [
+      'error',
+      {
+        'allow': ['arrowFunctions']
+      }
+    ],
     'no-useless-return': 'error',
     'eqeqeq': 'error',
 
