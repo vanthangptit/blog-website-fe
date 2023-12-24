@@ -1,25 +1,39 @@
-// import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-// import { api } from '@src/apis';
-
-// import { USER } from '@src/constants';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { USER } from '@constants/apis';
+import api from '@src/infra/apis';
 
 // interface IFUserState {}
 
 const initialState: any = {};
 
-export const getUserApi = createAsyncThunk<any>('USER.ACTION_TYPES.GET_USER', async (_, thunkAPI) => {
+export const getProfile = createAsyncThunk<any, { id: string }>(USER.ACTION_TYPES.PROFILE, async (params, thunkAPI) => {
   try {
-    return true;
+    const response: any = await api.getProfile(params.id);
+    return {
+      ...response
+    };
   } catch (error: any) {
-    return thunkAPI.rejectWithValue({ error: error.data });
+    return thunkAPI.rejectWithValue(error.response);
   }
 });
-
 
 export const appUsersSlice = createSlice({
   name: 'appUser',
   initialState,
-  reducers: {}
-  // extraReducers: builder => {}
+  reducers: {},
+  extraReducers: builder => {
+    builder
+      .addCase(getProfile.fulfilled, (state, action: PayloadAction<any>) => {
+        // eslint-disable-next-line no-console
+        console.log(action.payload);
+        return action.payload;
+      })
+      .addCase(getProfile.rejected, (state, action: PayloadAction<any>) => {
+        // eslint-disable-next-line no-console
+        console.log(action);
+        return action.payload;
+      });
+  }
 });
+
+export default appUsersSlice.actions;

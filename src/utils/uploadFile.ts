@@ -19,9 +19,9 @@ AWS.config.update({
   })
 });
 
-const validateFileTypes = [ 'image/jpg', 'image/jpeg', 'image/png' ];
+export const validateFileTypes = [ 'image/jpg', 'image/jpeg', 'image/png' ];
 
-const convertSize = (originSize: number) => {
+export const convertSize = (originSize: number) => {
   let mbSize: any = originSize / 1000000;
   let unit = 'MB';
 
@@ -42,12 +42,12 @@ const convertSize = (originSize: number) => {
   };
 };
 
-const validationSize = (file: any) => {
+export const validationSize = (file: any) => {
   const fileSize = convertSize(file.size);
 
   if (
-    (fileSize.unit === 'Bytes' && fileSize.size > 5000000)
-    || (fileSize.unit === 'KB' && fileSize.size > 5000000)
+    ((fileSize.unit === 'Bytes' || fileSize.unit === 'Byte') && fileSize.size > 5000000)
+    || (fileSize.unit === 'KB' && fileSize.size > 5000)
     || (fileSize.unit === 'MB' && fileSize.size > 5)
   ) {
     return {
@@ -97,22 +97,15 @@ export const uploadFile = ({ file, callback, setErrorMessage }: { file: any; cal
   }
 };
 
-export const deleteFile = (fileUploadedArray: ManagedUpload.SendData[], valueDescription: string) => {
+export const deleteFiles = (fileUploadedArray: ManagedUpload.SendData[]) => {
   if (fileUploadedArray.length === 0) {
     return;
   }
 
-  const fileDeleted: ManagedUpload.SendData[] = [];
-  fileUploadedArray.forEach((item) => {
-    if (valueDescription.indexOf(item.Location) === -1) {
-      fileDeleted.push(item);
-    }
-  });
-
-  if (fileDeleted.length > 0) {
+  if (fileUploadedArray.length > 0) {
     const objects: { Key: string }[] = [];
 
-    fileDeleted.forEach((item) => {
+    fileUploadedArray.forEach((item) => {
       objects.push({
         Key: item.Key
       });

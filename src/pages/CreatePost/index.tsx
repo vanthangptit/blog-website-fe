@@ -5,9 +5,9 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { IPostForm, IPostParams } from '@models/IFPosts';
 import FormControl from '@components/molecules/FormControl';
 import { AWS_S3_URL_BLOG, VISIBILITY } from '@src/constants/post';
-import Select from '@components/atoms/select';
+import Select from '@components/molecules/Select';
 import { IFColourOption } from '@models/SelectOptions';
-import { deleteFile, uploadFile } from '@utils/uploadFile';
+import { uploadFile } from '@utils/uploadFile';
 import { ManagedUpload } from 'aws-sdk/clients/s3';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
@@ -23,6 +23,8 @@ const CreatePost = () => {
     register,
     formState
   } = useForm<IPostForm>();
+
+  const [ categoryId, setCategoryId ] = useState<string>();
 
   const [ postType, setPostType ] = useState<string>('');
   const [ valueDescription, setValueDescription ] = useState('');
@@ -134,7 +136,7 @@ const CreatePost = () => {
     };
 
     if (fileUploadedArray) {
-      await deleteFile(fileUploadedArray, valueDescription);
+      // await deleteFiles(fileUploadedArray, valueDescription);
     }
 
     if (featuredImageChanged) {
@@ -145,13 +147,16 @@ const CreatePost = () => {
   };
 
   useEffect(() => {
-    // eslint-disable-next-line no-console
-    console.log(visibility, submitting, setPostType, setValueDescription, setFileUploadArray);
-    // eslint-disable-next-line no-console
-    console.log(postId, setPostId, errorMessage);
-    // eslint-disable-next-line no-console
-    console.log(location, navigate);
-  }, []);
+    setCategoryId(location?.state?._id);
+  /* eslint-disable */
+  }, [ location ]);
+
+  // eslint-disable-next-line no-console
+  console.log(visibility, submitting, setPostType, setValueDescription, setFileUploadArray);
+  // eslint-disable-next-line no-console
+  console.log(postId, setPostId, errorMessage);
+  // eslint-disable-next-line no-console
+  console.log(location, navigate, categoryId);
 
   return (
     <FormElement onSubmit={handleSubmit(onSubmit)}>

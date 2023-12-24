@@ -15,7 +15,7 @@ const setConf = ({ isCredentials= false, token }: { isCredentials?: boolean; tok
 const verifyCredentials = (url: string) => url === REFRESH_TOKEN.URL_API || url === LOGIN.URL_API;
 
 const responseBody = (response: AxiosResponse) => response.data;
-const errorBody = (error: AxiosError) => error.response;
+const errorBody = (error: AxiosError) => error.response?.data ? error.response.data : error.response;
 
 const getToken = () => axios.get(REFRESH_TOKEN.URL_API, setConf({ isCredentials: true }));
 

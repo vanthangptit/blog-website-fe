@@ -12,8 +12,7 @@ type Props = {
 
 type IAuthContext = {
   authenticated: IFAuth  | undefined
-  /* eslint-disable */
-  setAuthenticated: (newState: IFAuth | undefined) => void
+  setAuthenticated: (newState?: IFAuth) => void
 }
 
 const initialValue = {
@@ -34,4 +33,4 @@ const AuthProvider = ({ children }: Props) => {
   );
 };
 
-export {  AuthContext, AuthProvider }
+export {  AuthContext, AuthProvider };

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const BtnPrimary = styled.button<{ isLoading?: boolean }>`
+export const BtnPrimary = styled.button<{ $isLoading?: boolean }>`
   outline: none;
   padding: 8px 25px;
   background-color: ${({ theme }) => theme.bg1};
@@ -15,7 +15,7 @@ export const BtnPrimary = styled.button<{ isLoading?: boolean }>`
   justify-content: center;
   font-size: 16px;
   gap: 5px;
-  pointer-events: ${({ isLoading }) => isLoading ? 'none' : 'auto'};
+  pointer-events: ${({ $isLoading }) => $isLoading ? 'none' : 'auto'};
 
   &:hover {
     background-color: ${({ theme }) => theme.bg0};

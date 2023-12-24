@@ -35,6 +35,7 @@ function colors(darkMode: boolean): Colors {
     primary2: darkMode ? black : white,
     primary3: darkMode ? '#545454' : '#E4E4E4',
     primary4: darkMode ? '#7F7F7F' : '#A9A9A9',
+    primary5: darkMode ? '#C8C8C8' : '#545454',
 
     // secondary colors
     secondary1: darkMode ? black : white,
@@ -43,7 +44,8 @@ function colors(darkMode: boolean): Colors {
     secondary4: darkMode ? '#EFEFEF' : '#7F7F7F',
 
     inputPlaceholder: '#7F7F7F',
-    colorEyes: '#9f9f9f'
+    colorEyes: '#9f9f9f',
+    colorBorderCard: '#cccccc'
   };
 }
 
