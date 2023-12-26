@@ -14,6 +14,7 @@ import Register from '@pages/Register';
 import Featured from '@pages/Featured';
 import CreatePost from '@pages/CreatePost';
 import Categories from '@pages/Categories';
+import CreateCategory from '@pages/CreateCategory';
 
 const PrivateRoutes = () => {
   const { authenticated } = useContext(AuthContext);
@@ -35,8 +36,10 @@ const Routes = () => {
 
       <Route element={<PrivateRoutes />}>
         <Route path='/' element={<Home />} />
-        <Route path='/create' element={<CreatePost />} />
+        <Route path='/create-post' element={<CreatePost />} />
         <Route path='/categories' element={<Categories />} />
+        <Route path='/create-category' element={<CreateCategory />} />
+        <Route path='/category/:id' element={<CreateCategory />} />
       </Route>
 
       <Route path='*' element={<div>Page Not Found</div>} />

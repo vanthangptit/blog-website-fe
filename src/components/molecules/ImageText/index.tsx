@@ -1,13 +1,28 @@
-import React from 'react';
+import React, { MouseEvent } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { AVATAR_DEFAULT } from '@src/constants';
 import { IFResponseCategories } from '@models/IFCategory';
 
-const ImageText = ({ item }: { item: IFResponseCategories }) => {
+const ImageText = ({
+  item,
+  url,
+  handleClick
+}: {
+  item: IFResponseCategories,
+  url: string
+  handleClick?: (e: MouseEvent<HTMLDivElement>) => void
+}) => {
+  const click = (e: MouseEvent<HTMLDivElement>) => {
+    if (handleClick) {
+      e.stopPropagation();
+      handleClick && handleClick(e);
+    }
+  };
+
   return (
-    <Box>
-      <BoxLink to={'/create'} state={{ _id: item?._id }}>
+    <Box onClick={(e) => click(e)}>
+      <BoxLink to={url} state={{ _id: item?._id }}>
         <BoxBorder>
           <BoxImage>
             <img src={item?.image ?? AVATAR_DEFAULT} alt={item?.title} />
@@ -23,14 +38,14 @@ const ImageText = ({ item }: { item: IFResponseCategories }) => {
 
 export default ImageText;
 
-const Box = styled.article`
+const Box = styled.div`
   margin: 0 0 30px;
   padding: 0;
 `;
 
 const BoxBorder = styled.div`
   padding: 20px;
-  border: 1px solid ${({ theme }) => theme.colorBorderCard};
+  border: 1px solid ${({ theme }) => theme.gray1};
   border-bottom: none;
 `;
 
@@ -56,7 +71,7 @@ const BoxImage = styled.div`
 
 const BoxBody = styled.hgroup`
   padding: 15px;
-  border: 1px solid ${({ theme }) => theme.colorBorderCard};
+  border: 1px solid ${({ theme }) => theme.gray1};
   text-align: center;
 
   h5 {

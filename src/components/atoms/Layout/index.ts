@@ -1,14 +1,9 @@
 import styled from 'styled-components';
-import css from '@constants/styles';
 
-export const LayoutMiddle = styled('section')<{ styles?: any }>(({ styles }) => ({
+export const LayoutMiddle = styled('main')<{ styles?: any }>(({ styles }) => ({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  overflowX: 'hidden',
-  overflowY: 'auto',
-  height: `calc(100vh - ${css.heightFooter}px)`,
-  minHeight: `calc(575px + ${css.heightFooter}px)`,
 
   ...(styles && { ...styles }),
 

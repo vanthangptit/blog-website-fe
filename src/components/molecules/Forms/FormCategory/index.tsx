@@ -32,7 +32,6 @@ const FormCategory = ({
 }) => {
   return (
     <FormElement onSubmit={handleSubmit(onSubmit)}>
-      <FormTitle>Create Topic</FormTitle>
       <FormControl
         register={register}
         formState={formState}
@@ -67,10 +66,4 @@ export default React.memo(FormCategory);
 const FormElement = styled.form`
   font-size: 1.5em;
    text-align: center;
-`;
-
-const FormTitle = styled.h3`
-  margin-bottom: 30px;
-  font-weight: 400;
-  color: ${({ theme }) => theme.text1};
 `;
