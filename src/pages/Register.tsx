@@ -13,6 +13,7 @@ import { BtnSubmit } from '@components/atoms/Buttons/BtnSubmit';
 import { MessageError } from '@components/atoms/MessageError';
 import { API_REGISTER_URL } from '@constants/apis';
 import { useNavigate } from 'react-router-dom';
+import { BiLock } from 'react-icons/bi';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -58,8 +59,8 @@ const Register = () => {
     <LayoutMiddle styles={{ padding: '0 15px' }}>
       <RegisterBox>
         <SectionTitleForm
-          iconSize={20}
-          text={'Sign up'}
+          icon={{ el: BiLock }}
+          title={'Sign up'}
         />
 
         <FormElement onSubmit={handleSubmit(onSubmit)}>

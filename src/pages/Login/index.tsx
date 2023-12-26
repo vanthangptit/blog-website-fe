@@ -11,6 +11,7 @@ import FormControl from '@components/molecules/FormControl';
 import { useAuth } from '@hooks/useAuth';
 import { AuthContext } from '@infra/context/AuthContext';
 import { useCookies } from '@hooks/useCookies';
+import { BiLock } from 'react-icons/bi';
 
 const Login = () => {
   const location = useLocation();
@@ -54,7 +55,10 @@ const Login = () => {
   return (
     <LayoutMiddle>
       <LoginBox>
-        <SectionTitleForm iconSize={20} text={'Sign in'} />
+        <SectionTitleForm
+          icon={{ el: BiLock }}
+          title={'Sign in'}
+        />
 
         <FormElement onSubmit={handleSubmit(onSubmit)}>
           <FormControl

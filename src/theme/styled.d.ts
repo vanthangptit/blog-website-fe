@@ -33,7 +33,7 @@ export interface Colors {
 
   inputPlaceholder: Color
   colorEyes: Color
-  colorBorderCard: Color
+  gray1: Color
 }
 
 export type FontSize = string

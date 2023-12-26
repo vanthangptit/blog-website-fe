@@ -38,7 +38,7 @@ function App() {
 
 export default App;
 
-const LayoutMain = styled('div')`
+const LayoutMain = styled.div`
   transition: all 0.3s;
   background-color: ${({ theme }) => theme.bg0};
 `;

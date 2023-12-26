@@ -28,7 +28,7 @@ function colors(darkMode: boolean): Colors {
     bg1: darkMode ? white : black,
     bg2: darkMode ? '#222222' : '#F9F9F9',
     bg3: darkMode ? '#222222' : '#F9F9F9',
-    bg4: darkMode ? '#bc2e1d' : '#bc2e1d',
+    bg4: darkMode ? white : '#bc2e1d',
 
     //primary colors
     primary1: darkMode ? white : black,
@@ -45,7 +45,9 @@ function colors(darkMode: boolean): Colors {
 
     inputPlaceholder: '#7F7F7F',
     colorEyes: '#9f9f9f',
-    colorBorderCard: '#cccccc'
+
+    //gray colors
+    gray1: '#cccccc'
   };
 }
 

@@ -2,40 +2,65 @@ import React from 'react';
 import { BiLock } from 'react-icons/bi';
 import styled from 'styled-components';
 
-const SectionTitleForm = ({ iconSize = 20, text } : { iconSize: number; text: string }) => {
+const SectionTitleForm = ({
+  icon,
+  title,
+  text
+} : {
+  icon?: {
+    size?: number
+    el: any
+  }
+  title: string;
+  text?: string
+}) => {
   return (
-    <Title>
-      <TitleAvatar>
-        <BiLock size={iconSize ?? 20} />
-      </TitleAvatar>
-      <TitleText>{text}</TitleText>
-    </Title>
+    <Hgroup>
+      {icon && (
+        <TitleAvatar>
+          <icon.el size={icon?.size ?? 20} />
+        </TitleAvatar>
+      )}
+
+      <Heading>{title}</Heading>
+
+      {text && <Text>{text}</Text>}
+    </Hgroup>
   );
 };
 
 export default SectionTitleForm;
 
-const Title = styled.h1`
+const Hgroup = styled.hgroup`
   font-size: 1.5em;
   text-align: center;
+  margin-bottom: 35px;
 `;
 
-const TitleText = styled.span`
+const Heading = styled.h1`
   text-align: center;
-  font-size: 27px;
+  font-size: 32px;
   font-weight: 400;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   width: 100%;
-  display: inline-block;
+  color: ${({ theme }) => theme.primary1};
 
   @media (min-width: 768px) and (max-width: 991px) {
-    font-size: calc(22px + (27 - 22) * (100vw - 768px) / (991 - 768));
+    font-size: calc(24px + (32 - 26) * (100vw - 768px) / (991 - 768));
   }
 
   @media (max-width: 767px) {
-    // font-size: calc(18px + (23 - 18) * (100vw - 360px) / (767 - 360));
-    font-size: 22px;
+    // font-size: calc(18px + (24 - 18) * (100vw - 360px) / (767 - 360));
+    font-size: 24px;
   }
+`;
+
+const Text = styled.p`
+  text-align: center;
+  font-size: 16px;
+  font-weight: 400;
+  margin-bottom: 10px;
+  color: ${({ theme }) => theme.primary1};
 `;
 
 const TitleAvatar = styled.span`
@@ -44,5 +69,5 @@ const TitleAvatar = styled.span`
   height: 35px;
   border-radius: 50%;
   background-color: ${({ theme }) => theme.bg4};
-  color: ${({ theme }) => theme.white};
+  color: ${({ theme }) => theme.text2};
 `;
