@@ -58,7 +58,7 @@ const requester = {
       });
   },
   put: (url: string, data = {}, token?: string) => {
-    put(url, data, setConf({ token, isCredentials: verifyCredentials(url) }))
+    return put(url, data, setConf({ token, isCredentials: verifyCredentials(url) }))
       .then(responseBody)
       .catch((error: AxiosError) => {
         if (error.response?.status !==  401) {
@@ -74,7 +74,7 @@ const requester = {
       });
   },
   delete: (url: string, params = {}, token?: string) => {
-    del(url, params, setConf({ token, isCredentials: verifyCredentials(url) }))
+    return del(url, params, setConf({ token, isCredentials: verifyCredentials(url) }))
       .then(responseBody)
       .catch((error: AxiosError) => {
         if (error.response?.status !==  401) {

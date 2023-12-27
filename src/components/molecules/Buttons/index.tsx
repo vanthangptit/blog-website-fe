@@ -9,15 +9,17 @@ export default ({
   buttonType = 'button',
   text,
   isLoading= false,
-  handleClick
+  handleClick,
+  disabled
 }: {
   buttonType?: ButtonType
   text: string
   isLoading?: boolean
+  disabled?: boolean
   handleClick?: () => void
 }) => {
   return (
-    <BtnPrimary onClick={handleClick} $isLoading={isLoading} type={buttonType}>
+    <BtnPrimary onClick={handleClick} $isLoading={isLoading} type={buttonType} disabled={disabled}>
       <ButtonText>{text}</ButtonText>
       {isLoading && (
         <LoaderBox>

@@ -33,7 +33,16 @@ export interface Colors {
 
   inputPlaceholder: Color
   colorEyes: Color
-  gray1: Color
+  gray: Color,
+  gray1: Color,
+  gray2: Color,
+  gray3: Color,
+  gray4: Color,
+  gray5: Color,
+  gray6: Color,
+  gray7: Color,
+  gray8: Color,
+  gray9: Color
 }
 
 export type FontSize = string

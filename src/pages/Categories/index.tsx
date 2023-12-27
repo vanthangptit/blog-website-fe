@@ -24,9 +24,9 @@ const Categories = () => {
           <TitlePage>Your Categories</TitlePage>
         </SectionTitle>
 
-        {categories && categories.length > 0 && (
+        {categories?.data && categories.data?.length > 0 && (
           <Row>
-            {categories?.map((item, index) => {
+            {categories?.data?.map((item, index) => {
               return (
                 <Column $width={'100%'} $lgWidth={'20%'} $mdWidth={'25%'} $xsWidth={`${(1/3)*100}%`} key={index}>
                   <ImageText item={item} url={`/category/${item._id}`} />
@@ -79,7 +79,6 @@ const SuccessTitle = styled.h4`
 `;
 
 const Layout = styled.main`
-  background-color: ${({ theme }) => theme.bg0};
   min-height: 100vh;
   width: 100%;
   height: 100%;

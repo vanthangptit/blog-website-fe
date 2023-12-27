@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import FormCategory from '@components/molecules/Forms/FormCategory';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { IFCategories } from '@models/IFCategory';
@@ -6,7 +6,7 @@ import { ManagedUpload } from 'aws-sdk/clients/s3';
 import { messageErrors } from '@constants/messageErrors';
 import { deleteFiles, uploadFile } from '@utils/uploadFile';
 import { useCategories } from '@hooks/useCategories';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { LayoutMiddle } from '@components/atoms/Layout';
 import styled from 'styled-components';
 import SectionTitleForm from '@components/molecules/SectionTitleForm';
@@ -14,9 +14,10 @@ import Button from '@components/molecules/Buttons';
 
 const CreateCategory = () => {
   const navigate = useNavigate();
-  const { createCategory } = useCategories();
+  const { id } = useParams();
+  const { createCategory, getCategoryById, singleCategory, editCategory } = useCategories();
   const {
-    // setValue,
+    setValue,
     reset,
     register,
     formState,
@@ -44,37 +45,74 @@ const CreateCategory = () => {
     setFile({ name: '' });
   };
 
-  const onSubmit: SubmitHandler<IFCategories>= async (data) => {
+  const onSubmit: SubmitHandler<IFCategories> = async (data) => {
     setSubmitting(true);
+    setSubmitSuccess(false);
 
     const callback = (rs?: ManagedUpload.SendData) => {
+      const newData: IFCategories = {
+        title: data.title
+      };
+
       if (rs) {
         setFileUploaded(rs);
-        const newData: IFCategories = {
-          title: data.title,
-          image: rs.Location
-        };
+        newData.image = rs.Location;
 
-        createCategory(newData)
-          .unwrap()
-          .then((rs) => {
-            if (rs.status === 200 || rs.statusCode === 200) {
-              reset();
-              resetStates();
-              setSubmitSuccess(true);
-              setCategoryId(rs?.data?._id);
-            } else {
-              setSubmitError(rs?.data?.message ?? messageErrors.createCategory);
-              if (fileUploaded) {
-                deleteFiles([ fileUploaded ]);
+        if (categoryId) {
+          newData.id = categoryId;
+          editCategory(newData)
+            .unwrap()
+            .then((rs) => {
+              if (rs.status === 200 || rs.statusCode === 200) {
+                setSubmitSuccess(true);
+              } else {
+                setSubmitSuccess(false);
+                setSubmitError(rs.message);
               }
-            }
-            setSubmitting(false);
-          });
+              setSubmitting(false);
+            });
+        } else {
+          createCategory(newData)
+            .unwrap()
+            .then((rs) => {
+              if (rs.status === 200 || rs.statusCode === 200) {
+                reset();
+                resetStates();
+                setSubmitSuccess(true);
+                setCategoryId(rs?.data?._id);
+              } else {
+                setSubmitError(rs?.data?.message ?? messageErrors.createCategory);
+                if (fileUploaded) {
+                  deleteFiles([ fileUploaded ]);
+                }
+              }
+              setSubmitting(false);
+            });
+        }
       } else {
-        /* @todo
-          Handle rs is undefined
-         */
+        newData.image = srcImage;
+
+        if (categoryId) {
+          newData.id = categoryId;
+
+          if (newData.image && newData.image.length) {
+            editCategory(newData)
+              .unwrap()
+              .then((rs) => {
+                if (rs.status === 200 || rs.statusCode === 200) {
+                  setSubmitSuccess(true);
+                } else {
+                  setSubmitSuccess(false);
+                  setSubmitError(rs?.message);
+                }
+                setSubmitting(false);
+              });
+          } else {
+            setSubmitError('image can not empty');
+          }
+        } else {
+          setSubmitError('Category id can not empty');
+        }
       }
     };
 
@@ -94,20 +132,43 @@ const CreateCategory = () => {
       navigate('/create-post', {
         state: { _id: categoryId }
       });
+    } else if (singleCategory?.data) {
+
+      singleCategory.data._id === categoryId && navigate('/create-post', {
+        state: { _id: singleCategory.data._id }
+      });
     } else {
-      // eslint-disable-next-line no-console
-      console.log('categoryId is not defined.');
+      /**
+       * @todo: Handle category id is undefined
+     */
+      console.log(' category id is undefined');
     }
   };
+
+  useEffect(() => {
+    setCategoryId(id);
+    if (id) {
+      getCategoryById({ id });
+    }
+  }, [ id ]);
+
+  useEffect(() => {
+    if (singleCategory?.data) {
+      setValue('title', singleCategory.data.title);
+      setSrcImage(singleCategory.data.image);
+    }
+  }, [ singleCategory ]);
 
   return (
     <LayoutMiddle>
       <CategoryBox>
-        <SectionTitleForm title={'Create Topic'} />
+        <SectionTitleForm title={id ? 'Edit Topic' : 'Create Topic'} />
 
         {submitSuccess ? (
           <SuccessBox>
-            <SuccessTitle>Category created successfully</SuccessTitle>
+            <SuccessTitle>
+              {id ? 'Category changed successfully' : 'Category created successfully'}
+            </SuccessTitle>
 
             <Button
               text={'Create Post'}
@@ -131,6 +192,7 @@ const CreateCategory = () => {
               srcImage={srcImage}
               isLoading={submitting}
               submitError={submitError}
+              buttonText={id ? 'Save changes' : 'Create'}
             />
           </BoxForm>
         )}
@@ -151,7 +213,7 @@ const BoxForm = styled.div`
   width: 100%;
   max-width: 500px;
   padding: 50px 25px 30px;
-  border: 1px solid ${({ theme }) => theme.gray1};
+  border: 1px solid ${({ theme }) => theme.gray};
 `;
 
 const SuccessBox = styled.section`

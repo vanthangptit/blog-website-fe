@@ -3,13 +3,16 @@ import { API_CATEGORY } from '@constants/apis';
 import api from '@src/infra/apis';
 import {
   IFCategories,
+  IFCategoryId,
   IFGetCategory,
+  IFResponseCategory,
   IFResponseCategories
 } from '@models/IFCategory';
 
 interface IFUserState {
   isLoading: boolean
-  categories?: IFResponseCategories[]
+  categories?: IFResponseCategories
+  singleCategory?: IFResponseCategory
 }
 
 const initialState: IFUserState = {
@@ -18,7 +21,7 @@ const initialState: IFUserState = {
 
 export const getCategoriesApi = createAsyncThunk<any, IFGetCategory>(API_CATEGORY.ACTION_TYPES.GET, async (params, thunkAPI) => {
   try {
-    const response = await api.getCategoriesApi(params);
+    const response: IFResponseCategories = await api.getCategoriesApi(params);
     return {
       ...response
     };
@@ -38,6 +41,29 @@ export const createCategory = createAsyncThunk<any, IFCategories>(API_CATEGORY.A
   }
 });
 
+export const editCategory = createAsyncThunk<any, IFCategories>(API_CATEGORY.ACTION_TYPES.PUT, async (params, thunkAPI) => {
+  try {
+    const response: IFResponseCategory = await api.editCategoryApi(params);
+    return {
+      ...response
+    };
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue(error.response?.data);
+  }
+});
+
+export const getCategoryById = createAsyncThunk<any, IFCategoryId>(API_CATEGORY.ACTION_TYPES.GET_ID, async (params, thunkAPI) => {
+  try {
+    const response: IFResponseCategory = await api.getCategoryById(params);
+
+    return {
+      ...response
+    };
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue(error.response?.data);
+  }
+});
+
 export const appCategoriesSlice = createSlice({
   name: 'appCategory',
   initialState,
@@ -45,7 +71,10 @@ export const appCategoriesSlice = createSlice({
   extraReducers: builder => {
     builder
       .addCase(getCategoriesApi.fulfilled, (state, action: PayloadAction<any>) => {
-        state.categories = action.payload.data;
+        state.categories = action.payload;
+      })
+      .addCase(getCategoryById.fulfilled, (state, action: PayloadAction<any>) => {
+        state.singleCategory = action.payload;
       });
   }
 });

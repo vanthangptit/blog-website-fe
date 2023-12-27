@@ -2,14 +2,14 @@ import React, { MouseEvent } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { AVATAR_DEFAULT } from '@src/constants';
-import { IFResponseCategories } from '@models/IFCategory';
+import { IFCategory } from '@models/IFCategory';
 
 const ImageText = ({
   item,
   url,
   handleClick
 }: {
-  item: IFResponseCategories,
+  item: IFCategory,
   url: string
   handleClick?: (e: MouseEvent<HTMLDivElement>) => void
 }) => {
@@ -45,7 +45,7 @@ const Box = styled.div`
 
 const BoxBorder = styled.div`
   padding: 20px;
-  border: 1px solid ${({ theme }) => theme.gray1};
+  border: 1px solid ${({ theme }) => theme.gray};
   border-bottom: none;
 `;
 
@@ -71,7 +71,7 @@ const BoxImage = styled.div`
 
 const BoxBody = styled.hgroup`
   padding: 15px;
-  border: 1px solid ${({ theme }) => theme.gray1};
+  border: 1px solid ${({ theme }) => theme.gray};
   text-align: center;
 
   h5 {

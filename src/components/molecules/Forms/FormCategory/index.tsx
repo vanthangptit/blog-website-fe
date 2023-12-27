@@ -17,7 +17,8 @@ const FormCategory = ({
   setImageChanged,
   srcImage,
   isLoading= false,
-  submitError
+  submitError,
+  buttonText
 }: {
   register: UseFormRegister<any>
   formState: FormState<any>
@@ -29,6 +30,7 @@ const FormCategory = ({
   srcImage?: string
   isLoading?: boolean
   submitError?: string
+  buttonText: string
 }) => {
   return (
     <FormElement onSubmit={handleSubmit(onSubmit)}>
@@ -53,7 +55,7 @@ const FormCategory = ({
 
       <Button
         buttonType={'submit'}
-        text={'Create'}
+        text={buttonText}
         isLoading={isLoading}
       />
       {submitError &&  <MessageError $align={'center'}>{submitError}</MessageError>}

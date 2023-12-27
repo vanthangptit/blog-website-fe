@@ -21,4 +21,11 @@ export const BtnPrimary = styled.button<{ $isLoading?: boolean }>`
     background-color: ${({ theme }) => theme.bg0};
     color: ${({ theme }) => theme.primary1};
   }
+
+  &:disabled,
+  &[disabled] {
+    pointer-events: none;
+    background-color: ${({ theme }) => theme.gray5};
+    border-color: ${({ theme }) => theme.gray5};
+  }
 `;
