@@ -6,12 +6,43 @@ import ImageText from '@components/molecules/ImageText';
 import { useCategories } from '@hooks/useCategories';
 import Modal from '@components/molecules/Modal';
 import Button from '@components/molecules/Buttons';
+import { IFCategory } from '@models/IFCategory';
+import { MessageError } from '@components/atoms/MessageError';
+
 
 const Categories = () => {
-  const { getCategories, categories } = useCategories();
+  const { getCategories, deleteCategory, categories } = useCategories();
   const [ isOpenModal, setIsOpen ] = useState<boolean>(false);
+  const [ categoryDel, setCategoryDel ] = useState<IFCategory>();
+  const [ submitSuccess, setSubmitSuccess ] = useState<boolean>(false);
+  const [ submitError, setSubmitError ] = useState<string>();
 
-  const onAfterClose = () => {};
+  const onAfterClose = () => {
+    setSubmitSuccess(false);
+    setSubmitError(undefined);
+  };
+
+  const getCategoryDelete = (category: IFCategory) => {
+    setCategoryDel(category);
+    setIsOpen(true);
+  };
+
+  const deletingCategory = () => {
+    if (categoryDel) {
+      deleteCategory({ id: categoryDel._id })
+        .unwrap()
+        .then((rs) => {
+          if (rs.status === 200 || rs.statusCode === 200) {
+            setSubmitSuccess(true);
+            setSubmitError(undefined);
+            getCategories();
+          } else {
+            setSubmitSuccess(false);
+            setSubmitError(rs?.message);
+          }
+        });
+    }
+  };
 
   useEffect(() => {
     getCategories();
@@ -29,7 +60,11 @@ const Categories = () => {
             {categories?.data?.map((item, index) => {
               return (
                 <Column $width={'100%'} $lgWidth={'20%'} $mdWidth={'25%'} $xsWidth={`${(1/3)*100}%`} key={index}>
-                  <ImageText item={item} url={`/category/${item._id}`} />
+                  <ImageText
+                    item={item}
+                    url={`/category/${item._id}`}
+                    handleDelete={getCategoryDelete}
+                  />
                 </Column>
               );
             })}
@@ -50,13 +85,32 @@ const Categories = () => {
         closeModal={() => setIsOpen(false)}
       >
         <SuccessBox>
-          <SuccessTitle>Category created successfully</SuccessTitle>
+          <SuccessTitle>
+            {submitSuccess ? 'CATEGORY DELETED SUCCESSFULLY' : 'ARE YOU SURE TO DELETE?'}
+          </SuccessTitle>
 
-          <Button
-            text={'Create Post'}
-            handleClick={() => setIsOpen(true)}
-            isLoading={false}
-          />
+          <div style={{ display: 'flex', gap: '15px', justifyContent: 'center' }}>
+            {submitSuccess ? (
+              <Button
+                text={'Close'}
+                handleClick={() => setIsOpen(false)}
+              />
+            ) : (
+              <>
+                <Button
+                  text={'YES'}
+                  handleClick={deletingCategory}
+                  isLoading={false}
+                />
+                <Button
+                  text={'No'}
+                  handleClick={() => setIsOpen(false)}
+                />
+              </>
+            )}
+          </div>
+
+          {submitError && <MessageError $align={'center'} style={{ marginTop: '15px' }}>{submitError}</MessageError>}
         </SuccessBox>
       </Modal>
     </Layout>

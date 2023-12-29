@@ -1,28 +1,63 @@
-import React, { MouseEvent } from 'react';
+import React, { MouseEvent, useMemo } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { AVATAR_DEFAULT } from '@src/constants';
 import { IFCategory } from '@models/IFCategory';
+import BoxIcons from '@components/molecules/BoxIcons';
+import { AiOutlineEdit, AiOutlineForm } from 'react-icons/ai';
+import { BsTrash3 } from 'react-icons/bs';
 
 const ImageText = ({
   item,
   url,
-  handleClick
+  handleClick,
+  handleDelete
 }: {
   item: IFCategory,
   url: string
-  handleClick?: (e: MouseEvent<HTMLDivElement>) => void
+  handleDelete?: (category: IFCategory) => void
+  handleClick?: (e: MouseEvent<HTMLAnchorElement | MouseEvent>) => void
 }) => {
-  const click = (e: MouseEvent<HTMLDivElement>) => {
-    if (handleClick) {
+  const click = (e: MouseEvent<HTMLAnchorElement | MouseEvent>) => {
+    if (handleClick || !url) {
       e.stopPropagation();
-      handleClick && handleClick(e);
+      e.preventDefault();
     }
+
+    handleClick && handleClick(e);
   };
 
+  const items = useMemo(() => {
+    return [
+      {
+        element: AiOutlineForm,
+        title: 'Create Post',
+        link: '/create-post',
+        state: { _id: item?._id }
+      },
+      {
+        element: AiOutlineEdit,
+        title: 'Edit',
+        link: `/category/${item._id}`,
+        state: { _id: item?._id }
+      },
+      {
+        element: BsTrash3,
+        title: 'Delete',
+        link: '#',
+        state: { _id: item?._id },
+        onClick: () => handleDelete && handleDelete(item)
+      }
+    ];
+  }, [ item ]);
+
   return (
-    <Box onClick={(e) => click(e)}>
-      <BoxLink to={url} state={{ _id: item?._id }}>
+    <Box>
+      <BoxLink
+        to={url}
+        state={{ _id: item?._id }}
+        onClick={(e) => click(e)}
+      >
         <BoxBorder>
           <BoxImage>
             <img src={item?.image ?? AVATAR_DEFAULT} alt={item?.title} />
@@ -32,15 +67,45 @@ const ImageText = ({
           <h5>{item?.title}</h5>
         </BoxBody>
       </BoxLink>
+
+      <BoxIcons
+        className={'box-icons'}
+        icons={items}
+      />
     </Box>
   );
 };
 
-export default ImageText;
+export default React.memo(ImageText);
 
-const Box = styled.div`
+const Box = styled.article`
   margin: 0 0 30px;
   padding: 0;
+  position: relative;
+
+  &::after {
+    transition: all 0.3s;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: ${({ theme }) => theme.bgDarkOpacity};
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  .box-icons {
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  &:hover .box-icons,
+  &:hover:after {
+    visibility: visible;
+    opacity: 1;
+  }
 `;
 
 const BoxBorder = styled.div`
@@ -55,7 +120,7 @@ const BoxLink = styled(Link)`
   padding: 0;
 `;
 
-const BoxImage = styled.div`
+const BoxImage = styled.figure`
   position: relative;
   padding-bottom: 100%;
 

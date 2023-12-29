@@ -17,6 +17,8 @@ export interface Colors {
   bg2: Color
   bg3: Color
   bg4: Color
+  bgDarkOpacity: Color
+  bgLightOpacity: Color
 
   // primaries
   primary1: Color
@@ -33,6 +35,7 @@ export interface Colors {
 
   inputPlaceholder: Color
   colorEyes: Color
+
   gray: Color,
   gray1: Color,
   gray2: Color,

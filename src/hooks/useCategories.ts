@@ -16,6 +16,10 @@ export const useCategories = () => {
     return dispatch(categoriesStore.getCategoriesApi({ token: accessToken }));
   };
 
+  const getCategoryById = (params: IFCategoryId) => {
+    return dispatch(categoriesStore.getCategoryById(params));
+  };
+
   const createCategory = (params: IFCategories) => {
     return dispatch(categoriesStore.createCategory(params));
   };
@@ -24,8 +28,8 @@ export const useCategories = () => {
     return dispatch(categoriesStore.editCategory(params));
   };
 
-  const getCategoryById = (params: IFCategoryId) => {
-    return dispatch(categoriesStore.getCategoryById(params));
+  const deleteCategory = (params: IFCategoryId) => {
+    return dispatch(categoriesStore.deleteCategory(params));
   };
 
   return {
@@ -33,6 +37,7 @@ export const useCategories = () => {
     getCategories,
     createCategory,
     getCategoryById,
-    editCategory
+    editCategory,
+    deleteCategory
   };
 };

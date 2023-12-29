@@ -52,6 +52,17 @@ export const editCategory = createAsyncThunk<any, IFCategories>(API_CATEGORY.ACT
   }
 });
 
+export const deleteCategory = createAsyncThunk<any, IFCategoryId>(API_CATEGORY.ACTION_TYPES.PUT, async (params, thunkAPI) => {
+  try {
+    const response: IFResponseCategory = await api.deleteCategoryApi(params);
+    return {
+      ...response
+    };
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue(error.response?.data);
+  }
+});
+
 export const getCategoryById = createAsyncThunk<any, IFCategoryId>(API_CATEGORY.ACTION_TYPES.GET_ID, async (params, thunkAPI) => {
   try {
     const response: IFResponseCategory = await api.getCategoryById(params);

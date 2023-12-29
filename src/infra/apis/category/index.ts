@@ -12,6 +12,9 @@ const categoryApi = {
   editCategoryApi: ({ id, ...data }: IFCategories) => {
     return requester.put(`${API_CATEGORY.URL_API}/${id}`, data);
   },
+  deleteCategoryApi: (params: IFCategoryId) => {
+    return requester.delete(`${API_CATEGORY.URL_API}/${params.id}`, {});
+  },
   getCategoryById: (params: IFCategoryId) => {
     return requester.get(`${API_CATEGORY.URL_API}/${params.id}`, {});
   }
