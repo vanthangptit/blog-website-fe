@@ -37,6 +37,7 @@ const Routes = () => {
       <Route element={<PrivateRoutes />}>
         <Route path='/' element={<Home />} />
         <Route path='/create-post' element={<CreatePost />} />
+        <Route path='/edit-post/:shortUrl' element={<CreatePost />} />
         <Route path='/categories' element={<Categories />} />
         <Route path='/create-category' element={<CreateCategory />} />
         <Route path='/category/:id' element={<CreateCategory />} />

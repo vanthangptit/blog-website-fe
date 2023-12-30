@@ -59,7 +59,7 @@ const Categories = () => {
           <Row>
             {categories?.data?.map((item, index) => {
               return (
-                <Column $width={'100%'} $lgWidth={'20%'} $mdWidth={'25%'} $xsWidth={`${(1/3)*100}%`} key={index}>
+                <Column $lgWidth={'20%'} $mdWidth={'25%'} $xsWidth={`${(1/3)*100}%`} key={index}>
                   <ImageText
                     item={item}
                     url={`/category/${item._id}`}

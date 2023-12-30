@@ -43,6 +43,7 @@ const FormCategory = ({
         placeholder={'Name topic..'}
         $with={'100%'}
         $height={'45px'}
+        label={'Name Topic'}
       />
 
       <UploadImage

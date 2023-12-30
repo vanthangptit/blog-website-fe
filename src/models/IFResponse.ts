@@ -1,6 +1,6 @@
 export interface IFResponse {
   message: string
-  statusCode: string
+  statusCode: number
   stack?: string
-  status?: string
+  status?: number
 }

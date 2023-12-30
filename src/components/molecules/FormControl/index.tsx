@@ -7,6 +7,7 @@ import { NameFieldRegister } from '@models/IFRegister';
 import { BsEye, BsEyeSlash } from 'react-icons/bs';
 import { NameFieldLogin } from '@models/IFAuthenticated';
 import { NameFieldCreatePost } from '@models/IFPosts';
+import { LabelField } from '@components/atoms/Label';
 
 const FormControl = ({
   register,
@@ -20,13 +21,15 @@ const FormControl = ({
   $height,
   $minLength,
   $maxLength,
-  $pattern
+  $pattern,
+  label
 }: {
   register: UseFormRegister<any>
   formState: FormState<any>
   textEr: string
   typeField: 'email' | 'password' | 'text' | 'textarea'
   nameField: NameFieldRegister | NameFieldLogin | NameFieldCreatePost
+  label?: string
   placeholder: string
   isRequired?: boolean
   $with: string
@@ -37,31 +40,26 @@ const FormControl = ({
 }) => {
   const [ isHiddenPassword, setHiddenPassword ] = useState<boolean>(true);
   const handleHiddenPassword = () => setHiddenPassword(!isHiddenPassword);
-  let options: RegisterOptions = {
+  const options: RegisterOptions = {
     required: isRequired
   };
 
   if ($minLength) {
-    options = {
-      minLength: $minLength
-    };
+    options['minLength'] = $minLength;
   }
 
   if ($maxLength) {
-    options = {
-      minLength: $maxLength
-    };
+    options['maxLength'] = $maxLength;
   }
 
-  if ($maxLength) {
-    options = {
-      pattern: $pattern
-    };
+  if ($pattern) {
+    options['pattern'] = $pattern;
   }
 
   return (
     <>
       <DivBox $isError={!!formState.errors[nameField]}>
+        {label && <LabelField>{label}</LabelField>}
         <Input
           type={typeField === 'password' ? (isHiddenPassword ? 'password' : 'text') : typeField}
           placeholder={placeholder}

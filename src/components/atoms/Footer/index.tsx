@@ -15,7 +15,6 @@ export default Footer;
 
 const FooterElement = styled.footer`
   position: relative;
-  z-index: 1;
   font-size: 13px;
   font-style: italic;
   text-align: center;

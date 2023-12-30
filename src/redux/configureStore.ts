@@ -5,11 +5,13 @@ import { combineReducers } from 'redux';
 import { appUsersSlice } from './user';
 import { appAuthSlice } from './auth';
 import { appCategoriesSlice } from './categories';
+import { appPostSlice } from './post';
 
 const reducers = combineReducers({
   user: appUsersSlice.reducer,
   auth: appAuthSlice.reducer,
-  categories: appCategoriesSlice.reducer
+  categories: appCategoriesSlice.reducer,
+  posts: appPostSlice.reducer
 });
 
 export const store = configureStore({

@@ -1,67 +1,56 @@
+import { IFResponse } from '@models/IFResponse';
+
 export type NameFieldCreatePost = 'title' | 'shortUrl' | 'excerpt' | 'writer';
 
-export interface IPostForm {
+export interface IFDataPostMutable {
   title: string
+  writer: string
+  excerpt: string
   shortUrl: string
-  excerpt: string
-  writer: string
-}
-
-export interface IPostParamsGetAll {
-  page: number
-  pageSize: number
-  type?: string
-}
-
-export interface IPostParams {
-  title: string
-  shortUrl: string
-  excerpt: string
-  writer: string
-  postType: string
-  public: boolean
-  imageUrl?: string
-  description?: string
-  postId?: string
-}
-
-export interface IPostAuthor {
-  exp: any
-  iat: any
-  firstName: string
-  lastName: string
-  userId: string
-  username: string
-}
-
-export interface IPost {
-  author: IPostAuthor
-  description?: string
-  excerpt: string
-  writer: string
-  visible: boolean
   imageUrl: string
-  postType: string
-  shortUrl: string
+  description: string
+  isPublished: boolean
+}
+
+export interface IFPostForm {
   title: string
+  writer: string
+  excerpt: string
+  shortUrl: string
+  visibility: string
+}
+
+export interface IFSinglePostRequest {
+  shortUrl: string
+}
+
+export interface IFCreatePostRequest extends IFDataPostMutable {
+  categoryId: string
+}
+
+export interface IFEditPostRequest extends IFDataPostMutable {
+  params: IFSinglePostRequest
+}
+
+export interface IFPost extends IFDataPostMutable {
   createdAt: string
   updatedAt: string
-  __v: any
+  category: string
+  user: string
+  comments: string[]
+  daysAgo: string
+  numViews: string[]
+  viewsCount: number
+  disLikes: string[]
+  likes: string[]
+  disLikesCount: number
+  likesCount: number
+  id: string
   _id: string
 }
 
-export interface IPostCreateResponse {
-  message: string
-  status: number
-  errorCode?: string
-  post: IPost
+export interface IFResponseCreatePost extends IFResponse {
+  data?: IFPost
 }
 
-export interface IDataAllPost {
-  count: number
-  items: IPost[]
-  postLatestOfType?: IPost[]
-  page: number
-  pageCount: number
-  pageSize: number
-}
+export interface IFResponseSinglePost extends IFResponseCreatePost {}

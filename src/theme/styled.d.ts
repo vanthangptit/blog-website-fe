@@ -65,6 +65,8 @@ export interface FontSizes {
 
 export type FontFamily = string
 export interface FontFamilies {
-  fontFuturaMedium: FontFamily
-  fontFuturaLight: FontFamily
+  fontRobotoLight: FontFamily
+  fontRobotoRegular: FontFamily
+  fontRobotoBold: FontFamily
+  fontRobotoBlack: FontFamily
 }

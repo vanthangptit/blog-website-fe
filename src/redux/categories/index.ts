@@ -9,13 +9,13 @@ import {
   IFResponseCategories
 } from '@models/IFCategory';
 
-interface IFUserState {
+interface IFCategoryState {
   isLoading: boolean
   categories?: IFResponseCategories
   singleCategory?: IFResponseCategory
 }
 
-const initialState: IFUserState = {
+const initialState: IFCategoryState = {
   isLoading: false
 };
 

@@ -32,3 +32,12 @@ export const USER = {
     PROFILE: 'APPS/PROFILE'
   }
 };
+
+export const POST = {
+  URL_API: `${API_ROOT_URL}posts`,
+  ACTION_TYPES: {
+    POST: 'APPS/CREATE_POST',
+    PUT: 'APPS/PUT_POST',
+    DELETE: 'APPS/DELETE_POST'
+  }
+};

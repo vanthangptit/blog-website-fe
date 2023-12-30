@@ -45,6 +45,11 @@
         font-style: normal;
         src: url(%PUBLIC_URL%/fonts/Roboto-Regular.ttf) format("truetype");
       }
+      @font-face {
+        font-family: 'Roboto-Light';
+        font-style: normal;
+        src: url(%PUBLIC_URL%/fonts/Roboto-Light.ttf) format("truetype");
+      }
       *,
       *::before,
       *::after {
@@ -120,7 +125,10 @@
       q::before,
       q::after {
          content: none;
-       }
+      }
+      textarea {
+        border-radius: 4px;
+      }
       button,
       input {
         border: 1px solid #c0c0c0;

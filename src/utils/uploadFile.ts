@@ -130,3 +130,21 @@ export const deleteFiles = (fileUploadedArray: ManagedUpload.SendData[]) => {
     });
   }
 };
+
+export const deleteFilesInString = (fileUploadedArray: ManagedUpload.SendData[], valueDescription: string) => {
+  if (
+    fileUploadedArray.length === 0 ||
+    (!valueDescription || valueDescription.length === 0)
+  ) {
+    return;
+  }
+
+  const fileDeleted: ManagedUpload.SendData[] = [];
+  fileUploadedArray.forEach((item) => {
+    if (valueDescription.indexOf(item.Location) === -1) {
+      fileDeleted.push(item);
+    }
+  });
+
+  deleteFiles(fileDeleted);
+};

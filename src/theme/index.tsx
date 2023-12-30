@@ -8,8 +8,10 @@ import {
 
 const white = '#FFFFFF';
 const black = '#000000';
-const futuraMedium = 'Futura-Medium, sans-serif';
-const futuraLight = 'Futura-Light, sans-serif';
+const robotoLight = 'Roboto-Light, sans-serif';
+const robotoRegular = 'Roboto-Regular, sans-serif';
+const robotoBold = 'Roboto-Bold, sans-serif';
+const robotoBlack = 'Roboto-Black, sans-serif';
 
 function colors(darkMode: boolean): Colors {
   return {
@@ -80,8 +82,10 @@ function fontSizes(): FontSizes {
 
 function fontFamilies(): FontFamilies {
   return {
-    fontFuturaMedium: futuraMedium,
-    fontFuturaLight: futuraLight
+    fontRobotoLight: robotoLight,
+    fontRobotoRegular: robotoRegular,
+    fontRobotoBold: robotoBold,
+    fontRobotoBlack: robotoBlack
   };
 }
 

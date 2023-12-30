@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { AiFillEdit } from 'react-icons/ai';
 import { MessageError } from '@components/atoms/MessageError';
 import { validateFileTypes, validationSize } from '@utils/uploadFile';
+import { LabelField } from '@components/atoms/Label';
 
 const UploadImage = ({
   label,
@@ -10,7 +11,8 @@ const UploadImage = ({
   setSrcImage,
   setImageChanged,
   srcImage,
-  messageError
+  messageError,
+  maxWidth = '330px'
 } : {
   label: string
   setFile: (file: any) => void
@@ -19,6 +21,7 @@ const UploadImage = ({
   srcImage?: string
   imageChanged?: boolean
   messageError?: string
+  maxWidth?: string
 }) => {
   const [ validated, setValidated ] = useState<string>();
 
@@ -53,7 +56,7 @@ const UploadImage = ({
     <ImageContainer>
       <LabelField>{label}</LabelField>
       <DivImage>
-        <UploadImageBox>
+        <UploadImageBox $maxWidth={maxWidth}>
           <LabelInput htmlFor={'imageFile'}>
             <IconEdit>
               <AiFillEdit size={38} />
@@ -110,24 +113,16 @@ const ImageContainer = styled.article`
   margin-bottom: 40px;
 `;
 
-const LabelField = styled.div`
-  font-Size: 16px;
-  text-transform: uppercase;
-  font-family: ${({ theme }) => theme.fontFuturaMedium};
-  margin-bottom: 12px;
-  text-align: left;
-  color: ${({ theme }) => theme.text1};
-`;
-
 const DivImage = styled.div``;
 
-const UploadImageBox = styled.div`
+const UploadImageBox = styled.div<{ $maxWidth: string }>`
   overflow: hidden;
-  border-radius: 30px;
-  border: 1px solid #838383;
+  display: flex;
   position: relative;
   margin: auto auto 10px;
-  max-width: 300px;
+  max-width: ${({ $maxWidth }) => $maxWidth};
+  border: 1px solid ${({ theme }) => theme.gray6};
+  border-radius: 30px;
 `;
 
 const PostImage = styled.img`
@@ -144,7 +139,7 @@ const PostImage = styled.img`
 const DivImageNote = styled.div`
   display: flex;
   justify-content: space-between;
-  font-family: ${({ theme }) => theme.fontFuturaMedium};
+  font-family: ${({ theme }) => theme.fontRobotoRegular};
   font-style: italic;
   font-size: 14px;
   color: ${({ theme }) => theme.text1};
@@ -160,4 +155,5 @@ const LabelInput = styled.label`
   position: relative;
   z-index: 2;
   padding-bottom: 100%;
+  width: 100%;
 `;

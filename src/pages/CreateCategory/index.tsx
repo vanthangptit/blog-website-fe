@@ -10,7 +10,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { LayoutMiddle } from '@components/atoms/Layout';
 import styled from 'styled-components';
 import SectionTitleForm from '@components/molecules/SectionTitleForm';
-import Button from '@components/molecules/Buttons';
+import SuccessBox from '@components/molecules/SuccessBox';
 
 const CreateCategory = () => {
   const navigate = useNavigate();
@@ -141,6 +141,7 @@ const CreateCategory = () => {
       /**
        * @todo: Handle category id is undefined
      */
+      // eslint-disable-next-line no-console
       console.log(' category id is undefined');
     }
   };
@@ -165,20 +166,11 @@ const CreateCategory = () => {
         <SectionTitleForm title={id ? 'Edit Topic' : 'Create Topic'} />
 
         {submitSuccess ? (
-          <SuccessBox>
-            <SuccessTitle>
-              {id ? 'Category changed successfully' : 'Category created successfully'}
-            </SuccessTitle>
-
-            <Button
-              text={'Create Post'}
-              handleClick={onClick}
-            />
-
-            {/*
-              @todo: Add button view detail category
-            */}
-          </SuccessBox>
+          <SuccessBox
+            onClick={onClick}
+            title={id ? 'Category changed successfully' : 'Category created successfully'}
+            btnText={'Create Post'}
+          />
         ) : (
           <BoxForm>
             <FormCategory
@@ -214,17 +206,4 @@ const BoxForm = styled.div`
   max-width: 500px;
   padding: 50px 25px 30px;
   border: 1px solid ${({ theme }) => theme.gray};
-`;
-
-const SuccessBox = styled.section`
-  height: 270px;
-  text-align: center;
-  padding: 80px 0 45px;
-`;
-
-const SuccessTitle = styled.h4`
-  font-size: 22px;
-  font-weight: 400;
-  margin-bottom: 30px;
-  color: ${({ theme }) => theme.primary1};
 `;
