@@ -3,3 +3,5 @@ export const AWS_S3_NAME = process.env.REACT_APP_AWS_S3_NAME;
 export const AWS_S3_IDENTITY_POOL_ID = process.env.REACT_APP_AWS_S3_IDENTITY_POOL_ID;
 export const AWS_S3_URL = process.env.REACT_APP_AWS_S3_URL;
 export const AWS_S3_URL_BLOG = process.env.REACT_APP_AWS_S3_URL_BLOG;
+
+export const AVATAR_DEFAULT = 'https://blog-app-seeder.s3.ap-southeast-1.amazonaws.com/images/avatar.svg';
