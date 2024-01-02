@@ -1,25 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { SubmitHandler, useForm, Controller } from 'react-hook-form';
 import { IFPostForm, IFResponseCreatePost } from '@models/IFPosts';
 import FormControl from '@components/molecules/FormControl';
-import { VISIBILITY } from '@src/constants/post';
+import { VISIBILITY } from '@constants/post';
 import Select from '@components/molecules/Select';
 import { deleteFilesInString, uploadFile } from '@utils/uploadFile';
 import { ManagedUpload } from 'aws-sdk/clients/s3';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { LayoutMiddle, Container, Row, Column } from '@components/atoms/Layout';
+import { Container, Row, Column, LayoutMiddle } from '@components/atoms/Layout';
 import SectionTitleForm from '@components/molecules/SectionTitleForm';
 import Textarea from '@components/atoms/Textarea';
 import UploadImage from '@components/molecules/UploadImage';
 import { usePosts } from '@hooks/usePost';
-import { BtnSubmit } from '@components/atoms/Buttons/BtnSubmit';
 import { MessageError } from '@components/atoms/MessageError';
 import SuccessBox from '@components/molecules/SuccessBox';
+import RichTextEditor from '@components/molecules/RichTextEditor';
+import Button from '@components/molecules/Buttons';
+import { UnauthorizedContext } from '@infra/context/UnauthorizedContext';
 
 const cateId = '6587e390da66d8f63cd6fa34';
 
 const CreatePost = () => {
+  const { setUnauthorized } = useContext(UnauthorizedContext);
   const location: any = useLocation();
   const navigate = useNavigate();
   const { shortUrl } = useParams();
@@ -40,7 +43,8 @@ const CreatePost = () => {
 
   const [ categoryId, setCategoryId ] = useState<string>();
   const [ newShortUrl, setNewShortUrl ] = useState<string>();
-  const [ valueDescription, setValueDescription ] = useState('Hello body');
+  const [ valueDescription, setValueDescription ] = useState<string>('');
+  const [ fileUploaded, setFileUpload ] = useState<ManagedUpload.SendData>();
   const [ fileUploadedArray, setFileUploadArray ] = useState<ManagedUpload.SendData[]>();
   const [ featuredImageChanged, setFeaturedImageChanged ] = useState<boolean>(false);
   const [ srcImage, setSrcImage ] = useState<string>();
@@ -54,14 +58,14 @@ const CreatePost = () => {
   const [ uploadImageError, setUploadImageError ] = useState<string>();
   const [ valueDescError, setValueDescError ] = useState<string>();
 
-  // eslint-disable-next-line no-console
-  console.log({ setFileUploadArray, valueDescError });
-
   const handleResponse = (rs: IFResponseCreatePost) => {
     if (rs.status === 200 || rs.statusCode === 200) {
       setSubmitSuccess(true);
       setSubmitError(undefined);
       setNewShortUrl(shortUrl ?? rs.data?.shortUrl);
+    } else if (rs.status === 401 || rs.statusCode === 401 || rs.status === 403 || rs.statusCode === 403) {
+      setSubmitSuccess(false);
+      setUnauthorized(true);
     } else {
       setSubmitSuccess(false);
       setSubmitError(rs?.message);
@@ -132,6 +136,16 @@ const CreatePost = () => {
   const clickOnView = () => {
     navigate(`/post/${newShortUrl}`);
   };
+
+  useEffect(() => {
+    if (fileUploaded) {
+      if (fileUploadedArray && fileUploadedArray.length > 0) {
+        setFileUploadArray([ ...fileUploadedArray, fileUploaded ]);
+      } else {
+        setFileUploadArray([ fileUploaded ]);
+      }
+    }
+  }, [ fileUploaded ]);
 
   useEffect(() => {
     setCategoryId(location?.state?._id ?? cateId);
@@ -215,7 +229,7 @@ const CreatePost = () => {
                     placeholder={'Enter reduced information about the post...'}
                     label={'EXCERPT'}
                     textEr={'Excerpt required and must between 25 - 255 characters.'}
-                    $minLength={5}
+                    $minLength={25}
                     $maxLength={255}
                     $isRequired={true}
                     $rows={13}
@@ -261,13 +275,28 @@ const CreatePost = () => {
                   </GroupField>
                 </Column>
               </Row>
+              <Row>
+                <Column>
+                  <RichTextEditor
+                    label={'Description'}
+                    $heightEditor={'360px'}
+                    toolbarId={'create-post-desc'}
+                    value={valueDescription}
+                    setValueRichText={setValueDescription}
+                    setFileUpload={setFileUpload}
+                    placeholder={'What are you thinking...'}
+                    valueDescError={valueDescError}
+                  />
+                </Column>
+              </Row>
 
-              <BtnSubmit
-                type={'submit'}
-                disabled={submitting}
-              >
-                {shortUrl ? 'Save Changes' : 'Create'}
-              </BtnSubmit>
+              <ButtonBox>
+                <Button
+                  buttonType={'submit'}
+                  text={shortUrl ? 'Save Changes' : 'Create'}
+                  isLoading={submitting}
+                />
+              </ButtonBox>
             </FormElement>
             {submitError && submitError.length && (
               <MessageError $align={'center'}>{submitError}</MessageError>
@@ -287,4 +316,9 @@ const FormElement = styled.form`
 
 const GroupField = styled.div`
   padding-bottom: 32px;
+`;
+
+const ButtonBox = styled.div`
+  text-align: center;
+  margin: 32px 0 80px;
 `;

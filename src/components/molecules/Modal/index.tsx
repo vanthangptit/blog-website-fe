@@ -16,6 +16,7 @@ const customStyles: Styles = {
 Modal.setAppElement('body');
 
 export default ({
+  isIconClose= true,
   style,
   shouldCloseOnOverlayClick = true,
   modalIsOpen,
@@ -24,6 +25,7 @@ export default ({
   onAfterClose,
   closeModal
 }: {
+  isIconClose?: boolean,
   modalIsOpen: boolean,
   shouldCloseOnOverlayClick?: boolean,
   style?: Styles | undefined
@@ -42,9 +44,11 @@ export default ({
       style={{ ...customStyles, ...style }}
     >
       <ModalContent>
-        <IconClose onClick={closeModal}>
-          <AiOutlineClose size={20}/>
-        </IconClose>
+        {isIconClose && (
+          <IconClose onClick={closeModal}>
+            <AiOutlineClose size={20}/>
+          </IconClose>
+        )}
 
         {children}
       </ModalContent>

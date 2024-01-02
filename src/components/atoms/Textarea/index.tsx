@@ -87,11 +87,11 @@ const TextareaAutosize = styled.textarea`
   };
 
   &::-webkit-scrollbar-thumb {
-    background: #555555;
+    background: ${({ theme }) => theme.gray6};
     border-radius: 5px;
   };
 
   &::-webkit-scrollbar-thumb:hover {
-    background: #555555;
+    background: ${({ theme }) => theme.gray6};
   }
 `;

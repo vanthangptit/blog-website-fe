@@ -1,26 +1,24 @@
 import styled, { css } from 'styled-components';
 
-export const LayoutMiddle = styled('main')<{ styles?: any }>(({ styles }) => ({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-
-  ...(styles && { ...styles }),
-
-  '&::-webkit-scrollbar': {
-    width: '6px',
-    height: '6px'
-  },
-
-  '&::-webkit-scrollbar-thumb': {
-    background: '#555555',
-    borderRadius: '5px'
-  },
-
-  '&::-webkit-scrollbar-thumb:hover': {
-    background: '#555555'
+export const LayoutMiddle = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
   }
-}));
+
+  &::-webkit-scrollbar-thumb {
+    background: ${({ theme }) => theme.gray6};
+    border-radius: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: ${({ theme }) => theme.gray6};
+  }
+`;
 
 export const Container = styled.section`
   width: 100%;

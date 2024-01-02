@@ -7,6 +7,7 @@ import {
   useLocation
 } from 'react-router-dom';
 import { AuthContext } from '@src/infra/context/AuthContext';
+import { UnauthorizedContext } from '@infra/context/UnauthorizedContext';
 
 import Home from '@pages/Home';
 import Login from '@pages/Login';
@@ -27,12 +28,21 @@ const PrivateRoutes = () => {
   return <Outlet />;
 };
 
+const PublicRoutes = () => {
+  const { setUnauthorized } = useContext(UnauthorizedContext);
+  setUnauthorized(false);
+
+  return <Outlet />;
+};
+
 const Routes = () => {
   return (
     <Router>
-      <Route path='/login' element={<Login />} />
-      <Route path='/register' element={<Register />} />
-      <Route path='/featured' element={<Featured />} />
+      <Route element={<PublicRoutes />}>
+        <Route path='/login' element={<Login />} />
+        <Route path='/register' element={<Register />} />
+        <Route path='/featured' element={<Featured />} />
+      </Route>
 
       <Route element={<PrivateRoutes />}>
         <Route path='/' element={<Home />} />

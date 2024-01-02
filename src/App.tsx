@@ -3,13 +3,14 @@ import { BrowserRouter } from 'react-router-dom';
 import styled from 'styled-components';
 
 import ThemeProvider, { themeMode } from '@src/theme';
+import Routes from '@src/Routes';
 import SwitchToggle from '@components/molecules/Toggler';
 import Footer from '@components/atoms/Footer';
 import { themes } from '@constants/theme';
-
 import { useDarkMode } from '@hooks/useDarkMode';
 import { AuthProvider } from '@src/infra/context/AuthContext';
-import Routes from '@src/Routes';
+import { UnauthorizedProvider } from '@src/infra/context/UnauthorizedContext';
+import UnauthorizedError from '@components/molecules/Errors/UnauthorizedError';
 
 function App() {
   const [
@@ -21,17 +22,20 @@ function App() {
 
   return mountedComponent ? (
     <ThemeProvider themeObject={themeObject}>
-      <LayoutMain>
-        <BrowserRouter>
-          <AuthProvider>
-            <Routes />
-          </AuthProvider>
-        </BrowserRouter>
+      <UnauthorizedProvider>
+        <AuthProvider>
+          <LayoutMain>
+            <BrowserRouter>
+              <Routes />
 
-        <Footer>
-          <SwitchToggle isDarkMode={theme === themes.darkMode} toggleTheme={themeToggler} />
-        </Footer>
-      </LayoutMain>
+              <Footer>
+                <SwitchToggle isDarkMode={theme === themes.darkMode} toggleTheme={themeToggler} />
+              </Footer>
+              <UnauthorizedError />
+            </BrowserRouter>
+          </LayoutMain>
+        </AuthProvider>
+      </UnauthorizedProvider>
     </ThemeProvider>
   ) : <div/>;
 }

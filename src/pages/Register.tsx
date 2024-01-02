@@ -56,7 +56,7 @@ const Register = () => {
   };
 
   return (
-    <LayoutMiddle styles={{ padding: '0 15px' }}>
+    <LayoutMiddle style={{ padding: '0 15px' }}>
       <RegisterBox>
         <SectionTitleForm
           icon={{ el: BiLock }}
