@@ -11,9 +11,10 @@ import { IFRegister } from '@models/IFRegister';
 import FormControl from '@components/molecules/FormControl';
 import { MessageError } from '@components/atoms/MessageError';
 import { API_REGISTER_URL } from '@constants/apis';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { BiLock } from 'react-icons/bi';
 import Button from '@components/molecules/Buttons';
+import styles from '@constants/styles';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -56,7 +57,7 @@ const Register = () => {
   };
 
   return (
-    <LayoutMiddle style={{ padding: '0 15px' }}>
+    <Layout>
       <RegisterBox>
         <SectionTitleForm
           icon={{ el: BiLock }}
@@ -128,13 +129,22 @@ const Register = () => {
           {(messageErrors && messageErrors.length) && (
             <MessageError $align={'center'}>{messageErrors}</MessageError>
           )}
+          <RedirectBox>
+            <Link to="/login">Already have an account? Sign in</Link>
+          </RedirectBox>
         </FormElement>
       </RegisterBox>
-    </LayoutMiddle>
+    </Layout>
   );
 };
 
 export default Register;
+
+const Layout = styled(LayoutMiddle)`
+  padding: 0 15px;
+  height: calc(100vh - ${styles.heightFooter - styles.heightHeader}px);
+  min-height: calc(575px + ${styles.heightFooter - styles.heightHeader}px);
+`;
 
 const RegisterBox = styled.article`
   width: 600px;
@@ -145,6 +155,17 @@ const RegisterBox = styled.article`
 `;
 
 const FormElement = styled.form`
-  font-size: 1.5em;
   text-align: center;
+`;
+
+const RedirectBox = styled.div`
+  margin: 15px 0 25px;
+
+  a {
+    color: ${({ theme }) => theme.primary4};
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 `;

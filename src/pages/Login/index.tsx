@@ -12,6 +12,7 @@ import { AuthContext } from '@infra/context/AuthContext';
 import { useCookies } from '@hooks/useCookies';
 import { BiLock } from 'react-icons/bi';
 import Button from '@components/molecules/Buttons';
+import styles from '@constants/styles';
 
 const Login = () => {
   const location = useLocation();
@@ -53,7 +54,7 @@ const Login = () => {
   }, [ location ]);
 
   return (
-    <LayoutMiddle>
+    <Layout>
       <LoginBox>
         <SectionTitleForm
           icon={{ el: BiLock }}
@@ -96,11 +97,17 @@ const Login = () => {
           <Link to="/register">Don&rsquo;t have an account? Sign Up</Link>
         </RedirectBox>
       </LoginBox>
-    </LayoutMiddle>
+    </Layout>
   );
 };
 
 export default Login;
+
+const Layout = styled(LayoutMiddle)`
+  padding: 0 15px;
+  height: calc(100vh - ${styles.heightFooter - styles.heightHeader}px);
+  min-height: calc(575px + ${styles.heightFooter - styles.heightHeader}px);
+`;
 
 const LoginBox = styled.article`
   border: 1px solid ${({ theme }) => theme.gray6};
