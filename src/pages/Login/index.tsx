@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { LayoutMiddle } from '@components/atoms/Layout';
-import { BtnSubmit } from '@components/atoms/Buttons/BtnSubmit';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { IFLogin, IFLoginResponse } from '@models/IFAuthenticated';
 import { MessageError } from '@components/atoms/MessageError';
@@ -12,6 +11,7 @@ import { useAuth } from '@hooks/useAuth';
 import { AuthContext } from '@infra/context/AuthContext';
 import { useCookies } from '@hooks/useCookies';
 import { BiLock } from 'react-icons/bi';
+import Button from '@components/molecules/Buttons';
 
 const Login = () => {
   const location = useLocation();
@@ -82,13 +82,11 @@ const Login = () => {
             $height={'45px'}
           />
 
-          <BtnSubmit
-            type={'submit'}
-            $with={'100px'}
+          <Button
+            text={'Submit'}
+            buttonType={'submit'}
             disabled={isLoading}
-          >
-            Submit
-          </BtnSubmit>
+          />
           {(isErrorMessage && isErrorMessage.length) && (
             <MessageError $align={'center'}>{isErrorMessage}</MessageError>
           )}
@@ -105,9 +103,8 @@ const Login = () => {
 export default Login;
 
 const LoginBox = styled.article`
-  background-color: ${({ theme }) => theme.white};
+  border: 1px solid ${({ theme }) => theme.gray6};
   padding: 30px 45px;
-  box-shadow: 0 0px 7px 0px rgba(0, 0, 0, 0.2);
   border-radius: 5px;
 `;
 
@@ -120,5 +117,9 @@ const RedirectBox = styled.div`
   display: flex;
   justify-content: space-between;
   gap: 15px;
-  margin: 5px 0 15px;
+  margin: 15px 0 25px;
+
+  a {
+    color: ${({ theme }) => theme.primary4};
+  }
 `;

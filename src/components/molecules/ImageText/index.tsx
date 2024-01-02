@@ -1,7 +1,7 @@
 import React, { MouseEvent, useMemo } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { AVATAR_DEFAULT } from '@src/constants';
+import { AVATAR_DEFAULT } from '@src/constants/aws/s3';
 import { IFCategory } from '@models/IFCategory';
 import BoxIcons from '@components/molecules/BoxIcons';
 import { AiOutlineEdit, AiOutlineForm } from 'react-icons/ai';

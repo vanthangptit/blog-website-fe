@@ -30,7 +30,6 @@ function colors(darkMode: boolean): Colors {
     bg1: darkMode ? white : black,
     bg2: darkMode ? '#222222' : '#F9F9F9',
     bg3: darkMode ? '#222222' : '#F9F9F9',
-    bg4: darkMode ? white : '#bc2e1d',
     bgDarkOpacity: 'rgba(0, 0, 0, 0.7)',
     bgLightOpacity: 'rgba(255, 255, 255, 0.8)',
 

@@ -68,6 +68,5 @@ const TitleAvatar = styled.span`
   width: 35px;
   height: 35px;
   border-radius: 50%;
-  background-color: ${({ theme }) => theme.bg4};
-  color: ${({ theme }) => theme.text2};
+  color: ${({ theme }) => theme.text1};
 `;

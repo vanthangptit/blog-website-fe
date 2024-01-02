@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { SubmitHandler, useForm, Controller } from 'react-hook-form';
 import { IFPostForm, IFResponseCreatePost } from '@models/IFPosts';
 import FormControl from '@components/molecules/FormControl';
-import { VISIBILITY } from '@constants/post';
+import { VISIBILITY } from '@constants/visibility';
 import Select from '@components/molecules/Select';
 import { deleteFilesInString, uploadFile } from '@utils/uploadFile';
 import { ManagedUpload } from 'aws-sdk/clients/s3';

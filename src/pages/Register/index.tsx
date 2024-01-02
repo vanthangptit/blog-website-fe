@@ -3,17 +3,17 @@ import {
   Column,
   Row,
   LayoutMiddle
-} from '@components/./atoms/Layout';
+} from '@components/atoms/Layout';
 import styled from 'styled-components';
 import SectionTitleForm from '@components/molecules/SectionTitleForm';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { IFRegister } from '@models/IFRegister';
 import FormControl from '@components/molecules/FormControl';
-import { BtnSubmit } from '@components/atoms/Buttons/BtnSubmit';
 import { MessageError } from '@components/atoms/MessageError';
 import { API_REGISTER_URL } from '@constants/apis';
 import { useNavigate } from 'react-router-dom';
 import { BiLock } from 'react-icons/bi';
+import Button from '@components/molecules/Buttons';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -120,8 +120,11 @@ const Register = () => {
             $with={'100%'}
             $height={'45px'}
           />
-
-          <BtnSubmit type={'submit'} $with={'100px'} disabled={isLoading}>Submit</BtnSubmit>
+          <Button
+            text={'Submit'}
+            buttonType={'submit'}
+            disabled={isLoading}
+          />
           {(messageErrors && messageErrors.length) && (
             <MessageError $align={'center'}>{messageErrors}</MessageError>
           )}
@@ -134,12 +137,11 @@ const Register = () => {
 export default Register;
 
 const RegisterBox = styled.article`
-  background-color: ${({ theme }) => theme.white};
-  padding: 30px 45px;
-  box-shadow: 0 0px 7px 0px rgba(0, 0, 0, 0.2);
-  border-radius: 5px;
   width: 600px;
   max-width: 600px;
+  border: 1px solid ${({ theme }) => theme.gray6};
+  padding: 30px 45px;
+  border-radius: 5px;
 `;
 
 const FormElement = styled.form`
