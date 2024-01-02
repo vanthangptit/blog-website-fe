@@ -3,8 +3,15 @@ import ReactDOM from 'react-dom/client';
 
 import { store } from '@store/configureStore';
 import { Provider } from 'react-redux';
+import Loading from '@components/organisms/Loading';
 
-const LazyApp = lazy(() => import('./App'));
+const LazyApp = lazy(() => {
+  return Promise.all([
+    import('./App'),
+    new Promise(resolve => setTimeout(resolve, 100))
+  ])
+    .then(([ moduleExports ]) => moduleExports);
+});
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -13,10 +20,7 @@ const root = ReactDOM.createRoot(
 const App: React.FC = () => {
   return (
     <Provider store={store}>
-      {/*
-        @todo: Create Loading Component
-      */}
-      <Suspense fallback={<div>Loading... </div>}>
+      <Suspense fallback={<Loading />}>
         <LazyApp />
       </Suspense>
     </Provider>
@@ -26,7 +30,7 @@ const App: React.FC = () => {
 root.render(
   // This React.StrictMode renders the application twice in the development mode to check the side effects and the bad code and practices.
   // If you remove this, your app will be single-rendered.
-  // <React.StrictMode>
-  <App />
-  // </React.StrictMode>
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
 );
