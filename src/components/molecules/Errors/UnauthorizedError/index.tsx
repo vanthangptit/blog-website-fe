@@ -15,12 +15,13 @@ const UnauthorizedError = () => {
       isIconClose={false}
       modalIsOpen={!!unauthorized}
       shouldCloseOnOverlayClick={false}
+      styles={{ content: { maxWidth: '635px' } }}
     >
       <Unauthorized>
         <UnauthorizedName>HEY!</UnauthorizedName>
 
         <Hgroup>
-          <Heading>This page requires authentication!</Heading>
+          <Heading>The authentication session has expired!</Heading>
           <Description>Please login to continue using our platform features</Description>
         </Hgroup>
 

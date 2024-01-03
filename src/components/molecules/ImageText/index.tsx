@@ -31,7 +31,7 @@ const ImageText = ({
     return [
       {
         element: AiOutlineForm,
-        title: 'Create Post',
+        title: 'New Post',
         link: '/create-post',
         state: { _id: item?._id }
       },
@@ -97,8 +97,14 @@ const Box = styled.article`
   }
 
   .box-icons {
+    position: absolute;
+    z-index: 2;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     visibility: hidden;
     opacity: 0;
+    transition: all 0.3s;
   }
 
   &:hover .box-icons,

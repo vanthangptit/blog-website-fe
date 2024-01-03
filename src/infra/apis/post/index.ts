@@ -15,6 +15,12 @@ const postApi = {
   },
   getSinglePostApi: (params: IFSinglePostRequest) => {
     return requester.get(`${POST.URL_API}/${params.shortUrl}`);
+  },
+  getAllPostApi: () => {
+    return requester.get(POST.URL_API);
+  },
+  deletePostApi: (id: string) => {
+    return requester.delete(`${POST.URL_API}/${id}`);
   }
 };
 

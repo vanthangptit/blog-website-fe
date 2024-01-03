@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-export const LayoutMiddle = styled.div`
+export const LayoutMiddle = styled.main`
   display: flex;
   justify-content: center;
   align-items: center;

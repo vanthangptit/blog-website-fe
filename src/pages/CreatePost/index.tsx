@@ -63,7 +63,7 @@ const CreatePost = () => {
       setSubmitSuccess(true);
       setSubmitError(undefined);
       setNewShortUrl(shortUrl ?? rs.data?.shortUrl);
-    } else if (rs.status === 401 || rs.statusCode === 401 || rs.status === 403 || rs.statusCode === 403) {
+    } else if (rs.status === 401 || rs.statusCode === 401) {
       setSubmitSuccess(false);
       setUnauthorized(true);
     } else {
@@ -166,14 +166,11 @@ const CreatePost = () => {
               rs.data.isPublished ? VISIBILITY[1].value : VISIBILITY[0].value
             );
           } else if (rs.status === 401 || rs.statusCode === 401) {
-            // navigate('/login');
-            /**
-             * @todo: handle in error auth
-             */
+            setSubmitSuccess(false);
+            setUnauthorized(true);
           } else {
-            /**
-             * @todo: handle in error access or internal server error
-             */
+            setSubmitSuccess(false);
+            setSubmitError(rs?.message);
           }
         });
     }

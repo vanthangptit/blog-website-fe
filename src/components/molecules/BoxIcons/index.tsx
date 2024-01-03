@@ -24,7 +24,7 @@ const BoxIcons = ({
         return (
           <Icons
             key={key}
-            title={item.link}
+            title={item.title}
             to={item.link}
             state={item.state}
             onClick={() => item.onClick && item.onClick()}
@@ -40,14 +40,8 @@ const BoxIcons = ({
 export default BoxIcons;
 
 const IconsBox = styled.div`
-  position: absolute;
-  z-index: 2;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   display: flex;
   gap: 12px;
-  transition: all 0.3s;
 `;
 
 const Icons = styled(Link)`

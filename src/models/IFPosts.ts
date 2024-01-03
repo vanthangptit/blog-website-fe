@@ -1,4 +1,5 @@
 import { IFResponse } from '@models/IFResponse';
+import { IFRequester } from '@models/IFRequester';
 
 export type NameFieldCreatePost = 'title' | 'shortUrl' | 'excerpt' | 'writer';
 
@@ -32,11 +33,15 @@ export interface IFEditPostRequest extends IFDataPostMutable {
   params: IFSinglePostRequest
 }
 
+export interface IFDeletePostRequest extends IFRequester {
+  id: string
+}
+
 export interface IFPost extends IFDataPostMutable {
   createdAt: string
   updatedAt: string
-  category: string
-  user: string
+  category: any // @todo: interface category
+  user: any // @todo: interface User
   comments: string[]
   daysAgo: string
   numViews: string[]
@@ -44,6 +49,8 @@ export interface IFPost extends IFDataPostMutable {
   disLikes: string[]
   likes: string[]
   disLikesCount: number
+  tags?: string[]
+  tagsCount?: number
   likesCount: number
   id: string
   _id: string
@@ -54,3 +61,7 @@ export interface IFResponseCreatePost extends IFResponse {
 }
 
 export interface IFResponseSinglePost extends IFResponseCreatePost {}
+
+export interface IFResponseAllPost extends IFResponse {
+  data?: IFPost[]
+}

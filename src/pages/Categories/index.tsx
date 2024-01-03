@@ -40,6 +40,7 @@ const Categories = () => {
             setSubmitError(undefined);
             getCategories();
           } else if (rs.status === 401 || rs.statusCode === 401) {
+            setIsOpen(false);
             setSubmitSuccess(false);
             setUnauthorized(true);
           } else {

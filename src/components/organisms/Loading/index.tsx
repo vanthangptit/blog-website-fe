@@ -8,7 +8,7 @@ const Loading = () => {
   const [ theme ] = useDarkMode();
 
   return (
-    <LoadingBox>
+    <LoadingBox $isDarkMode={theme === themes.darkMode}>
       <Loader size={'115px'} stroke={theme === themes.darkMode ? '#FFFFFF' : '#000000'} />
     </LoadingBox>
   );
@@ -16,7 +16,7 @@ const Loading = () => {
 
 export default Loading;
 
-const LoadingBox = styled.section`
+const LoadingBox = styled.section<{ $isDarkMode: boolean }>`
   height: 100vh;
   width: 100vw;
   min-width: 360px;
@@ -25,5 +25,5 @@ const LoadingBox = styled.section`
   justify-content: center;
   align-content: center;
   align-items: center;
-  background-color: ${({ theme }) => theme.bg0};;
+  background-color: ${({ $isDarkMode }) => $isDarkMode ? '#000000' : '#FFFFFF'};;
 `;

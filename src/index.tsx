@@ -8,7 +8,7 @@ import Loading from '@components/organisms/Loading';
 const LazyApp = lazy(() => {
   return Promise.all([
     import('./App'),
-    new Promise(resolve => setTimeout(resolve, 100))
+    new Promise(resolve => setTimeout(resolve, 300))
   ])
     .then(([ moduleExports ]) => moduleExports);
 });

@@ -10,6 +10,9 @@ const customStyles: Styles = {
     zIndex: 1000,
     backgroundColor: 'rgba(0, 0, 0, 0.85)',
     overflow: 'auto'
+  },
+  content: {
+    maxWidth: '550px'
   }
 };
 
@@ -17,7 +20,7 @@ Modal.setAppElement('body');
 
 export default ({
   isIconClose= true,
-  style,
+  styles,
   shouldCloseOnOverlayClick = true,
   modalIsOpen,
   children,
@@ -28,7 +31,7 @@ export default ({
   isIconClose?: boolean,
   modalIsOpen: boolean,
   shouldCloseOnOverlayClick?: boolean,
-  style?: Styles | undefined
+  styles?: Styles | undefined
   children?: React.ReactNode
   afterOpenModal?: OnAfterOpenCallback | undefined
   onAfterClose?: () => void
@@ -41,7 +44,7 @@ export default ({
       onAfterOpen={afterOpenModal}
       onAfterClose={onAfterClose}
       onRequestClose={closeModal}
-      style={{ ...customStyles, ...style }}
+      style={{ ...customStyles, ...styles }}
     >
       <ModalContent>
         {isIconClose && (
@@ -75,7 +78,6 @@ const ModalContent = styled.div`
 
 const ModelBox = styled(Modal)`
   width: 100%;
-  max-width: 550px;
   border: none;
   border-radius: 10px;
   padding: 20px;

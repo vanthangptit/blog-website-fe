@@ -6,6 +6,7 @@ import {
 import * as postStore from '@store/post';
 import {
   IFCreatePostRequest,
+  IFDeletePostRequest,
   IFEditPostRequest,
   IFSinglePostRequest
 } from '@models/IFPosts';
@@ -26,10 +27,20 @@ export const usePosts = () => {
     return dispatch(postStore.getSinglePostApi(params));
   };
 
+  const getAllPost = () => {
+    return dispatch(postStore.getAllPost());
+  };
+
+  const deletePost = (params: IFDeletePostRequest) => {
+    return dispatch(postStore.deletePost(params));
+  };
+
   return {
     ...postsStates,
     createPostApi,
     editPostApi,
-    getSinglePostApi
+    getSinglePostApi,
+    getAllPost,
+    deletePost
   };
 };

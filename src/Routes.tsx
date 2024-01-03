@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import {
   Routes as Router,
   Route,
@@ -19,7 +19,12 @@ import CreateCategory from '@pages/CreateCategory';
 
 const PrivateRoutes = () => {
   const { authenticated } = useContext(AuthContext);
+  const { setUnauthorized } = useContext(UnauthorizedContext);
   const location = useLocation();
+
+  useEffect(() => {
+    setUnauthorized(false);
+  }, []);
 
   if (!authenticated) {
     return <Navigate to='/login' state={{ from: location }} replace />;
@@ -30,7 +35,10 @@ const PrivateRoutes = () => {
 
 const PublicRoutes = () => {
   const { setUnauthorized } = useContext(UnauthorizedContext);
-  setUnauthorized(false);
+
+  useEffect(() => {
+    setUnauthorized(false);
+  }, []);
 
   return <Outlet />;
 };
