@@ -1,16 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import css from '@constants/styles';
 import { Column, Row } from '@components/atoms/Layout';
 import ImageText from '@components/molecules/ImageText';
 import { useCategories } from '@hooks/useCategories';
-import Modal from '@components/molecules/Modal';
 import Button from '@components/molecules/Buttons';
 import { IFCategory } from '@models/IFCategory';
-import { MessageError } from '@components/atoms/MessageError';
+import ModalDelete from '@components/organisms/ModalDelete';
+import { UnauthorizedContext } from '@infra/context/UnauthorizedContext';
+import { useNavigate } from 'react-router-dom';
 
 
 const Categories = () => {
+  const navigate = useNavigate();
+  const { setUnauthorized } = useContext(UnauthorizedContext);
   const { getCategories, deleteCategory, categories } = useCategories();
   const [ isOpenModal, setIsOpen ] = useState<boolean>(false);
   const [ categoryDel, setCategoryDel ] = useState<IFCategory>();
@@ -36,6 +39,9 @@ const Categories = () => {
             setSubmitSuccess(true);
             setSubmitError(undefined);
             getCategories();
+          } else if (rs.status === 401 || rs.statusCode === 401) {
+            setSubmitSuccess(false);
+            setUnauthorized(true);
           } else {
             setSubmitSuccess(false);
             setSubmitError(rs?.message);
@@ -73,64 +79,25 @@ const Categories = () => {
 
         <Button
           text={'Create'}
-          handleClick={() => setIsOpen(true)}
+          handleClick={() => navigate('/create-category')}
           isLoading={false}
         />
       </Container>
 
-      <Modal
-        modalIsOpen={isOpenModal}
-        shouldCloseOnOverlayClick={false}
+      <ModalDelete
+        isOpenModal={isOpenModal}
+        setIsOpen={setIsOpen}
         onAfterClose={onAfterClose}
-        closeModal={() => setIsOpen(false)}
-      >
-        <SuccessBox>
-          <SuccessTitle>
-            {submitSuccess ? 'CATEGORY DELETED SUCCESSFULLY' : 'ARE YOU SURE TO DELETE?'}
-          </SuccessTitle>
-
-          <div style={{ display: 'flex', gap: '15px', justifyContent: 'center' }}>
-            {submitSuccess ? (
-              <Button
-                text={'Close'}
-                handleClick={() => setIsOpen(false)}
-              />
-            ) : (
-              <>
-                <Button
-                  text={'YES'}
-                  handleClick={deletingCategory}
-                  isLoading={false}
-                />
-                <Button
-                  text={'No'}
-                  handleClick={() => setIsOpen(false)}
-                />
-              </>
-            )}
-          </div>
-
-          {submitError && <MessageError $align={'center'} style={{ marginTop: '15px' }}>{submitError}</MessageError>}
-        </SuccessBox>
-      </Modal>
+        submitSuccess={submitSuccess}
+        handleDelete={deletingCategory}
+        submitError={submitError}
+        textSuccess={'CATEGORY DELETED SUCCESSFULLY'}
+      />
     </Layout>
   );
 };
 
 export default Categories;
-
-const SuccessBox = styled.section`
-  height: 270px;
-  text-align: center;
-  padding: 80px 0 45px;
-`;
-
-const SuccessTitle = styled.h4`
-  font-size: 22px;
-  font-weight: 400;
-  margin-bottom: 30px;
-  color: ${({ theme }) => theme.primary1};
-`;
 
 const Layout = styled.main`
   min-height: 100vh;
