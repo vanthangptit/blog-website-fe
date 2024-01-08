@@ -6,9 +6,9 @@ import { ManagedUpload } from 'aws-sdk/clients/s3';
 import { deleteFiles, uploadFile } from '@utils/uploadFile';
 import { useCategories } from '@hooks/useCategories';
 import { useNavigate, useParams } from 'react-router-dom';
-import { LayoutMiddle } from '@components/atoms/Layout';
+import { LayoutMiddle, Container } from '@components/atoms/Layout';
 import styled from 'styled-components';
-import SectionTitleForm from '@components/molecules/SectionTitleForm';
+import SectionTitleForm from '@components/molecules/SectionTitle/TitleForm';
 import SuccessBox from '@components/molecules/SuccessBox';
 import { UnauthorizedContext } from '@infra/context/UnauthorizedContext';
 
@@ -148,7 +148,7 @@ const CreateCategory = () => {
 
   return (
     <LayoutMiddle>
-      <CategoryBox>
+      <Container>
         <SectionTitleForm title={id ? 'Edit Topic' : 'Create Topic'} />
 
         {submitSuccess ? (
@@ -174,22 +174,17 @@ const CreateCategory = () => {
             />
           </BoxForm>
         )}
-      </CategoryBox>
+      </Container>
     </LayoutMiddle>
   );
 };
 
 export default CreateCategory;
 
-const CategoryBox = styled.div`
+const BoxForm = styled.section`
   width: 100%;
   max-width: 500px;
-  padding: 100px 0;
-`;
-
-const BoxForm = styled.div`
-  width: 100%;
-  max-width: 500px;
+  margin: auto;
   padding: 50px 25px 30px;
   border: 1px solid ${({ theme }) => theme.gray};
 `;

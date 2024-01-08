@@ -5,7 +5,7 @@ import {
   LayoutMiddle
 } from '@components/atoms/Layout';
 import styled from 'styled-components';
-import SectionTitleForm from '@components/molecules/SectionTitleForm';
+import SectionTitleForm from '@components/molecules/SectionTitle/TitleForm';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { IFRegister } from '@models/IFRegister';
 import FormControl from '@components/molecules/FormControl';
@@ -14,7 +14,6 @@ import { API_REGISTER_URL } from '@constants/apis';
 import { Link, useNavigate } from 'react-router-dom';
 import { BiLock } from 'react-icons/bi';
 import Button from '@components/molecules/Buttons';
-import styles from '@constants/styles';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -57,7 +56,7 @@ const Register = () => {
   };
 
   return (
-    <Layout>
+    <Container>
       <RegisterBox>
         <SectionTitleForm
           icon={{ el: BiLock }}
@@ -134,21 +133,20 @@ const Register = () => {
           </RedirectBox>
         </FormElement>
       </RegisterBox>
-    </Layout>
+    </Container>
   );
 };
 
 export default Register;
 
-const Layout = styled(LayoutMiddle)`
+const Container = styled(LayoutMiddle)`
   padding: 0 15px;
-  height: calc(100vh - ${styles.heightFooter - styles.heightHeader}px);
-  min-height: calc(575px + ${styles.heightFooter - styles.heightHeader}px);
 `;
 
-const RegisterBox = styled.article`
-  width: 600px;
+const RegisterBox = styled.section`
+  width: 100%;
   max-width: 600px;
+  margin: auto;
   border: 1px solid ${({ theme }) => theme.gray6};
   padding: 30px 45px;
   border-radius: 5px;

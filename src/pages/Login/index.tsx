@@ -5,14 +5,13 @@ import { LayoutMiddle } from '@components/atoms/Layout';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { IFLogin, IFLoginResponse } from '@models/IFAuthenticated';
 import { MessageError } from '@components/atoms/MessageError';
-import SectionTitleForm from '@components/molecules/SectionTitleForm';
+import SectionTitleForm from '@components/molecules/SectionTitle/TitleForm';
 import FormControl from '@components/molecules/FormControl';
 import { useAuth } from '@hooks/useAuth';
 import { AuthContext } from '@infra/context/AuthContext';
 import { useCookies } from '@hooks/useCookies';
 import { BiLock } from 'react-icons/bi';
 import Button from '@components/molecules/Buttons';
-import styles from '@constants/styles';
 
 const Login = () => {
   const location = useLocation();
@@ -29,6 +28,7 @@ const Login = () => {
     formState,
     handleSubmit
   } = useForm<IFLogin>();
+
   const onSubmit: SubmitHandler<IFLogin> = (data) => {
     setLoading(true);
     loginApi(data)
@@ -54,7 +54,7 @@ const Login = () => {
   }, [ location ]);
 
   return (
-    <Layout>
+    <Container>
       <LoginBox>
         <SectionTitleForm
           icon={{ el: BiLock }}
@@ -97,19 +97,17 @@ const Login = () => {
           <Link to="/register">Don&rsquo;t have an account? Sign Up</Link>
         </RedirectBox>
       </LoginBox>
-    </Layout>
+    </Container>
   );
 };
 
 export default Login;
 
-const Layout = styled(LayoutMiddle)`
+const Container = styled(LayoutMiddle)`
   padding: 0 15px;
-  height: calc(100vh - ${styles.heightFooter - styles.heightHeader}px);
-  min-height: calc(575px + ${styles.heightFooter - styles.heightHeader}px);
 `;
 
-const LoginBox = styled.article`
+const LoginBox = styled.section`
   border: 1px solid ${({ theme }) => theme.gray6};
   padding: 30px 45px;
   border-radius: 5px;

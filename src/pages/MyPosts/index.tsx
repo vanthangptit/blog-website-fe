@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { usePosts } from '@hooks/usePost';
-import styled from 'styled-components';
-import styles from '@constants/styles';
 import { Container, Row, Column } from '@components/atoms/Layout';
-import CardFeatured from '@components/molecules/Cards/CardFeatured';
 import ModalDelete from '@components/organisms/ModalDelete';
 import { UnauthorizedContext } from '@infra/context/UnauthorizedContext';
+import TitlePage from '@components/molecules/SectionTitle/TitlePage';
+import CardPost from '@components/molecules/Cards/CardPost';
+import styled from 'styled-components';
 
-const Featured = () => {
+const MyPosts = () => {
   const { setUnauthorized } = useContext(UnauthorizedContext);
   const { getAllPost, deletePost, allPost } = usePosts();
   const [ postIdDelete, setPostIdDelete ] = useState<string>();
@@ -47,16 +47,24 @@ const Featured = () => {
   };
 
   useEffect(() => {
-    getAllPost();
+    getAllPost()
+      .unwrap()
+      .then((rs) => {
+        if (rs.status === 401 || rs.statusCode === 401) {
+          setUnauthorized(true);
+        }
+      });
   }, []);
 
   return (
     <Layout>
       <Container>
+        <TitlePage title={'All Post'} />
+
         <Row>
           <Column>
             {allPost?.data && allPost?.data.length > 0 && allPost?.data?.map((item, key) => (
-              <CardFeatured key={key} item={item} handleDelete={handleShowModalDelete} />
+              <CardPost key={key} item={item} handleDelete={handleShowModalDelete} />
             ))}
           </Column>
         </Row>
@@ -75,9 +83,8 @@ const Featured = () => {
   );
 };
 
-export default Featured;
+export default MyPosts;
 
 const Layout = styled.main`
-  padding: 0 15px;
-  min-height: calc(100vh - ${styles.heightFooter - styles.heightHeader}px);
+  width: 100%;
 `;

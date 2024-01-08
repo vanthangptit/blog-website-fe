@@ -2,7 +2,7 @@ import React from 'react';
 import { BiLock } from 'react-icons/bi';
 import styled from 'styled-components';
 
-const SectionTitleForm = ({
+const TitleForm = ({
   icon,
   title,
   text
@@ -29,7 +29,7 @@ const SectionTitleForm = ({
   );
 };
 
-export default SectionTitleForm;
+export default TitleForm;
 
 const Hgroup = styled.hgroup`
   font-size: 1.5em;

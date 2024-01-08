@@ -4,7 +4,7 @@ import { useCookies } from '@hooks/useCookies';
 
 export const useDarkMode = () => {
   const { addCookies, getCookies } = useCookies();
-  const [ theme, setTheme ] = useState(themes.lightMode);
+  const [ theme, setTheme ] = useState<string>(themes.lightMode);
   const [ mountedComponent, setMountedComponent ] = useState(false);
 
   const setMode = (mode: string) => {

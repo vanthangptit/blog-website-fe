@@ -130,6 +130,10 @@ a:hover {
 .ReactModal__Html--open {
   overflow: hidden;
 }
+.ReactModal__Content:focus-visible {
+  border: none;
+  outline: none;
+}
 .ql-align-right {
   text-align: right;
 }

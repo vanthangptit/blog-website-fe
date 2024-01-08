@@ -9,7 +9,7 @@ import { deleteFilesInString, uploadFile } from '@utils/uploadFile';
 import { ManagedUpload } from 'aws-sdk/clients/s3';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Container, Row, Column, LayoutMiddle } from '@components/atoms/Layout';
-import SectionTitleForm from '@components/molecules/SectionTitleForm';
+import SectionTitleForm from '@components/molecules/SectionTitle/TitleForm';
 import Textarea from '@components/atoms/Textarea';
 import UploadImage from '@components/molecules/UploadImage';
 import { usePosts } from '@hooks/usePost';
@@ -268,6 +268,7 @@ const CreatePost = () => {
                       Controller={Controller}
                       formState={formState}
                       textEr={'Error'}
+                      classNamePrefix={'react-select'}
                     />
                   </GroupField>
                 </Column>

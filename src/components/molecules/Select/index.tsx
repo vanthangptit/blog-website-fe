@@ -16,7 +16,8 @@ export default ({
   nameField,
   textEr,
   label,
-  height
+  height,
+  classNamePrefix
 }: {
   formState: FormState<any>
   Controller: any,
@@ -26,34 +27,48 @@ export default ({
   textEr: string
   label: string
   height?: string
+  classNamePrefix?: string
 }) => {
   return (
     <SelectBox $height={height}>
       <LabelField>{label}</LabelField>
-      <Controller
-        control={control}
-        name={nameField}
-        render={({ field: { onChange, value, name } }: { field:  ControllerRenderProps<IFColourOption> }) => {
-          return (
-            <Select
-              value={colourOptions.find((c) => c.value === (value ?? colourOptions[0].value))}
-              name={name}
-              options={colourOptions}
-              onChange={(selectedOption: IFColourOption | null) => {
-                selectedOption && onChange(selectedOption.value);
-              }}
-            />
-          );
-        }}
-      />
+      <DivController>
+        <Controller
+          control={control}
+          name={nameField}
+          render={({ field: { onChange, value, name } }: { field:  ControllerRenderProps<IFColourOption> }) => {
+            return (
+              <Select
+                classNamePrefix={classNamePrefix ?? ''}
+                value={colourOptions.find((c) => c.value === (value ?? colourOptions[0].value))}
+                name={name}
+                options={colourOptions}
+                onChange={(selectedOption: IFColourOption | null) => {
+                  selectedOption && onChange(selectedOption.value);
+                }}
+              />
+            );
+          }}
+        />
+      </DivController>
+
       {formState.errors[nameField] && <MessageError>{textEr}</MessageError>}
     </SelectBox>
   );
 };
-//true 'visibility' {label: 'Publish', value: 'publish'}
+
 const SelectBox = styled.div<{ $height?: string }>`
   .react-select__control {
     border: 1px solid ${({ theme }) => theme.inputPlaceholder};
     height: ${({ $height }) => $height ?? 'auto'};
+    background-color: ${({ theme }) => theme.bg0};
   }
+
+  .react-select__single-value {
+    color: ${({ theme }) => theme.text1};
+  }
+`;
+
+const DivController = styled.div`
+  border-radius: 20px;
 `;

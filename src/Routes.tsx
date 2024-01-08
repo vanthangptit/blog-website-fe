@@ -12,19 +12,22 @@ import { UnauthorizedContext } from '@infra/context/UnauthorizedContext';
 import Home from '@pages/Home';
 import Login from '@pages/Login';
 import Register from '@pages/Register';
-import Featured from '@pages/Featured';
+import MyPosts from '@pages/MyPosts';
 import CreatePost from '@pages/CreatePost';
 import Categories from '@pages/Categories';
 import CreateCategory from '@pages/CreateCategory';
+import SinglePost from '@pages/SinglePost';
 
 const PrivateRoutes = () => {
   const { authenticated } = useContext(AuthContext);
-  const { setUnauthorized } = useContext(UnauthorizedContext);
+  const { unauthorized, setUnauthorized } = useContext(UnauthorizedContext);
   const location = useLocation();
 
   useEffect(() => {
-    setUnauthorized(false);
-  }, []);
+    if (unauthorized) {
+      setUnauthorized(false);
+    }
+  }, [ location ]);
 
   if (!authenticated) {
     return <Navigate to='/login' state={{ from: location }} replace />;
@@ -34,11 +37,14 @@ const PrivateRoutes = () => {
 };
 
 const PublicRoutes = () => {
-  const { setUnauthorized } = useContext(UnauthorizedContext);
+  const { unauthorized, setUnauthorized } = useContext(UnauthorizedContext);
+  const location = useLocation();
 
   useEffect(() => {
-    setUnauthorized(false);
-  }, []);
+    if (unauthorized) {
+      setUnauthorized(false);
+    }
+  }, [ location ]);
 
   return <Outlet />;
 };
@@ -49,11 +55,12 @@ const Routes = () => {
       <Route element={<PublicRoutes />}>
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
-        <Route path='/featured' element={<Featured />} />
+        <Route path='/post/:shortUrl' element={<SinglePost />} />
       </Route>
 
       <Route element={<PrivateRoutes />}>
         <Route path='/' element={<Home />} />
+        <Route path='/posts' element={<MyPosts />} />
         <Route path='/create-post' element={<CreatePost />} />
         <Route path='/edit-post/:shortUrl' element={<CreatePost />} />
         <Route path='/categories' element={<Categories />} />

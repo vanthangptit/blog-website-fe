@@ -1,5 +1,5 @@
 export default {
-  widthContainer: 1200,
+  widthContainer: 1300,
   heightFooter: 108,
   heightHeader: 0,
   toggler: {

@@ -1,15 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
-import styled from 'styled-components';
-import css from '@constants/styles';
-import { Column, Row } from '@components/atoms/Layout';
-import ImageText from '@components/molecules/ImageText';
+import { Container, Column, Row } from '@components/atoms/Layout';
 import { useCategories } from '@hooks/useCategories';
 import Button from '@components/molecules/Buttons';
 import { IFCategory } from '@models/IFCategory';
 import ModalDelete from '@components/organisms/ModalDelete';
 import { UnauthorizedContext } from '@infra/context/UnauthorizedContext';
 import { useNavigate } from 'react-router-dom';
-
+import TitlePage from '@components/molecules/SectionTitle/TitlePage';
+import CardCategory from '@components/molecules/Cards/CardCategory';
 
 const Categories = () => {
   const navigate = useNavigate();
@@ -52,22 +50,26 @@ const Categories = () => {
   };
 
   useEffect(() => {
-    getCategories();
+    getCategories()
+      .unwrap()
+      .then((rs) => {
+        if (rs.status === 401 || rs.statusCode === 401) {
+          setUnauthorized(true);
+        }
+      });
   }, []);
 
   return (
-    <Layout>
+    <>
       <Container>
-        <SectionTitle>
-          <TitlePage>Your Categories</TitlePage>
-        </SectionTitle>
+        <TitlePage title={'Your Categories'} />
 
         {categories?.data && categories.data?.length > 0 && (
           <Row>
             {categories?.data?.map((item, index) => {
               return (
-                <Column $lgWidth={'20%'} $mdWidth={'25%'} $xsWidth={`${(1/3)*100}%`} key={index}>
-                  <ImageText
+                <Column $lgWidth={'20%'} $mdWidth={'25%'} $smWidth={`${(1/3)*100}%`} key={index}>
+                  <CardCategory
                     item={item}
                     url={`/category/${item._id}`}
                     handleDelete={getCategoryDelete}
@@ -94,35 +96,8 @@ const Categories = () => {
         submitError={submitError}
         textSuccess={'CATEGORY DELETED SUCCESSFULLY'}
       />
-    </Layout>
+    </>
   );
 };
 
 export default Categories;
-
-const Layout = styled.main`
-  min-height: 100vh;
-  width: 100%;
-  height: 100%;
-
-  @media (min-width: 767px) {
-    min-height: calc(575px + ${css.heightFooter}px);
-  }
-`;
-
-const Container = styled.section`
-  max-width: ${css.widthContainer}px;
-  width: 100%;
-  padding: 0 15px;
-  margin: auto;
-`;
-
-const SectionTitle = styled.hgroup`
-  margin: 0 0 45px;
-`;
-
-const TitlePage = styled.h1`
-  font-size: 30px;
-  text-align: center;
-  color: ${({ theme }) => theme.primary1};
-`;
