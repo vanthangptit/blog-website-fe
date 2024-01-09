@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { IconType } from 'react-icons';
 
-type Icon = {
+export type Icon = {
   element: IconType
   link: string
   title: string

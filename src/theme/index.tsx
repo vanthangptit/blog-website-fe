@@ -34,6 +34,7 @@ function colors(darkMode: boolean): Colors {
     bg3: darkMode ? '#222222' : '#F9F9F9',
     bgDarkOpacity: 'rgba(0, 0, 0, 0.7)',
     bgLightOpacity: 'rgba(255, 255, 255, 0.8)',
+    bgBoxShadow: 'rgba(0, 0, 0, 0.3)',
 
     //primary colors
     primary1: darkMode ? white : black,

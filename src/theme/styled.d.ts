@@ -17,6 +17,7 @@ export interface Colors {
   bg3: Color
   bgDarkOpacity: Color
   bgLightOpacity: Color
+  bgBoxShadow: Color
 
   // primaries
   primary1: Color

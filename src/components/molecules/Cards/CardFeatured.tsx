@@ -4,8 +4,6 @@ import CardAvatar from '@components/molecules/Avatars/CardAvatar';
 import { Link } from 'react-router-dom';
 import { BtnOutLine } from '@components/atoms/Buttons/BtnOutLine';
 import { FaRegCommentAlt, FaRegBookmark  } from 'react-icons/fa';
-// import { BiDislike, BiLike, BiSolidDislike, BiSolidLike, BiHeart, BiSolidHeart, BiStar, BiSolidStar } from 'react-icons/bi';
-// import { TbHeartPlus } from 'react-icons/tb';
 import ThreeDots from '@components/atoms/ThreeDots';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { BsTrash3 } from 'react-icons/bs';

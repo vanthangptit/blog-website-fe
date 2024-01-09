@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import SectionTitle from '@components/molecules/Titles/SectionTitle';
 import { usePosts } from '@hooks/usePost';
 import { useParams } from 'react-router-dom';
-import { Column } from '@components/atoms/Layout';
 import Layout174 from '@components/organisms/Layout-1-7-4';
 import NotFound from '@components/molecules/NotFound';
 import BannerPost from '@components/molecules/Banners/BannerPost';
@@ -25,34 +24,34 @@ const SinglePost = () => {
 
   return !isLoading ? (
     <>
-      {singlePost?.data ? (
+      {singlePost?.data && (
         <Layout174>
-          <Column>
-            <BoxContent>
-              <CreateAt>
-                {singlePost.data?.createdAt && formatDatetime(singlePost.data.createdAt)}
-              </CreateAt>
-              <BoxBanner>
-                <BannerPost src={singlePost.data?.imageUrl} />
-              </BoxBanner>
-              <CardAvatar
-                link={`profile/${singlePost.data?.user?.id}`}
-                imageUrl={singlePost.data?.user?.profilePhoto}
-                userName={singlePost.data?.user?.fullName}
-                createAt={`Posted on ${moment(singlePost.data?.createdAt).format('MMM YY')}`}
-              />
-              {/*@todo: View likesCount, dislikesCount,...*/}
-              <SectionTitle title={singlePost.data?.title} />
-              {/*@todo: View Tags, Category,...*/}
-              <EscapeHTML htmlString={singlePost.data?.description} />
-            </BoxContent>
-            <BoxComment>
-              <h2>Top comments (0)</h2>
-              <PostFormComment />
-            </BoxComment>
-          </Column>
+          <BoxContent>
+            <CreateAt>
+              {singlePost.data?.createdAt && formatDatetime(singlePost.data.createdAt)}
+            </CreateAt>
+            <BoxBanner>
+              <BannerPost src={singlePost.data?.imageUrl} />
+            </BoxBanner>
+            <CardAvatar
+              link={`profile/${singlePost.data?.user?.id}`}
+              imageUrl={singlePost.data?.user?.profilePhoto}
+              userName={singlePost.data?.user?.fullName}
+              createAt={`Posted on ${moment(singlePost.data?.createdAt).format('MMM YY')}`}
+            />
+            {/*@todo: View likesCount, dislikesCount,...*/}
+            <SectionTitle title={singlePost.data?.title} />
+            {/*@todo: View Tags, Category,...*/}
+            <EscapeHTML htmlString={singlePost.data?.description} />
+          </BoxContent>
+          <BoxComment>
+            <h2>Top comments (0)</h2>
+            <PostFormComment />
+          </BoxComment>
         </Layout174>
-      ) : (
+      )}
+
+      {singlePost?.statusCode && singlePost.statusCode !== 200 && (
         <NotFound message={'SORRY! <br /> THIS PAGE DOES NOT EXISTS'}/>
       )}
     </>

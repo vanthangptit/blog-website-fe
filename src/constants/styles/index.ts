@@ -2,6 +2,9 @@ export default {
   widthContainer: 1300,
   heightFooter: 108,
   heightHeader: 0,
+  zIndex: {
+    highest: 1100
+  },
   toggler: {
     heightBg: 23,
     widthBg: 40,
