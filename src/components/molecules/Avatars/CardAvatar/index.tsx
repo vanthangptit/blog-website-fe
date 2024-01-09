@@ -15,12 +15,17 @@ const CardAvatar = ({
   createAt: string
 }) => {
   return (
-    <Avatar to={link}>
+    <Avatar>
       <AvatarLeft>
-        <img src={imageUrl ?? AVATAR_DEFAULT} alt="image profile" />
+        <Link to={link}>
+          <img src={imageUrl ?? AVATAR_DEFAULT} alt="image profile" />
+        </Link>
+
       </AvatarLeft>
       <AvatarRight>
-        <AvatarName>{userName}</AvatarName>
+        <AvatarName>
+          <Link to={link}>{userName}</Link>
+        </AvatarName>
         <AvatarDate>{createAt}</AvatarDate>
       </AvatarRight>
     </Avatar>
@@ -29,7 +34,7 @@ const CardAvatar = ({
 
 export default CardAvatar;
 
-const Avatar = styled(Link)`
+const Avatar = styled.article`
   display: flex;
   gap: 10px;
 `;

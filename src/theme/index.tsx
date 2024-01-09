@@ -12,6 +12,9 @@ const robotoLight = 'Roboto-Light, sans-serif';
 const robotoRegular = 'Roboto-Regular, sans-serif';
 const robotoBold = 'Roboto-Bold, sans-serif';
 const robotoBlack = 'Roboto-Black, sans-serif';
+const muktaMalarSemiBold = 'MuktaMalar-SemiBold, sans-serif';
+const muktaMalarBold = 'MuktaMalar-Bold, sans-serif';
+const muktaMalarExtraBold = 'MuktaMalar-ExtraBold, sans-serif';
 
 function colors(darkMode: boolean): Colors {
   return {
@@ -23,7 +26,6 @@ function colors(darkMode: boolean): Colors {
     // text
     text1: darkMode ? white : black,
     text2: darkMode ? black : white,
-    text3: darkMode ? black : white,
 
     // backgrounds / greys
     bg0: darkMode ? black : white,
@@ -84,7 +86,10 @@ function fontFamilies(): FontFamilies {
     fontRobotoLight: robotoLight,
     fontRobotoRegular: robotoRegular,
     fontRobotoBold: robotoBold,
-    fontRobotoBlack: robotoBlack
+    fontRobotoBlack: robotoBlack,
+    fontMuktaMalarSemiBold: muktaMalarSemiBold,
+    fontMuktaMalarBold: muktaMalarBold,
+    fontMuktaMalarExtraBold: muktaMalarExtraBold
   };
 }
 

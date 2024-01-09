@@ -3,7 +3,7 @@ import { usePosts } from '@hooks/usePost';
 import { Container, Row, Column } from '@components/atoms/Layout';
 import ModalDelete from '@components/organisms/ModalDelete';
 import { UnauthorizedContext } from '@infra/context/UnauthorizedContext';
-import TitlePage from '@components/molecules/SectionTitle/TitlePage';
+import TitlePage from '@components/molecules/Titles/TitlePage';
 import CardPost from '@components/molecules/Cards/CardPost';
 import styled from 'styled-components';
 

@@ -5,7 +5,7 @@ import {
   LayoutMiddle
 } from '@components/atoms/Layout';
 import styled from 'styled-components';
-import SectionTitleForm from '@components/molecules/SectionTitle/TitleForm';
+import SectionTitleForm from '@components/molecules/Titles/TitleForm';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { IFRegister } from '@models/IFRegister';
 import FormControl from '@components/molecules/FormControl';

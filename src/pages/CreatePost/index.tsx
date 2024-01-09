@@ -9,7 +9,7 @@ import { deleteFilesInString, uploadFile } from '@utils/uploadFile';
 import { ManagedUpload } from 'aws-sdk/clients/s3';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Container, Row, Column, LayoutMiddle } from '@components/atoms/Layout';
-import SectionTitleForm from '@components/molecules/SectionTitle/TitleForm';
+import SectionTitleForm from '@components/molecules/Titles/TitleForm';
 import Textarea from '@components/atoms/Textarea';
 import UploadImage from '@components/molecules/UploadImage';
 import { usePosts } from '@hooks/usePost';

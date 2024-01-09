@@ -7,7 +7,7 @@ import BoxIcons from '@components/molecules/BoxIcons';
 import { AiOutlineEdit, AiOutlineForm } from 'react-icons/ai';
 import { BsTrash3 } from 'react-icons/bs';
 
-const ImageText = ({
+const CardCategory  = ({
   item,
   url,
   handleClick,
@@ -76,7 +76,7 @@ const ImageText = ({
   );
 };
 
-export default React.memo(ImageText);
+export default React.memo(CardCategory);
 
 const Box = styled.article`
   margin: 0 0 30px;
@@ -129,6 +129,7 @@ const BoxLink = styled(Link)`
 const BoxImage = styled.figure`
   position: relative;
   padding-bottom: 100%;
+  margin: 0;
 
   img {
     position: absolute;

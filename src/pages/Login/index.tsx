@@ -5,7 +5,7 @@ import { LayoutMiddle } from '@components/atoms/Layout';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { IFLogin, IFLoginResponse } from '@models/IFAuthenticated';
 import { MessageError } from '@components/atoms/MessageError';
-import SectionTitleForm from '@components/molecules/SectionTitle/TitleForm';
+import SectionTitleForm from '@components/molecules/Titles/TitleForm';
 import FormControl from '@components/molecules/FormControl';
 import { useAuth } from '@hooks/useAuth';
 import { AuthContext } from '@infra/context/AuthContext';

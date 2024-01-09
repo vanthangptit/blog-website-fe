@@ -6,7 +6,7 @@ import { IFCategory } from '@models/IFCategory';
 import ModalDelete from '@components/organisms/ModalDelete';
 import { UnauthorizedContext } from '@infra/context/UnauthorizedContext';
 import { useNavigate } from 'react-router-dom';
-import TitlePage from '@components/molecules/SectionTitle/TitlePage';
+import TitlePage from '@components/molecules/Titles/TitlePage';
 import CardCategory from '@components/molecules/Cards/CardCategory';
 
 const Categories = () => {

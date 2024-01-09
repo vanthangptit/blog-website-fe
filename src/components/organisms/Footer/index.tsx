@@ -1,13 +1,16 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import css from '@constants/styles';
+import { Container } from '@components/atoms/Layout';
 
 const Footer = ({ children }: { children: React.ReactNode}) => {
   return (
-    <FooterElement>
-      {children}
-      <NoCopyright>2023 Ⓒ nguyenthangdev - All rights reserved</NoCopyright>
-    </FooterElement>
+    <Container>
+      <FooterElement>
+        {children}
+        <NoCopyright>2023 Ⓒ nguyenthangdev - All rights reserved</NoCopyright>
+      </FooterElement>
+    </Container>
   );
 };
 

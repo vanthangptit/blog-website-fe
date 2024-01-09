@@ -43,15 +43,16 @@ export interface IFPost extends IFDataPostMutable {
   category: any // @todo: interface category
   user: any // @todo: interface User
   comments: string[]
+  commentsCount: number
   daysAgo: string
   numViews: string[]
   viewsCount: number
   disLikes: string[]
-  likes: string[]
   disLikesCount: number
+  likes: string[]
+  likesCount: number
   tags?: string[]
   tagsCount?: number
-  likesCount: number
   id: string
   _id: string
 }

@@ -89,9 +89,17 @@ export const appPostSlice = createSlice({
     builder
       .addCase(getSinglePostApi.fulfilled, (state, action: PayloadAction<any>) => {
         state.singlePost = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(getSinglePostApi.pending, (state) => {
+        state.isLoading = true;
       })
       .addCase(getAllPost.fulfilled, (state, action: PayloadAction<any>) => {
         state.allPost = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(getAllPost.pending, (state) => {
+        state.isLoading = true;
       });
   }
 });

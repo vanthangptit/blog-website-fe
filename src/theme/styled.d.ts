@@ -9,7 +9,6 @@ export interface Colors {
   // Text
   text1: Color
   text2: Color
-  text3: Color
 
   // Backgrounds / greys
   bg0: Color
@@ -68,4 +67,7 @@ export interface FontFamilies {
   fontRobotoRegular: FontFamily
   fontRobotoBold: FontFamily
   fontRobotoBlack: FontFamily
+  fontMuktaMalarSemiBold: FontFamily,
+  fontMuktaMalarBold: FontFamily,
+  fontMuktaMalarExtraBold: FontFamily
 }

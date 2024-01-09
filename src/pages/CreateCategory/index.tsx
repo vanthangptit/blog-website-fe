@@ -8,7 +8,7 @@ import { useCategories } from '@hooks/useCategories';
 import { useNavigate, useParams } from 'react-router-dom';
 import { LayoutMiddle, Container } from '@components/atoms/Layout';
 import styled from 'styled-components';
-import SectionTitleForm from '@components/molecules/SectionTitle/TitleForm';
+import SectionTitleForm from '@components/molecules/Titles/TitleForm';
 import SuccessBox from '@components/molecules/SuccessBox';
 import { UnauthorizedContext } from '@infra/context/UnauthorizedContext';
 

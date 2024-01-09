@@ -15,7 +15,7 @@ const TitlePage = ({ title, des }: { title: string, des?: string }) => {
 export default TitlePage;
 
 const SectionTitle = styled.hgroup`
-  margin: 0 0 45px;
+  margin: 20px 0 45px;
 `;
 
 const Heading = styled.h1`

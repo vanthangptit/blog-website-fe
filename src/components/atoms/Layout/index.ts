@@ -5,71 +5,15 @@ export const LayoutMiddle = styled.main`
   display: flex;
   justify-content: center;
   align-items: center;
-  
-  &::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: ${({ theme }) => theme.gray6};
-    border-radius: 5px;
-  }
-
-  &::-webkit-scrollbar-thumb:hover {
-    background: ${({ theme }) => theme.gray6};
-  }
 `;
 
-export const Container = styled.div<{
-  $xlWidth?: string
-  $lgWidth?: string
-  $mdWidth?: string
-  $smWidth?: string
-  $xsWidth?: string
-  $width?: string
-}>`
+export const Container = styled.div`
   width: 100%;
   margin-right: auto;
   margin-left: auto;
   padding-right: 15px;
   padding-left: 15px;
-
-  @media (min-width: 1270px) {
-    max-width: ${styles.widthContainer}px;
-  }
-
-  ${({ $smWidth }) =>
-    $smWidth &&
-    css`
-      @media (min-width: 576px) {
-        max-width: ${$smWidth};
-      }
-  `}
-
-  ${({ $mdWidth }) =>
-    $mdWidth &&
-    css`
-      @media (min-width: 768px) {
-        max-width: ${$mdWidth};
-      }
-  `}
-
-  ${({ $lgWidth }) =>
-    $lgWidth &&
-    css`
-      @media (min-width: 992px) {
-        max-width: ${$lgWidth};
-      }
-  `}
-
-  ${({ $xsWidth }) =>
-    $xsWidth &&
-    css`
-      @media (max-width: 576px) {
-        max-width: ${$xsWidth};
-      }
-  `}
+  max-width: ${styles.widthContainer}px;
 `;
 
 export const Row = styled.div`

@@ -81,6 +81,7 @@ const TextareaAutosize = styled.textarea`
   padding: 18px 14px;
   color: ${({ theme }) => theme.text1};
   background-color: ${({ theme }) => theme.bg0};
+  outline: none;
 
   &::-webkit-scrollbar {
     width: 3px;
