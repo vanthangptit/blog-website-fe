@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Footer from '@components/atoms/Footer';
+import Footer from '@components/organisms/Footer';
 import SwitchToggle from '@components/molecules/Toggler';
 import { themes } from '@constants/theme';
 import UnauthorizedError from '@components/molecules/Errors/UnauthorizedError';

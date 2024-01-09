@@ -8,7 +8,7 @@ const Footer = ({ children }: { children: React.ReactNode}) => {
     <Container>
       <FooterElement>
         {children}
-        <NoCopyright>2023 Ⓒ nguyenthangdev - All rights reserved</NoCopyright>
+        <NoCopyright>2024 Ⓒ nguyenthangdev - All rights reserved</NoCopyright>
       </FooterElement>
     </Container>
   );
