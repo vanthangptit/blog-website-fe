@@ -43,3 +43,13 @@ export const POST = {
     DELETE: 'APPS/DELETE_POST'
   }
 };
+
+export const COMMENT = {
+  URL_API: `${API_ROOT_URL}comments`,
+  ACTION_TYPES: {
+    GET_BY_POST_ID: 'APPS/GET_BY_POST_ID',
+    POST: 'APPS/CREATE_COMMENT',
+    PUT: 'APPS/PUT_COMMENT',
+    DELETE: 'APPS/DELETE_COMMENT'
+  }
+};

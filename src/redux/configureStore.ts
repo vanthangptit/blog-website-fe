@@ -6,12 +6,14 @@ import { appUsersSlice } from './user';
 import { appAuthSlice } from './auth';
 import { appCategoriesSlice } from './categories';
 import { appPostSlice } from './post';
+import { appCommentSlice } from './comment';
 
 const reducers = combineReducers({
   user: appUsersSlice.reducer,
   auth: appAuthSlice.reducer,
   categories: appCategoriesSlice.reducer,
-  posts: appPostSlice.reducer
+  posts: appPostSlice.reducer,
+  comment: appCommentSlice.reducer
 });
 
 export const store = configureStore({
