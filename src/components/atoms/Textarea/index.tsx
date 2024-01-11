@@ -8,7 +8,7 @@ import {
   UseFormRegister
 } from 'react-hook-form';
 
-type nameField = 'excerpt';
+type nameField = 'excerpt' | 'description';
 
 const Textarea = ({
   register,
@@ -22,7 +22,8 @@ const Textarea = ({
   $isRequired= false,
   $pattern,
   $rows,
-  $cols
+  $cols,
+  $resize
 }: {
   register: UseFormRegister<any>
   formState: FormState<any>
@@ -37,6 +38,7 @@ const Textarea = ({
   $isRequired?: boolean
   $rows?: number
   $cols?: number
+  $resize?: boolean
 }) => {
   const options: RegisterOptions = {
     required: $isRequired
@@ -58,6 +60,7 @@ const Textarea = ({
     <TextareaBox $isError={!!formState.errors[nameField]}>
       {label && <LabelField>{label}</LabelField>}
       <TextareaAutosize
+        $resize={$resize}
         rows={$rows ?? 7}
         cols={$cols}
         placeholder={placeholder}
@@ -75,9 +78,9 @@ const TextareaBox = styled.div<{ $isError: boolean }>`
   margin-bottom: ${({ $isError }) => $isError ? '5px' : '25px'};
 `;
 
-const TextareaAutosize = styled.textarea`
+const TextareaAutosize = styled.textarea<{ $resize?: boolean }>`
   width: 100%;
-  resize: none;
+  resize: ${({ $resize }) => $resize ? 'vertical' : 'none'};
   padding: 18px 14px;
   color: ${({ theme }) => theme.text1};
   background-color: ${({ theme }) => theme.bg0};

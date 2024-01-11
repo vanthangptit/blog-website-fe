@@ -5,10 +5,9 @@ import { useParams } from 'react-router-dom';
 import Layout174 from '@components/organisms/Layout-1-7-4';
 import NotFound from '@components/molecules/NotFound';
 import BannerPost from '@components/molecules/Banners/BannerPost';
-import { formatDatetime } from '@utils/formatDatetime';
+import { formatDatetime, formatDatetimeByMonthYear } from '@utils/formatDatetime';
 import styled from 'styled-components';
 import CardAvatar from '@components/molecules/Avatars/CardAvatar';
-import moment from 'moment';
 import EscapeHTML from '@components/atoms/EscapeHTML';
 import PostFormComment from '@components/molecules/Forms/PostFormComment';
 
@@ -37,22 +36,21 @@ const SinglePost = () => {
               link={`profile/${singlePost.data?.user?.id}`}
               imageUrl={singlePost.data?.user?.profilePhoto}
               userName={singlePost.data?.user?.fullName}
-              createAt={`Posted on ${moment(singlePost.data?.createdAt).format('MMM YY')}`}
+              createAt={`Posted on ${formatDatetimeByMonthYear(singlePost.data?.createdAt)}`}
             />
-            {/*@todo: View likesCount, dislikesCount,...*/}
+            {/** @todo: View likesCount, dislikesCount,... */}
             <SectionTitle title={singlePost.data?.title} />
-            {/*@todo: View Tags, Category,...*/}
+            {/** @todo: View Tags, Category,...*/}
             <EscapeHTML htmlString={singlePost.data?.description} />
           </BoxContent>
           <BoxComment>
-            <h2>Top comments (0)</h2>
-            <PostFormComment />
+            <PostFormComment postId={singlePost?.data?.id} />
           </BoxComment>
         </Layout174>
       )}
 
       {singlePost?.statusCode && singlePost.statusCode !== 200 && (
-        <NotFound message={'SORRY! <br /> THIS PAGE DOES NOT EXISTS'}/>
+        <NotFound message={'SORRY! THIS PAGE DOES NOT EXISTS'}/>
       )}
     </>
   ) : <div />;

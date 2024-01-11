@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { BtnPrimary } from '@components/atoms/Buttons/BtnPrimary';
+import { BtnPrimary, Size } from '@components/atoms/Buttons/BtnPrimary';
 import Loader from '@components/molecules/Loader';
 
 export type ButtonType = 'button' | 'submit' | 'reset';
@@ -10,16 +10,24 @@ export default ({
   text,
   isLoading= false,
   handleClick,
-  disabled
+  disabled,
+  size
 }: {
   buttonType?: ButtonType
   text: string
   isLoading?: boolean
   disabled?: boolean
   handleClick?: () => void
+  size?: Size
 }) => {
   return (
-    <BtnPrimary onClick={handleClick} $isLoading={isLoading} type={buttonType} disabled={disabled}>
+    <BtnPrimary
+      onClick={handleClick}
+      $isLoading={isLoading}
+      type={buttonType}
+      disabled={disabled}
+      $size={size ?? 'md'}
+    >
       <ButtonText>{text}</ButtonText>
       {isLoading && (
         <LoaderBox>

@@ -1,3 +1,5 @@
+import 'react-toastify/dist/ReactToastify.css';
+
 import React from 'react';
 import styled from 'styled-components';
 import Footer from '@components/organisms/Footer';
@@ -5,6 +7,7 @@ import SwitchToggle from '@components/molecules/Toggler';
 import { themes } from '@constants/theme';
 import UnauthorizedError from '@components/molecules/Errors/UnauthorizedError';
 import { useDarkMode } from '@hooks/useDarkMode';
+import { ToastContainer } from 'react-toastify';
 
 const Layout = ({
   children,
@@ -27,6 +30,10 @@ const Layout = ({
         <SwitchToggle isDarkMode={theme === themes.darkMode} toggleTheme={themeToggler} />
       </Footer>
       <UnauthorizedError />
+      <ToastContainer
+        position='bottom-right'
+        autoClose={2500}
+      />
     </BoxBg>
   );
 };

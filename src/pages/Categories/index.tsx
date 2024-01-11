@@ -8,6 +8,7 @@ import { UnauthorizedContext } from '@infra/context/UnauthorizedContext';
 import { useNavigate } from 'react-router-dom';
 import TitlePage from '@components/molecules/Titles/TitlePage';
 import CardCategory from '@components/molecules/Cards/CardCategory';
+import { TOAST } from '@constants/toast';
 
 const Categories = () => {
   const navigate = useNavigate();
@@ -43,7 +44,7 @@ const Categories = () => {
             setUnauthorized(true);
           } else {
             setSubmitSuccess(false);
-            setSubmitError(rs?.message);
+            setSubmitError(TOAST.ERROR_COMMON);
           }
         });
     }
