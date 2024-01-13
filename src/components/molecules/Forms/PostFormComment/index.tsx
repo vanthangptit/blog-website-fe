@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import SiteAvatar from '@components/molecules/Avatars/SiteAvatar';
 import Button from '@components/molecules/Buttons';
 import { useComment } from '@hooks/useComment';
-import { IFDataCommentRequest, IFResponseComment } from '@models/IFComment';
+import { IFDataComment, IFResponseComment } from '@models/IFComment';
 import { UnauthorizedContext } from '@infra/context/UnauthorizedContext';
 import { toasts } from '@utils/toast';
 import { TOAST } from '@constants/toast';
@@ -22,9 +22,9 @@ const PostFormComment = ({ postId }: { postId: string }) => {
     handleSubmit,
     register,
     formState
-  } = useForm<any>();
+  } = useForm<IFDataComment>();
 
-  const onSubmit: SubmitHandler<IFDataCommentRequest> = data => {
+  const onSubmit: SubmitHandler<IFDataComment> = data => {
     createComment({ id: postId }, data).unwrap().then(handleResponse);
   };
 
@@ -45,7 +45,6 @@ const PostFormComment = ({ postId }: { postId: string }) => {
 
   return (
     <BoxComment>
-      {/** @todo: Handle top comment again */}
       <SingleTitle title={`Top comments (${comment?.data?.length ?? 0})`} />
 
       <FormComment>

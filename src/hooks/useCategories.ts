@@ -4,32 +4,32 @@ import {
   useAppSelector
 } from '@store/configureStore';
 import * as categoriesStore from '@store/categories';
+import { CategoryParams, IFCategoryId } from '@models/IFCategory';
 import { useAuth } from '@hooks/useAuth';
-import { IFCategories, IFCategoryId } from '@models/IFCategory';
 
 export const useCategories = () => {
+  const { getAuth } = useAuth();
   const dispatch = useAppDispatch();
-  const { accessToken } = useAuth();
   const categoryStore = useAppSelector((state: RootState) => state.categories);
 
   const getCategories = () => {
-    return dispatch(categoriesStore.getCategoriesApi({ token: accessToken }));
+    return dispatch(categoriesStore.getCategoriesApi({ token: getAuth('accessToken') }));
   };
 
   const getCategoryById = (params: IFCategoryId) => {
-    return dispatch(categoriesStore.getCategoryById(params));
+    return dispatch(categoriesStore.getCategoryById({ params, token: getAuth('accessToken') }));
   };
 
-  const createCategory = (params: IFCategories) => {
-    return dispatch(categoriesStore.createCategory(params));
+  const createCategory = (data: CategoryParams) => {
+    return dispatch(categoriesStore.createCategory({ data, token: getAuth('accessToken') }));
   };
 
-  const editCategory = (params: IFCategories) => {
-    return dispatch(categoriesStore.editCategory(params));
+  const editCategory = (data: CategoryParams, params: IFCategoryId) => {
+    return dispatch(categoriesStore.editCategory({ data, params, token: getAuth('accessToken') }));
   };
 
   const deleteCategory = (params: IFCategoryId) => {
-    return dispatch(categoriesStore.deleteCategory(params));
+    return dispatch(categoriesStore.deleteCategory({ params, token: getAuth('accessToken') }));
   };
 
   return {

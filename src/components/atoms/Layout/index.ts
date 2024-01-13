@@ -5,6 +5,7 @@ export const LayoutMiddle = styled.main`
   display: flex;
   justify-content: center;
   align-items: center;
+  flex: 1;
 `;
 
 export const Container = styled.div`

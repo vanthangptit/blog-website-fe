@@ -1,21 +1,39 @@
-import {
-  RootState,
-  useAppDispatch,
-  useAppSelector
-} from '@store/configureStore';
-import * as authStore from '@store/auth';
 import { IFLogin } from '@models/IFAuthenticated';
+import requester from '@infra/apis/requester';
+import { AUTH } from '@constants/apis';
+import { IFRegister } from '@models/IFRegister';
+
+type SessionKeys = 'accessToken' | 'user';
 
 export const useAuth = () => {
-  const dispatch = useAppDispatch();
-  const authStates = useAppSelector((state: RootState) => state.auth);
-
-  const loginApi = (params: IFLogin) => {
-    return dispatch(authStore.loginApi(params));
+  const registerApi = async (data: IFRegister) => {
+    return requester.post(AUTH.REGISTER_URL, data);
   };
 
+  const loginApi = async (data: IFLogin) => {
+    return requester.post(AUTH.LOGIN_URL, data);
+  };
+
+  const logoutApi = async (params: IFLogin) => {
+    return requester.delete(AUTH.LOGOUT_URL, params);
+  };
+
+  const setAuth = (key: SessionKeys, value: any) => {
+    sessionStorage.setItem(key, value);
+  };
+
+  const getAuth = (key: SessionKeys) => {
+    return sessionStorage.getItem(key) ?? undefined;
+  };
+
+  const clearAllAuth = () => sessionStorage.clear();
+
   return {
-    ...authStates,
-    loginApi
+    loginApi,
+    setAuth,
+    getAuth,
+    logoutApi,
+    clearAllAuth,
+    registerApi
   };
 };

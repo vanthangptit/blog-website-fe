@@ -19,22 +19,24 @@ const Layout = ({
   const [ theme ] = useDarkMode();
 
   return (
-    <BoxBg>
-      {/*@todo: create header component */}
-      {/*<header>header</header>*/}
-      {/*<nav>nav</nav>*/}
+    <>
+      <BoxBg>
+        {/*@todo: create header component */}
+        {/*<header>header</header>*/}
+        {/*<nav>nav</nav>*/}
 
-      {children}
+        {children}
 
-      <Footer>
-        <SwitchToggle isDarkMode={theme === themes.darkMode} toggleTheme={themeToggler} />
-      </Footer>
-      <UnauthorizedError />
+        <Footer>
+          <SwitchToggle isDarkMode={theme === themes.darkMode} toggleTheme={themeToggler} />
+        </Footer>
+        <UnauthorizedError />
+      </BoxBg>
       <ToastContainer
         position='bottom-right'
-        autoClose={2500}
+        autoClose={3000}
       />
-    </BoxBg>
+    </>
   );
 };
 

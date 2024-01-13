@@ -1,5 +1,13 @@
 import axios, { AxiosResponse, AxiosError, AxiosRequestConfig } from 'axios';
-import { LOGIN, REFRESH_TOKEN } from '@constants/apis';
+import { AUTH, POST } from '@constants/apis';
+
+type Method = 'get' | 'post' | 'put' | 'delete';
+
+type Props = {
+  url: string
+  method: Method
+  params: any
+}
 
 const setConf = ({ isCredentials= false, token }: { isCredentials?: boolean; token?: string }): AxiosRequestConfig => {
   return {
@@ -12,81 +20,73 @@ const setConf = ({ isCredentials= false, token }: { isCredentials?: boolean; tok
   };
 };
 
-const verifyCredentials = (url: string) => url === REFRESH_TOKEN.URL_API || url === LOGIN.URL_API;
+const verifyCredentials = (url: string, method?: Method) => {
+  // eslint-disable-next-line no-console
+  console.log(url);
+  // eslint-disable-next-line no-console
+  console.log(POST.URL_API);
+  // eslint-disable-next-line no-console
+  console.log(method);
+  return url === AUTH.REFRESH_TOKEN_URL || url === AUTH.LOGIN_URL || (url === POST.URL_API && method === 'get');
+};
 
-const responseBody = (response: AxiosResponse) => response.data;
-const errorBody = (error: AxiosError) => error.response?.data ? error.response.data : error.response;
+export const responseBody = (response: AxiosResponse) => response.data;
+export const errorBody = (error: AxiosError) => error.response?.data ? error.response.data : error.response;
 
-const getToken = () => axios.get(REFRESH_TOKEN.URL_API, setConf({ isCredentials: true }));
+export const getToken = (props: Props) => {
+  return axios.get(AUTH.REFRESH_TOKEN_URL, setConf({ isCredentials: true }))
+    .then((rs) => {
+      sessionStorage.setItem('accessToken', rs.data.accessToken);
+      return requester[props.method](props.url, props.params, false, rs.data.accessToken);
+    })
+    .catch(errorBody);
+};
 
 const get = (url: string, params = {}, config: AxiosRequestConfig) => axios.get(url, { params, ...config });
 const post = (url: string, data = {}, config: AxiosRequestConfig) => axios.post(url, data, { ...config });
 const put = (url: string, data = {}, config: AxiosRequestConfig) => axios.put(url, data, { ...config });
 const del = (url: string, params = {}, config: AxiosRequestConfig) => axios.delete(url, { params, ...config });
 
-const requester = {
-  get: (url: string, params = {}, token?: string) => {
-    return get(url, params, setConf({ token, isCredentials: verifyCredentials(url) }))
+const requester: any = {
+  get: (url: string, params = {}, retry?: boolean, token?: string) => {
+    return get(url, params, setConf({ token, isCredentials: verifyCredentials(url, 'get') }))
       .then(responseBody)
-      .catch((error: AxiosError) => {
-        if (error.response?.status !==  401) {
-          return errorBody(error);
+      .catch((e) => {
+        if (retry && e.response.status === 401) {
+          return getToken({ method: 'get', url, params });
+        } else {
+          return errorBody(e);
         }
-
-        return getToken()
-          .then((rs: AxiosResponse) => get(url, params, setConf({
-            token: rs.data.accessToken,
-            isCredentials: verifyCredentials(url)
-          })).then(responseBody).catch(errorBody))
-          .catch(errorBody);
       });
   },
-  post: (url: string, data = {}, token?: string) => {
-    return post(url, data, setConf({ token, isCredentials: verifyCredentials(url) }))
+  post: (url: string, data = {}, retry?: boolean, token?: string) => {
+    return post(url, data, setConf({ token, isCredentials: verifyCredentials(url, 'post') }))
       .then(responseBody)
-      .catch((error: AxiosError) => {
-        if (error.response?.status !==  401) {
-          return errorBody(error);
+      .catch((e) => {
+        if (retry && e.response.status === 401) {
+          return getToken({ method: 'post', url, params: data });
         }
-
-        return getToken()
-          .then((rs: AxiosResponse) => post(url, data, setConf({
-            token: rs.data.accessToken,
-            isCredentials: verifyCredentials(url)
-          })).then(responseBody).catch(errorBody))
-          .catch(errorBody);
+        return errorBody(e);
       });
   },
-  put: (url: string, data = {}, token?: string) => {
-    return put(url, data, setConf({ token, isCredentials: verifyCredentials(url) }))
+  put: (url: string, data = {}, retry?: boolean, token?: string) => {
+    return put(url, data, setConf({ token, isCredentials: verifyCredentials(url, 'put') }))
       .then(responseBody)
-      .catch((error: AxiosError) => {
-        if (error.response?.status !==  401) {
-          return errorBody(error);
+      .catch((e) => {
+        if (retry && e.response.status === 401) {
+          return getToken({ method: 'put', url, params: data });
         }
-
-        return getToken()
-          .then((rs: AxiosResponse) => put(url, data, setConf({
-            token: rs.data.accessToken,
-            isCredentials: verifyCredentials(url)
-          })).then(responseBody).catch(errorBody))
-          .catch(errorBody);
+        return errorBody(e);
       });
   },
-  delete: (url: string, params = {}, token?: string) => {
-    return del(url, params, setConf({ token, isCredentials: verifyCredentials(url) }))
+  delete: (url: string, params = {}, retry?: boolean, token?: string) => {
+    return del(url, params, setConf({ token, isCredentials: verifyCredentials(url, 'delete') }))
       .then(responseBody)
-      .catch((error: AxiosError) => {
-        if (error.response?.status !==  401) {
-          return errorBody(error);
+      .catch((e) => {
+        if (retry && e.response.status === 401) {
+          return getToken({ method: 'put', url, params });
         }
-
-        return getToken()
-          .then((rs: AxiosResponse) => del(url, params, setConf({
-            token: rs.data.accessToken,
-            isCredentials: verifyCredentials(url)
-          })).then(responseBody).catch(errorBody))
-          .catch(errorBody);
+        return errorBody(e);
       });
   }
 };

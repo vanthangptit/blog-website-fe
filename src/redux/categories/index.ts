@@ -1,13 +1,15 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { API_CATEGORY } from '@constants/apis';
-import api from '@src/infra/apis';
 import {
-  IFCategories,
-  IFCategoryId,
-  IFGetCategory,
+  IFCreateCategory,
+  IFEditCategory,
+  IFGetCategories,
   IFResponseCategory,
-  IFResponseCategories
+  IFResponseCategories,
+  IFDeleteCategory,
+  IFGetCategoryById
 } from '@models/IFCategory';
+import requester from '@infra/apis/requester';
 
 interface IFCategoryState {
   isLoading: boolean
@@ -19,9 +21,9 @@ const initialState: IFCategoryState = {
   isLoading: false
 };
 
-export const getCategoriesApi = createAsyncThunk<any, IFGetCategory>(API_CATEGORY.ACTION_TYPES.GET, async (params, thunkAPI) => {
+export const getCategoriesApi = createAsyncThunk<any, IFGetCategories>(API_CATEGORY.ACTION_TYPES.GET, async ({ token }, thunkAPI) => {
   try {
-    const response: IFResponseCategories = await api.getCategoriesApi(params);
+    const response: IFResponseCategories = await requester.get(API_CATEGORY.URL_API, {}, true, token);
     return {
       ...response
     };
@@ -30,9 +32,9 @@ export const getCategoriesApi = createAsyncThunk<any, IFGetCategory>(API_CATEGOR
   }
 });
 
-export const createCategory = createAsyncThunk<any, IFCategories>(API_CATEGORY.ACTION_TYPES.POST, async (params, thunkAPI) => {
+export const createCategory = createAsyncThunk<any, IFCreateCategory>(API_CATEGORY.ACTION_TYPES.POST, async ({ data, token }, thunkAPI) => {
   try {
-    const response = await api.createCategoryApi(params);
+    const response: IFResponseCategories = await requester.post(API_CATEGORY.URL_API, data, true, token);
     return {
       ...response
     };
@@ -41,9 +43,9 @@ export const createCategory = createAsyncThunk<any, IFCategories>(API_CATEGORY.A
   }
 });
 
-export const editCategory = createAsyncThunk<any, IFCategories>(API_CATEGORY.ACTION_TYPES.PUT, async (params, thunkAPI) => {
+export const editCategory = createAsyncThunk<any, IFEditCategory>(API_CATEGORY.ACTION_TYPES.PUT, async ({ params, data,  token }, thunkAPI) => {
   try {
-    const response: IFResponseCategory = await api.editCategoryApi(params);
+    const response: IFResponseCategory = await requester.put(`${API_CATEGORY.URL_API}/${params.id}`, data, true, token);
     return {
       ...response
     };
@@ -52,9 +54,9 @@ export const editCategory = createAsyncThunk<any, IFCategories>(API_CATEGORY.ACT
   }
 });
 
-export const deleteCategory = createAsyncThunk<any, IFCategoryId>(API_CATEGORY.ACTION_TYPES.PUT, async (params, thunkAPI) => {
+export const deleteCategory = createAsyncThunk<any, IFDeleteCategory>(API_CATEGORY.ACTION_TYPES.PUT, async ({ params, token }, thunkAPI) => {
   try {
-    const response: IFResponseCategory = await api.deleteCategoryApi(params);
+    const response: IFResponseCategory = await requester.delete(`${API_CATEGORY.URL_API}/${params.id}`, {}, true, token);
     return {
       ...response
     };
@@ -63,9 +65,9 @@ export const deleteCategory = createAsyncThunk<any, IFCategoryId>(API_CATEGORY.A
   }
 });
 
-export const getCategoryById = createAsyncThunk<any, IFCategoryId>(API_CATEGORY.ACTION_TYPES.GET_ID, async (params, thunkAPI) => {
+export const getCategoryById = createAsyncThunk<any, IFGetCategoryById>(API_CATEGORY.ACTION_TYPES.GET_ID, async ({ params, token }, thunkAPI) => {
   try {
-    const response: IFResponseCategory = await api.getCategoryById(params);
+    const response: IFResponseCategory = await requester.get(`${API_CATEGORY.URL_API}/${params.id}`, {}, true, token);
 
     return {
       ...response

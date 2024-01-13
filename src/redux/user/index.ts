@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { USER } from '@constants/apis';
-import api from '@src/infra/apis';
 
 // interface IFUserState {}
 
@@ -8,7 +7,7 @@ const initialState: any = {};
 
 export const getProfile = createAsyncThunk<any, { id: string }>(USER.ACTION_TYPES.PROFILE, async (params, thunkAPI) => {
   try {
-    const response: any = await api.getProfile(params.id);
+    const response: any = true;
     return {
       ...response
     };

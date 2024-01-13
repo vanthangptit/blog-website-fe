@@ -8,6 +8,7 @@ import { UnauthorizedContext } from '@infra/context/UnauthorizedContext';
 import { useNavigate } from 'react-router-dom';
 import TitlePage from '@components/molecules/Titles/TitlePage';
 import CardCategory from '@components/molecules/Cards/CardCategory';
+import SingleTitle from '@components/molecules/Titles/SingleTitle';
 import { TOAST } from '@constants/toast';
 
 const Categories = () => {
@@ -19,10 +20,7 @@ const Categories = () => {
   const [ submitSuccess, setSubmitSuccess ] = useState<boolean>(false);
   const [ submitError, setSubmitError ] = useState<string>();
 
-  const onAfterClose = () => {
-    setSubmitSuccess(false);
-    setSubmitError(undefined);
-  };
+  const onAfterClose = () => setSubmitSuccess(false);
 
   const getCategoryDelete = (category: IFCategory) => {
     setCategoryDel(category);
@@ -36,7 +34,6 @@ const Categories = () => {
         .then((rs) => {
           if (rs.status === 200 || rs.statusCode === 200) {
             setSubmitSuccess(true);
-            setSubmitError(undefined);
             getCategories();
           } else if (rs.status === 401 || rs.statusCode === 401) {
             setIsOpen(false);
@@ -65,7 +62,7 @@ const Categories = () => {
       <Container>
         <TitlePage title={'Your Categories'} />
 
-        {categories?.data && categories.data?.length > 0 && (
+        {categories?.data && categories.data?.length > 0 ? (
           <Row>
             {categories?.data?.map((item, index) => {
               return (
@@ -79,6 +76,8 @@ const Categories = () => {
               );
             })}
           </Row>
+        ) : (
+          <SingleTitle title={'You have no category'}/>
         )}
 
         <Button

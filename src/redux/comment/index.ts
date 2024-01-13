@@ -1,11 +1,11 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { COMMENT } from '@constants/apis';
-import api from '@src/infra/apis';
 import {
   IFParamsCommentRequest,
   IFDataCommentRequest,
   IFResponseComment
 } from '@models/IFComment';
+import requester from '@infra/apis/requester';
 
 interface IFPostState {
   isLoading: boolean
@@ -16,9 +16,9 @@ const initialState: IFPostState = {
   isLoading: false
 };
 
-export const getCommentByPostId = createAsyncThunk<any, IFParamsCommentRequest>(COMMENT.ACTION_TYPES.GET_BY_POST_ID, async (params, thunkAPI) => {
+export const getCommentByPostId = createAsyncThunk<any, IFParamsCommentRequest>(COMMENT.ACTION_TYPES.GET_BY_POST_ID, async ({ params, token }, thunkAPI) => {
   try {
-    const response: IFResponseComment = await api.getCommentByPostIdApi(params);
+    const response: IFResponseComment = await requester.get(`${COMMENT.URL_API}/${params.id}`, {}, true, token);
 
     return {
       ...response
@@ -28,11 +28,11 @@ export const getCommentByPostId = createAsyncThunk<any, IFParamsCommentRequest>(
   }
 });
 
-export const createComment = createAsyncThunk<any, { params: IFParamsCommentRequest, data: IFDataCommentRequest }>(COMMENT.ACTION_TYPES.POST, async ({ params, data }, thunkAPI) => {
+export const createComment = createAsyncThunk<any, IFDataCommentRequest>(COMMENT.ACTION_TYPES.POST, async ({ params, data, token }, thunkAPI) => {
   try {
-    const response: IFResponseComment = await api.createCommentApi(params, data);
+    const response: IFResponseComment = await requester.post(`${COMMENT.URL_API}/${params.id}`, data, true, token);
     if (response.status === 200 || response.statusCode === 200) {
-      await thunkAPI.dispatch(getCommentByPostId(params));
+      await thunkAPI.dispatch(getCommentByPostId({ params, token }));
     }
 
     return {
@@ -43,11 +43,11 @@ export const createComment = createAsyncThunk<any, { params: IFParamsCommentRequ
   }
 });
 
-export const editComment = createAsyncThunk<any, { params: IFParamsCommentRequest, data: IFDataCommentRequest }>(COMMENT.ACTION_TYPES.PUT, async ({ params, data }, thunkAPI) => {
+export const editComment = createAsyncThunk<any, IFDataCommentRequest>(COMMENT.ACTION_TYPES.PUT, async ({ params, data, token }, thunkAPI) => {
   try {
-    const response: IFResponseComment = await api.editCommentApi(params, data);
+    const response: IFResponseComment = await requester.put(`${COMMENT.URL_API}/${params.id}`, data, true, token);
     if (response.status === 200 || response.statusCode === 200) {
-      await thunkAPI.dispatch(getCommentByPostId(params));
+      await thunkAPI.dispatch(getCommentByPostId({ params, token }));
     }
 
     return {
@@ -58,11 +58,11 @@ export const editComment = createAsyncThunk<any, { params: IFParamsCommentReques
   }
 });
 
-export const deleteComment = createAsyncThunk<any, IFParamsCommentRequest>(COMMENT.ACTION_TYPES.DELETE, async (params, thunkAPI) => {
+export const deleteComment = createAsyncThunk<any, IFParamsCommentRequest>(COMMENT.ACTION_TYPES.DELETE, async ({ params, token }, thunkAPI) => {
   try {
-    const response: IFResponseComment = await api.deleteCommentApi(params);
+    const response: IFResponseComment = await requester.delete(`${COMMENT.URL_API}/${params.id}`, {}, true, token);
     if (response.status === 200 || response.statusCode === 200) {
-      await thunkAPI.dispatch(getCommentByPostId(params));
+      await thunkAPI.dispatch(getCommentByPostId({ params, token }));
     }
 
     return {

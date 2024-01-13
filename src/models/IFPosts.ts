@@ -29,7 +29,8 @@ export interface IFCreatePostRequest extends IFDataPostMutable {
   categoryId: string
 }
 
-export interface IFEditPostRequest extends IFDataPostMutable {
+export interface IFEditPostRequest extends IFRequester {
+  data: IFDataPostMutable
   params: IFSinglePostRequest
 }
 

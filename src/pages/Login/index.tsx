@@ -4,23 +4,21 @@ import styled from 'styled-components';
 import { LayoutMiddle } from '@components/atoms/Layout';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { IFLogin, IFLoginResponse } from '@models/IFAuthenticated';
-import { MessageError } from '@components/atoms/MessageError';
 import SectionTitleForm from '@components/molecules/Titles/TitleForm';
 import FormControl from '@components/molecules/FormControl';
 import { useAuth } from '@hooks/useAuth';
 import { AuthContext } from '@infra/context/AuthContext';
-import { useCookies } from '@hooks/useCookies';
 import { BiLock } from 'react-icons/bi';
 import Button from '@components/molecules/Buttons';
+import { toasts } from '@utils/toast';
+import { TOAST } from '@constants/toast';
 
 const Login = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { addCookies } = useCookies();
   const { setAuthenticated } = useContext(AuthContext);
-  const { loginApi } = useAuth();
+  const { loginApi, setAuth } = useAuth();
   const [ isLoading, setLoading ] = useState<boolean>(false);
-  const [ isErrorMessage, setErrorMessage ] = useState<string>();
 
   const {
     setValue,
@@ -32,18 +30,20 @@ const Login = () => {
   const onSubmit: SubmitHandler<IFLogin> = (data) => {
     setLoading(true);
     loginApi(data)
-      .unwrap()
-      .then((rs: IFLoginResponse) => {
-        setAuthenticated(rs.user);
-        addCookies('user', JSON.stringify(rs.user));
-        setTimeout(() => {
-          setLoading(false);
-          navigate('/');
-        }, 500);
-      })
-      .catch((error) => {
+      .then((rs) => {
+        if (rs.statusCode === 200) {
+          setAuth('user', JSON.stringify(rs.user));
+          setAuth('accessToken', rs.accessToken);
+          setAuthenticated(rs.accessToken);
+
+          setTimeout(() => {
+            setLoading(false);
+            navigate('/');
+          }, 500);
+        } else {
+          toasts('error', rs?.message ?? TOAST.ERROR_COMMON);
+        }
         setLoading(false);
-        setErrorMessage(error?.data?.message ?? 'An error occurred. Please try again!');
       });
   };
 
@@ -88,9 +88,6 @@ const Login = () => {
             buttonType={'submit'}
             disabled={isLoading}
           />
-          {(isErrorMessage && isErrorMessage.length) && (
-            <MessageError $align={'center'}>{isErrorMessage}</MessageError>
-          )}
         </FormElement>
         <RedirectBox>
           <Link to="/forgot-password">Forgot password?</Link>

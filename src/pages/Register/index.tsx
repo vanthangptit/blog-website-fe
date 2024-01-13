@@ -9,15 +9,16 @@ import SectionTitleForm from '@components/molecules/Titles/TitleForm';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { IFRegister } from '@models/IFRegister';
 import FormControl from '@components/molecules/FormControl';
-import { MessageError } from '@components/atoms/MessageError';
-import { API_REGISTER_URL } from '@constants/apis';
 import { Link, useNavigate } from 'react-router-dom';
 import { BiLock } from 'react-icons/bi';
 import Button from '@components/molecules/Buttons';
+import { useAuth } from '@hooks/useAuth';
+import { toasts } from '@utils/toast';
+import { TOAST } from '@constants/toast';
 
 const Register = () => {
   const navigate = useNavigate();
-  const [ messageErrors, setMessageErrors ] = useState<string>();
+  const { registerApi } = useAuth();
   const [ isLoading, setLoading ] = useState<boolean>(false);
   const {
     register,
@@ -28,29 +29,18 @@ const Register = () => {
 
   const onSubmit: SubmitHandler<IFRegister> = async (data) => {
     setLoading(true);
-    await fetch(API_REGISTER_URL, {
-      method: 'POST',
-      credentials: 'include',
-      headers: {
-        'content-type': 'application/json',
-        accept: 'application/json'
-      },
-      body: JSON.stringify(data)
-    })
-      .then(response => response.json())
-      .then(response => {
-        if (response.statusCode === 200) {
+    registerApi(data)
+      .then((rs) => {
+        if (rs.statusCode === 200) {
           setTimeout(() => {
             reset();
             navigate('/login', {
-              state: { email: data.email }
+              state: { email: data.email, password: data.password }
             });
           }, 1000);
         } else {
-          setMessageErrors(response.message);
+          toasts('error', rs?.message ?? TOAST.ERROR_COMMON);
         }
-      })
-      .finally(() => {
         setLoading(false);
       });
   };
@@ -125,9 +115,6 @@ const Register = () => {
             buttonType={'submit'}
             disabled={isLoading}
           />
-          {(messageErrors && messageErrors.length) && (
-            <MessageError $align={'center'}>{messageErrors}</MessageError>
-          )}
           <RedirectBox>
             <Link to="/login">Already have an account? Sign in</Link>
           </RedirectBox>

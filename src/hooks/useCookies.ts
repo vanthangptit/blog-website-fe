@@ -1,6 +1,6 @@
 import Cookies from 'universal-cookie';
 
-type cookieKeys = 'theme' | 'user';
+type cookieKeys = 'theme';
 
 const cookies = new Cookies();
 

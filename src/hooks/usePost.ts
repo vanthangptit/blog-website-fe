@@ -10,17 +10,19 @@ import {
   IFEditPostRequest,
   IFSinglePostRequest
 } from '@models/IFPosts';
+import { useAuth } from '@hooks/useAuth';
 
 export const usePosts = () => {
   const dispatch = useAppDispatch();
+  const { getAuth } = useAuth();
   const postsStates = useAppSelector((state: RootState) => state.posts);
 
-  const createPostApi = (params: IFCreatePostRequest) => {
-    return dispatch(postStore.createPostApi(params));
+  const createPostApi = (data: IFCreatePostRequest) => {
+    return dispatch(postStore.createPostApi({ data, token: getAuth('accessToken') }));
   };
 
   const editPostApi = (params: IFEditPostRequest) => {
-    return dispatch(postStore.editPostApi(params));
+    return dispatch(postStore.editPostApi({ ...params, token: getAuth('accessToken') }));
   };
 
   const getSinglePostApi = (params: IFSinglePostRequest) => {
@@ -28,7 +30,7 @@ export const usePosts = () => {
   };
 
   const getAllPost = () => {
-    return dispatch(postStore.getAllPost());
+    return dispatch(postStore.getAllPost({ token: getAuth('accessToken') }));
   };
 
   const deletePost = (params: IFDeletePostRequest) => {

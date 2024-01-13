@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import FormControl from '@components/molecules/FormControl';
 import { FormState, UseFormRegister, UseFormHandleSubmit } from 'react-hook-form';
 import UploadImage from '@components/molecules/UploadImage';
-import { IFCategories } from '@models/IFCategory';
 import Button from '@components/molecules/Buttons';
 import { MessageError } from '@components/atoms/MessageError';
+import { CategoryParams } from '@models/IFCategory';
 
 const FormCategory = ({
   register,
@@ -22,8 +22,8 @@ const FormCategory = ({
 }: {
   register: UseFormRegister<any>
   formState: FormState<any>
-  handleSubmit: UseFormHandleSubmit<IFCategories>
-  onSubmit: (data: IFCategories) => void
+  handleSubmit: UseFormHandleSubmit<CategoryParams>
+  onSubmit: (data: CategoryParams) => void
   setFile: (file: any) => void
   setSrcImage: (newImage: string) => void
   setImageChanged: (newState: boolean) => void

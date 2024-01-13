@@ -3,16 +3,15 @@ import React, {
   ReactNode,
   useState
 } from 'react';
-import { useCookies } from '@hooks/useCookies';
-import { IFAuth } from '@models/IFAuthenticated';
+import { useAuth } from '@hooks/useAuth';
 
 type Props = {
   children?: ReactNode;
 }
 
 type IAuthContext = {
-  authenticated: IFAuth  | undefined
-  setAuthenticated: (newState?: IFAuth) => void
+  authenticated: string  | undefined
+  setAuthenticated: (newState?: string) => void
 }
 
 const initialValue = {
@@ -23,8 +22,8 @@ const initialValue = {
 const AuthContext = createContext<IAuthContext>(initialValue);
 
 const AuthProvider = ({ children }: Props) => {
-  const { getCookies } = useCookies();
-  const [ authenticated, setAuthenticated ] = useState<IFAuth | undefined>(getCookies([ 'user' ]));
+  const { getAuth } = useAuth();
+  const [ authenticated, setAuthenticated ] = useState<string | undefined>(getAuth('accessToken'));
 
   return (
     <AuthContext.Provider value={{ authenticated, setAuthenticated }}>

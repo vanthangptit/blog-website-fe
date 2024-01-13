@@ -2,12 +2,20 @@ import { IFResponse } from '@models/IFResponse';
 import { IFRequester } from '@models/IFRequester';
 import { IFPost } from '@models/IFPosts';
 
-export interface IFDataCommentRequest extends IFRequester {
+export interface IFParamsPostIdComment {
+  id: string
+}
+
+export interface IFDataComment {
   description: string
 }
 
 export interface IFParamsCommentRequest extends IFRequester {
-  id: string
+  params: IFParamsPostIdComment
+}
+
+export interface IFDataCommentRequest extends IFParamsCommentRequest {
+  data: IFDataComment
 }
 
 export interface IFComment {

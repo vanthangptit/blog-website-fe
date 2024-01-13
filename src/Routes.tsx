@@ -29,11 +29,7 @@ const PrivateRoutes = () => {
     }
   }, [ location ]);
 
-  if (!authenticated) {
-    return <Navigate to='/login' state={{ from: location }} replace />;
-  }
-
-  return <Outlet />;
+  return authenticated ? <Outlet /> : <Navigate to='/login' state={{ from: location }} replace />;
 };
 
 const PublicRoutes = () => {

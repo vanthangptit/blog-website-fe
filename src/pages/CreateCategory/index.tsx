@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import FormCategory from '@components/molecules/Forms/FormCategory';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { IFCategories, IFResponseCategory } from '@models/IFCategory';
+import { CategoryParams, IFResponseCategory } from '@models/IFCategory';
 import { ManagedUpload } from 'aws-sdk/clients/s3';
 import { deleteFiles, uploadFile } from '@utils/uploadFile';
 import { useCategories } from '@hooks/useCategories';
@@ -23,7 +23,7 @@ const CreateCategory = () => {
     register,
     formState,
     handleSubmit
-  } = useForm<IFCategories>();
+  } = useForm<CategoryParams>();
 
   const [ categoryId, setCategoryId ] = useState<string>();
   const [ fileUploaded, setFileUploaded ] = useState<ManagedUpload.SendData>();
@@ -67,12 +67,12 @@ const CreateCategory = () => {
     setSubmitting(false);
   };
 
-  const onSubmit: SubmitHandler<IFCategories> = async (data) => {
+  const onSubmit: SubmitHandler<CategoryParams> = async (data) => {
     setSubmitting(true);
     setSubmitSuccess(false);
 
     const callback = (rs?: ManagedUpload.SendData) => {
-      const newData: IFCategories = {
+      const newData: CategoryParams = {
         title: data.title
       };
 
@@ -81,8 +81,7 @@ const CreateCategory = () => {
         newData.image = rs.Location;
 
         if (categoryId) {
-          newData.id = categoryId;
-          editCategory(newData)
+          editCategory(newData, { id: categoryId })
             .unwrap()
             .then(handleResponse);
         } else {
@@ -94,10 +93,8 @@ const CreateCategory = () => {
         newData.image = srcImage;
 
         if (categoryId) {
-          newData.id = categoryId;
-
           if (newData.image && newData.image.length) {
-            editCategory(newData)
+            editCategory(newData, { id: categoryId })
               .unwrap()
               .then(handleResponse);
           } else {

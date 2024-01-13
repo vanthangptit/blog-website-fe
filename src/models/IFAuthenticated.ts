@@ -7,6 +7,11 @@ export interface IFTokenResponse extends IFResponse {
   accessToken: string
 }
 
+export interface IFRegister {
+  email: string
+  password: string
+}
+
 export interface IFLogin {
   email: string
   password: string

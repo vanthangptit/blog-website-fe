@@ -13,12 +13,16 @@ import SectionTitleForm from '@components/molecules/Titles/TitleForm';
 import Textarea from '@components/atoms/Textarea';
 import UploadImage from '@components/molecules/UploadImage';
 import { usePosts } from '@hooks/usePost';
-import { MessageError } from '@components/atoms/MessageError';
 import SuccessBox from '@components/molecules/SuccessBox';
 import RichTextEditor from '@components/molecules/RichTextEditor';
 import Button from '@components/molecules/Buttons';
 import { UnauthorizedContext } from '@infra/context/UnauthorizedContext';
+import { toasts } from '@utils/toast';
+import { TOAST } from '@constants/toast';
 
+/**
+ * @todo: Getting the category id
+ */
 const cateId = '6587e390da66d8f63cd6fa34';
 
 const CreatePost = () => {
@@ -54,21 +58,19 @@ const CreatePost = () => {
 
   const [ submitting, setSubmitting ] = useState<boolean>(false);
   const [ submitSuccess, setSubmitSuccess ] = useState<boolean>(false);
-  const [ submitError, setSubmitError ] = useState<string>();
   const [ uploadImageError, setUploadImageError ] = useState<string>();
   const [ valueDescError, setValueDescError ] = useState<string>();
 
   const handleResponse = (rs: IFResponseCreatePost) => {
     if (rs.status === 200 || rs.statusCode === 200) {
       setSubmitSuccess(true);
-      setSubmitError(undefined);
       setNewShortUrl(shortUrl ?? rs.data?.shortUrl);
     } else if (rs.status === 401 || rs.statusCode === 401) {
       setSubmitSuccess(false);
       setUnauthorized(true);
     } else {
       setSubmitSuccess(false);
-      setSubmitError(rs?.message);
+      toasts('error', rs?.message ?? TOAST.ERROR_COMMON);
     }
     setSubmitting(false);
   };
@@ -84,10 +86,12 @@ const CreatePost = () => {
         if (rs) {
           if (shortUrl) {
             editPostApi({
-              ...fields,
-              isPublished,
-              description: valueDescription,
-              imageUrl: rs.Location,
+              data: {
+                ...fields,
+                isPublished,
+                description: valueDescription,
+                imageUrl: rs.Location
+              },
               params: { shortUrl }
             }).unwrap().then(handleResponse);
           } else if (categoryId) {
@@ -100,20 +104,22 @@ const CreatePost = () => {
             }).unwrap().then(handleResponse);
           } else {
             setSubmitting(false);
-            setSubmitError('An occurred error. Please try again!');
+            toasts('error', TOAST.ERROR_COMMON);
           }
         } else {
           if (shortUrl) {
             editPostApi({
-              ...fields,
-              isPublished,
-              description: valueDescription,
-              imageUrl: srcImage ?? singlePost?.data?.imageUrl ?? '',
+              data: {
+                ...fields,
+                isPublished,
+                description: valueDescription,
+                imageUrl: srcImage ?? singlePost?.data?.imageUrl ?? ''
+              },
               params: { shortUrl }
             }).unwrap().then(handleResponse);
           } else {
             setSubmitting(false);
-            setSubmitError('An occurred error. Please try again!');
+            toasts('error', TOAST.ERROR_COMMON);
           }
         }
       } else {
@@ -170,7 +176,7 @@ const CreatePost = () => {
             setUnauthorized(true);
           } else {
             setSubmitSuccess(false);
-            setSubmitError(rs?.message);
+            toasts('error', rs?.message ?? TOAST.ERROR_COMMON);
           }
         });
     }
@@ -296,9 +302,6 @@ const CreatePost = () => {
                 />
               </ButtonBox>
             </FormElement>
-            {submitError && submitError.length && (
-              <MessageError $align={'center'}>{submitError}</MessageError>
-            )}
           </>
         )}
       </Container>

@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { POST } from '@constants/apis';
-import api from '@src/infra/apis';
 import {
   IFCreatePostRequest,
   IFResponseCreatePost,
@@ -10,6 +9,7 @@ import {
   IFResponseAllPost,
   IFDeletePostRequest
 } from '@models/IFPosts';
+import requester from '@infra/apis/requester';
 
 interface IFPostState {
   isLoading: boolean
@@ -21,9 +21,9 @@ const initialState: IFPostState = {
   isLoading: false
 };
 
-export const createPostApi = createAsyncThunk<any, IFCreatePostRequest>(POST.ACTION_TYPES.POST, async (params, thunkAPI) => {
+export const createPostApi = createAsyncThunk<any, { data: IFCreatePostRequest, token?: string }>(POST.ACTION_TYPES.POST, async ({ data, token }, thunkAPI) => {
   try {
-    const response: IFResponseCreatePost = await api.createPostApi(params);
+    const response: IFResponseCreatePost = await requester.post(POST.URL_API, data, true, token);
 
     return {
       ...response
@@ -33,9 +33,9 @@ export const createPostApi = createAsyncThunk<any, IFCreatePostRequest>(POST.ACT
   }
 });
 
-export const editPostApi = createAsyncThunk<any, IFEditPostRequest>(POST.ACTION_TYPES.PUT, async (params, thunkAPI) => {
+export const editPostApi = createAsyncThunk<any, IFEditPostRequest>(POST.ACTION_TYPES.PUT, async ({ params, data, token }, thunkAPI) => {
   try {
-    const response: IFResponseCreatePost = await api.editPostApi(params);
+    const response: IFResponseCreatePost = await requester.put(`${POST.URL_API}/${params.shortUrl}`, data, true, token);
 
     return {
       ...response
@@ -47,7 +47,7 @@ export const editPostApi = createAsyncThunk<any, IFEditPostRequest>(POST.ACTION_
 
 export const getSinglePostApi = createAsyncThunk<any, IFSinglePostRequest>(POST.ACTION_TYPES.SINGLE, async (params, thunkAPI) => {
   try {
-    const response: IFResponseSinglePost = await api.getSinglePostApi(params);
+    const response: IFResponseSinglePost = await requester.get(`${POST.URL_API}/${params.shortUrl}`);
 
     return {
       ...response
@@ -57,9 +57,9 @@ export const getSinglePostApi = createAsyncThunk<any, IFSinglePostRequest>(POST.
   }
 });
 
-export const getAllPost = createAsyncThunk<any>(POST.ACTION_TYPES.ALL, async (_, thunkAPI) => {
+export const getAllPost = createAsyncThunk<any, { token?: string }>(POST.ACTION_TYPES.ALL, async (token, thunkAPI) => {
   try {
-    const response: IFResponseAllPost = await api.getAllPostApi();
+    const response: IFResponseAllPost = await requester.get(POST.URL_API);
 
     return {
       ...response
@@ -69,9 +69,9 @@ export const getAllPost = createAsyncThunk<any>(POST.ACTION_TYPES.ALL, async (_,
   }
 });
 
-export const deletePost = createAsyncThunk<any, IFDeletePostRequest>(POST.ACTION_TYPES.DELETE, async ({ id }, thunkAPI) => {
+export const deletePost = createAsyncThunk<any, IFDeletePostRequest>(POST.ACTION_TYPES.DELETE, async ({ id, token }, thunkAPI) => {
   try {
-    const response: IFResponseAllPost = await api.deletePostApi(id);
+    const response: IFResponseAllPost = await requester.delete(`${POST.URL_API}/${id}`, {}, true, token);
 
     return {
       ...response
