@@ -174,7 +174,7 @@ const CardTitle = styled.div`
   }
 `;
 
-const CardDescription = styled.p`
+const CardDescription = styled.div`
   margin-bottom: 12px;
   display: -webkit-box;
   -webkit-line-clamp: 2;

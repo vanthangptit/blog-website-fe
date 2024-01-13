@@ -29,6 +29,10 @@ export const usePosts = () => {
     return dispatch(postStore.getSinglePostApi(params));
   };
 
+  const getPostsByUser = () => {
+    return dispatch(postStore.getPostsByUser({ token: getAuth('accessToken') }));
+  };
+
   const getAllPost = () => {
     return dispatch(postStore.getAllPost({ token: getAuth('accessToken') }));
   };
@@ -43,6 +47,7 @@ export const usePosts = () => {
     editPostApi,
     getSinglePostApi,
     getAllPost,
-    deletePost
+    deletePost,
+    getPostsByUser
   };
 };

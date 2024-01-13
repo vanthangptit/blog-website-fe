@@ -21,12 +21,6 @@ const setConf = ({ isCredentials= false, token }: { isCredentials?: boolean; tok
 };
 
 const verifyCredentials = (url: string, method?: Method) => {
-  // eslint-disable-next-line no-console
-  console.log(url);
-  // eslint-disable-next-line no-console
-  console.log(POST.URL_API);
-  // eslint-disable-next-line no-console
-  console.log(method);
   return url === AUTH.REFRESH_TOKEN_URL || url === AUTH.LOGIN_URL || (url === POST.URL_API && method === 'get');
 };
 
@@ -84,7 +78,7 @@ const requester: any = {
       .then(responseBody)
       .catch((e) => {
         if (retry && e.response.status === 401) {
-          return getToken({ method: 'put', url, params });
+          return getToken({ method: 'delete', url, params });
         }
         return errorBody(e);
       });

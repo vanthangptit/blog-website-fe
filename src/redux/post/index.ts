@@ -15,6 +15,7 @@ interface IFPostState {
   isLoading: boolean
   singlePost?: IFResponseSinglePost,
   allPost?: IFResponseAllPost,
+  postsByUser?: IFResponseAllPost,
 }
 
 const initialState: IFPostState = {
@@ -57,9 +58,21 @@ export const getSinglePostApi = createAsyncThunk<any, IFSinglePostRequest>(POST.
   }
 });
 
-export const getAllPost = createAsyncThunk<any, { token?: string }>(POST.ACTION_TYPES.ALL, async (token, thunkAPI) => {
+export const getAllPost = createAsyncThunk<any, { token?: string }>(POST.ACTION_TYPES.ALL, async ({ token }, thunkAPI) => {
   try {
-    const response: IFResponseAllPost = await requester.get(POST.URL_API);
+    const response: IFResponseAllPost = await requester.get(POST.URL_API, {}, false, token);
+
+    return {
+      ...response
+    };
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue(error.response);
+  }
+});
+
+export const getPostsByUser = createAsyncThunk<any, { token?: string }>(POST.ACTION_TYPES.POSTS_BY_USER, async ({ token }, thunkAPI) => {
+  try {
+    const response: IFResponseAllPost = await requester.get(`${POST.URL_API}/my-post`, {}, true, token);
 
     return {
       ...response
@@ -72,6 +85,10 @@ export const getAllPost = createAsyncThunk<any, { token?: string }>(POST.ACTION_
 export const deletePost = createAsyncThunk<any, IFDeletePostRequest>(POST.ACTION_TYPES.DELETE, async ({ id, token }, thunkAPI) => {
   try {
     const response: IFResponseAllPost = await requester.delete(`${POST.URL_API}/${id}`, {}, true, token);
+
+    if (response.status === 200 || response.statusCode === 200) {
+      await thunkAPI.dispatch(getPostsByUser({ token }));
+    }
 
     return {
       ...response
@@ -93,6 +110,10 @@ export const appPostSlice = createSlice({
       })
       .addCase(getSinglePostApi.pending, (state) => {
         state.isLoading = true;
+      })
+      .addCase(getPostsByUser.fulfilled, (state, action: PayloadAction<any>) => {
+        state.postsByUser = action.payload;
+        state.isLoading = false;
       })
       .addCase(getAllPost.fulfilled, (state, action: PayloadAction<any>) => {
         state.allPost = action.payload;
