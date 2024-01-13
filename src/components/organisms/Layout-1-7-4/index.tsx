@@ -2,12 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 import styles from '@constants/styles';
 import AsideLeftPost from '@components/organisms/AsideLeftPost';
+import { IFPost } from '@models/IFPosts';
 
-const Layout174 = ({ children }: { children: React.ReactNode }) => {
+const Layout174 = ({ children, post }: { children: React.ReactNode, post: IFPost }) => {
   return (
     <Layout>
       <AsideLeft>
-        <AsideLeftPost />
+        <AsideLeftPost post={post}/>
       </AsideLeft>
       <Main>
         {children}
@@ -54,7 +55,7 @@ const AsideRight = styled.aside`
   flex: 0 0 100%;
 
   @media (min-width: 992px) {
-    flex: 0 0 calc(${(4/12)*100}% - 30px);
+    flex: 0 0 ${(4/12)*100}%;
   }
 `;
 
@@ -62,10 +63,10 @@ const Main = styled.main`
   flex: 0 0 100%;
 
   @media (min-width: 768px) {
-    flex: 0 0 ${(11.3/12)*100}%;
+    flex: 0 0 calc(${(11.3/12)*100}% - 15px);
   }
 
   @media (min-width: 992px) {
-    flex: 0 0 ${(7.3/12)*100}%;
+    flex: 0 0  calc(${(7.3/12)*100}% - 30px);
   }
 `;

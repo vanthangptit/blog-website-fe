@@ -7,7 +7,9 @@ import {
   IFSinglePostRequest,
   IFResponseSinglePost,
   IFResponseAllPost,
-  IFDeletePostRequest
+  IFDeletePostRequest,
+  IFToggleLikePostRequest,
+  IFToggleDislikePostRequest
 } from '@models/IFPosts';
 import requester from '@infra/apis/requester';
 
@@ -89,6 +91,30 @@ export const deletePost = createAsyncThunk<any, IFDeletePostRequest>(POST.ACTION
     if (response.status === 200 || response.statusCode === 200) {
       await thunkAPI.dispatch(getPostsByUser({ token }));
     }
+
+    return {
+      ...response
+    };
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue(error.response);
+  }
+});
+
+export const toggleLikePostsApi = createAsyncThunk<any, IFToggleLikePostRequest>(POST.ACTION_TYPES.DELETE, async ({ params, token }, thunkAPI) => {
+  try {
+    const response = await requester.post(`${POST.URL_API}/likes/${params.id}`, {}, true, token);
+
+    return {
+      ...response
+    };
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue(error.response);
+  }
+});
+
+export const toggleDislikePostsApi = createAsyncThunk<any, IFToggleDislikePostRequest>(POST.ACTION_TYPES.DELETE, async ({ params, token }, thunkAPI) => {
+  try {
+    const response = await requester.post(`${POST.URL_API}/dislikes/${params.id}`, {}, true, token);
 
     return {
       ...response

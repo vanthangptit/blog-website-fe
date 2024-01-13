@@ -24,7 +24,7 @@ const SinglePost = () => {
   return !isLoading ? (
     <>
       {singlePost?.data && (
-        <Layout174>
+        <Layout174 post={singlePost?.data}>
           <BoxContent>
             <CreateAt>
               {singlePost.data?.createdAt && formatDatetime(singlePost.data.createdAt)}

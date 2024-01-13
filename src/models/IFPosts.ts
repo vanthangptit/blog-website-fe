@@ -21,6 +21,10 @@ export interface IFPostForm {
   visibility: string
 }
 
+export interface IFParamsIdRequest {
+  id: string
+}
+
 export interface IFSinglePostRequest {
   shortUrl: string
 }
@@ -37,6 +41,12 @@ export interface IFEditPostRequest extends IFRequester {
 export interface IFDeletePostRequest extends IFRequester {
   id: string
 }
+
+export interface IFToggleLikePostRequest extends IFRequester {
+  params: IFParamsIdRequest
+}
+
+export interface IFToggleDislikePostRequest extends IFToggleLikePostRequest {}
 
 export interface IFPost extends IFDataPostMutable {
   createdAt: string

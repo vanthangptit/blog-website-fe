@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useContext, useMemo, useState, useEffect } from 'react';
 import {
   BiLike,
   BiSolidLike,
@@ -14,13 +14,64 @@ import { FaBookmark, FaRegBookmark  } from 'react-icons/fa';
 import styled from 'styled-components';
 import PopupActions from '@components/molecules/Popups/PopupActions';
 import IconButton from '@components/atoms/IconButton';
+import { useParams } from 'react-router-dom';
+import { toasts } from '@utils/toast';
+import { TOAST } from '@constants/toast';
+import { IFPost } from '@models/IFPosts';
+import { usePosts } from '@hooks/usePost';
+import { UnauthorizedContext } from '@infra/context/UnauthorizedContext';
 
-const AsideLeftPost = () => {
-  const isLike = false;
-  const isDislike = false;
-  const isHeart = false;
-  const isStart = false;
-  const isSave = false;
+const AsideLeftPost = ({ post }: { post: IFPost }) => {
+  const { shortUrl } = useParams();
+  const { setUnauthorized } = useContext(UnauthorizedContext);
+  const { toggleLikePosts, toggleDislikePosts } = usePosts();
+  const [ isLike, setIsLike ] = useState<boolean>(false);
+  const [ isDislike, setIsDislike ] = useState<boolean>(false);
+  const [ isHeart, setIsHeart ] = useState<boolean>(false);
+  const [ isStart, setIsStart ] = useState<boolean>(false);
+  const [ isSave, setIsSave ] = useState<boolean>(false);
+
+  const handleSavePost = () => toasts('warn', TOAST.WARNING_UPDATING);
+
+  const handleSubmit = (rs: any, setState: any, isValue: boolean) => {
+    if (rs.status === 200 || rs.statusCode === 200) {
+      return;
+    }
+
+    setState(!isValue);
+    if (rs.status === 401 || rs.statusCode === 401) {
+      setUnauthorized(true);
+    } else {
+      toasts('error', TOAST.ERROR_COMMON);
+    }
+  };
+
+  const toggleLikePost = () => {
+    setIsLike(!isLike);
+    toggleLikePosts({ id: post.id })
+      .unwrap()
+      .then((rs) => handleSubmit(rs, setIsLike, !isLike));
+  };
+
+  const toggleDislikePost = () => {
+    setIsDislike(!isDislike);
+    toggleDislikePosts({
+      id: post.id
+    })
+      .unwrap()
+      .then((rs) => handleSubmit(rs, setIsDislike, !isDislike));
+  };
+
+  const toggleHeartPost = () => {
+    toasts('warn', TOAST.WARNING_UPDATING);
+  };
+
+  const toggleStarPost = () => {
+    toasts('warn', TOAST.WARNING_UPDATING);
+  };
+
+  // eslint-disable-next-line no-console
+  console.log(setIsHeart, setIsStart, setIsSave);
 
   const listIcons = useMemo(() => {
     return [
@@ -28,30 +79,34 @@ const AsideLeftPost = () => {
         element: isLike ? BiSolidLike : BiLike,
         title: 'Like',
         link: '#',
-        onClick: () => true
+        onClick: toggleLikePost
       },
       {
         element: isDislike ? BiSolidDislike : BiDislike,
         title: 'Dislike',
         link: '#',
-        onClick: () => true
+        onClick: toggleDislikePost
       },
       {
         element: isHeart ? BiSolidHeart : BiHeart,
         title: 'Heart',
         link: '#',
-        onClick: () => true
+        onClick: toggleHeartPost
       },
       {
         element: isStart ? BiSolidStar : BiStar,
         title: 'Star',
         link: '#',
-        onClick: () => true
+        onClick: toggleStarPost
       }
     ];
-  }, []);
+  }, [ isLike, isDislike, isHeart, isStart ]);
 
-  const handleSavePost = () => true;
+  useEffect(() => {
+    /**
+     * @todo: get user current to set ui default
+     */
+  }, [ shortUrl ]);
 
   return (
     <AsideLef>
@@ -89,7 +144,7 @@ const AsideLeftPost = () => {
   );
 };
 
-export default AsideLeftPost;
+export default React.memo(AsideLeftPost);
 
 const AsideLef = styled.div`
   display: flex;

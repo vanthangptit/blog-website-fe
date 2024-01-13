@@ -8,7 +8,8 @@ import {
   IFCreatePostRequest,
   IFDeletePostRequest,
   IFEditPostRequest,
-  IFSinglePostRequest
+  IFSinglePostRequest,
+  IFParamsIdRequest
 } from '@models/IFPosts';
 import { useAuth } from '@hooks/useAuth';
 
@@ -41,6 +42,14 @@ export const usePosts = () => {
     return dispatch(postStore.deletePost(params));
   };
 
+  const toggleLikePosts = (params: IFParamsIdRequest) => {
+    return dispatch(postStore.toggleLikePostsApi({ params, token: getAuth('accessToken') }));
+  };
+
+  const toggleDislikePosts = (params: IFParamsIdRequest) => {
+    return dispatch(postStore.toggleDislikePostsApi({ params, token: getAuth('accessToken') }));
+  };
+
   return {
     ...postsStates,
     createPostApi,
@@ -48,6 +57,8 @@ export const usePosts = () => {
     getSinglePostApi,
     getAllPost,
     deletePost,
-    getPostsByUser
+    getPostsByUser,
+    toggleLikePosts,
+    toggleDislikePosts
   };
 };
