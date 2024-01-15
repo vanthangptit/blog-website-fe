@@ -63,9 +63,6 @@ const AsideLeftPost = ({ post }: { post: IFPost }) => {
       .then((rs) => handleSubmit(rs, setIsLike, !state));
   };
 
-  // eslint-disable-next-line no-console
-  console.log(setIsSave);
-
   const listIcons = useMemo(() => {
     return [
       {
