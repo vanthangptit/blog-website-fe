@@ -21,6 +21,12 @@ export interface IFPostForm {
   visibility: string
 }
 
+export type Associate = 'likes'|'disLikes'|'hearts'|'stars';
+
+export interface IFAssociateDataRequest {
+  associate: Associate
+}
+
 export interface IFParamsIdRequest {
   id: string
 }
@@ -42,11 +48,13 @@ export interface IFDeletePostRequest extends IFRequester {
   id: string
 }
 
-export interface IFToggleLikePostRequest extends IFRequester {
+export interface IFSavesRequest extends IFRequester {
   params: IFParamsIdRequest
 }
 
-export interface IFToggleDislikePostRequest extends IFToggleLikePostRequest {}
+export interface IFAssociatePostRequest extends IFSavesRequest {
+  data: IFAssociateDataRequest
+}
 
 export interface IFPost extends IFDataPostMutable {
   createdAt: string

@@ -1,4 +1,9 @@
-import React, { useContext, useMemo, useState, useEffect } from 'react';
+import React, {
+  useContext,
+  useMemo,
+  useState,
+  useEffect
+} from 'react';
 import {
   BiLike,
   BiSolidLike,
@@ -17,21 +22,19 @@ import IconButton from '@components/atoms/IconButton';
 import { useParams } from 'react-router-dom';
 import { toasts } from '@utils/toast';
 import { TOAST } from '@constants/toast';
-import { IFPost } from '@models/IFPosts';
+import { Associate, IFPost } from '@models/IFPosts';
 import { usePosts } from '@hooks/usePost';
 import { UnauthorizedContext } from '@infra/context/UnauthorizedContext';
 
 const AsideLeftPost = ({ post }: { post: IFPost }) => {
   const { shortUrl } = useParams();
   const { setUnauthorized } = useContext(UnauthorizedContext);
-  const { toggleLikePosts, toggleDislikePosts } = usePosts();
+  const { toggleAssociatePost, toggleSavesPost } = usePosts();
   const [ isLike, setIsLike ] = useState<boolean>(false);
   const [ isDislike, setIsDislike ] = useState<boolean>(false);
   const [ isHeart, setIsHeart ] = useState<boolean>(false);
   const [ isStart, setIsStart ] = useState<boolean>(false);
   const [ isSave, setIsSave ] = useState<boolean>(false);
-
-  const handleSavePost = () => toasts('warn', TOAST.WARNING_UPDATING);
 
   const handleSubmit = (rs: any, setState: any, isValue: boolean) => {
     if (rs.status === 200 || rs.statusCode === 200) {
@@ -46,32 +49,22 @@ const AsideLeftPost = ({ post }: { post: IFPost }) => {
     }
   };
 
-  const toggleLikePost = () => {
-    setIsLike(!isLike);
-    toggleLikePosts({ id: post.id })
+  const handleSavePost = () => {
+    setIsSave(!isSave);
+    toggleSavesPost({ id: post.id })
       .unwrap()
-      .then((rs) => handleSubmit(rs, setIsLike, !isLike));
+      .then((rs) => handleSubmit(rs, setIsSave, !isSave));
   };
 
-  const toggleDislikePost = () => {
-    setIsDislike(!isDislike);
-    toggleDislikePosts({
-      id: post.id
-    })
+  const toggleAssociate = (associate: Associate, setState: any, state: boolean) => {
+    setState(!state);
+    toggleAssociatePost({ id: post.id }, { associate })
       .unwrap()
-      .then((rs) => handleSubmit(rs, setIsDislike, !isDislike));
-  };
-
-  const toggleHeartPost = () => {
-    toasts('warn', TOAST.WARNING_UPDATING);
-  };
-
-  const toggleStarPost = () => {
-    toasts('warn', TOAST.WARNING_UPDATING);
+      .then((rs) => handleSubmit(rs, setIsLike, !state));
   };
 
   // eslint-disable-next-line no-console
-  console.log(setIsHeart, setIsStart, setIsSave);
+  console.log(setIsSave);
 
   const listIcons = useMemo(() => {
     return [
@@ -79,25 +72,25 @@ const AsideLeftPost = ({ post }: { post: IFPost }) => {
         element: isLike ? BiSolidLike : BiLike,
         title: 'Like',
         link: '#',
-        onClick: toggleLikePost
+        onClick: () => toggleAssociate('likes', setIsLike, isLike)
       },
       {
         element: isDislike ? BiSolidDislike : BiDislike,
         title: 'Dislike',
         link: '#',
-        onClick: toggleDislikePost
+        onClick: () => toggleAssociate('disLikes', setIsDislike, isDislike)
       },
       {
         element: isHeart ? BiSolidHeart : BiHeart,
         title: 'Heart',
         link: '#',
-        onClick: toggleHeartPost
+        onClick: () => toggleAssociate('hearts', setIsHeart, isHeart)
       },
       {
         element: isStart ? BiSolidStar : BiStar,
         title: 'Star',
         link: '#',
-        onClick: toggleStarPost
+        onClick: () => toggleAssociate('stars', setIsStart, isStart)
       }
     ];
   }, [ isLike, isDislike, isHeart, isStart ]);

@@ -8,8 +8,8 @@ import {
   IFResponseSinglePost,
   IFResponseAllPost,
   IFDeletePostRequest,
-  IFToggleLikePostRequest,
-  IFToggleDislikePostRequest
+  IFAssociatePostRequest,
+  IFSavesRequest
 } from '@models/IFPosts';
 import requester from '@infra/apis/requester';
 
@@ -100,9 +100,9 @@ export const deletePost = createAsyncThunk<any, IFDeletePostRequest>(POST.ACTION
   }
 });
 
-export const toggleLikePostsApi = createAsyncThunk<any, IFToggleLikePostRequest>(POST.ACTION_TYPES.DELETE, async ({ params, token }, thunkAPI) => {
+export const toggleAssociatePosts = createAsyncThunk<any, IFAssociatePostRequest>(POST.ACTION_TYPES.DELETE, async ({ data, params, token }, thunkAPI) => {
   try {
-    const response = await requester.post(`${POST.URL_API}/likes/${params.id}`, {}, true, token);
+    const response = await requester.post(`${POST.URL_API}/associates/${params.id}`, data, true, token);
 
     return {
       ...response
@@ -112,9 +112,9 @@ export const toggleLikePostsApi = createAsyncThunk<any, IFToggleLikePostRequest>
   }
 });
 
-export const toggleDislikePostsApi = createAsyncThunk<any, IFToggleDislikePostRequest>(POST.ACTION_TYPES.DELETE, async ({ params, token }, thunkAPI) => {
+export const toggleSavesPost = createAsyncThunk<any, IFSavesRequest>(POST.ACTION_TYPES.DELETE, async ({ params, token }, thunkAPI) => {
   try {
-    const response = await requester.post(`${POST.URL_API}/dislikes/${params.id}`, {}, true, token);
+    const response = await requester.post(`${POST.URL_API}/saves/${params.id}`, {}, true, token);
 
     return {
       ...response
