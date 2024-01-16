@@ -30,7 +30,11 @@ const SinglePost = () => {
               {singlePost.data?.createdAt && formatDatetime(singlePost.data.createdAt)}
             </CreateAt>
             <BoxBanner>
-              <BannerPost src={singlePost.data?.imageUrl} />
+              <BannerPost
+                clickOutsideToClose={false}
+                photo={singlePost.data?.imageUrl}
+                alt={'Image banner Post'}
+              />
             </BoxBanner>
             <CardAvatar
               link={`profile/${singlePost.data?.user?.id}`}
@@ -76,6 +80,10 @@ const BoxContent = styled.section`
   border-bottom: 1px solid ${({ theme }) => theme.gray4};
 `;
 
-const BoxComment = styled.article`
+const BoxComment = styled.section`
   padding: 30px 0;
+`;
+
+const Description = styled.div`
+  color: ${( { theme }) => theme.text3};
 `;
