@@ -34,7 +34,7 @@ const CardAvatar = ({
 
 export default CardAvatar;
 
-const Avatar = styled.article`
+const Avatar = styled.div`
   display: flex;
   gap: 10px;
 `;

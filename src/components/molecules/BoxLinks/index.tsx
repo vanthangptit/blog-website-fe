@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { MouseEvent } from 'react';
 import styled from 'styled-components';
 import { toasts } from '@utils/toast';
 import { TOAST } from '@constants/toast';
@@ -12,7 +12,8 @@ const BoxLinks = ({
 }: {
   className?: string
 }) => {
-  const handleSavePost = () => {
+  const handleSavePost  = (e: MouseEvent<HTMLAnchorElement | MouseEvent>) => {
+    e.preventDefault();
     toasts('warn', TOAST.WARNING_UPDATING);
     return false;
   };

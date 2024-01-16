@@ -5,5 +5,5 @@ export const formatDatetime = (date: string) => {
 };
 
 export const formatDatetimeByMonthYear = (date: string) => {
-  return `${moment(date).format('MMM YY')}`;
+  return moment(date).format('ll');
 };

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { MouseEvent, useContext, useEffect } from 'react';
 import Textarea from '@components/atoms/Textarea';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import styled from 'styled-components';
@@ -39,6 +39,12 @@ const PostFormComment = ({ postId }: { postId: string }) => {
     }
   };
 
+  const reportAbuse = (e: MouseEvent<HTMLAnchorElement | MouseEvent>) => {
+    e.preventDefault();
+    toasts('warn', TOAST.WARNING_UPDATING);
+    return false;
+  };
+
   useEffect(() => {
     getCommentByPostId({ id: postId });
   }, [ postId ]);
@@ -77,7 +83,7 @@ const PostFormComment = ({ postId }: { postId: string }) => {
         </Card>
       ))}
       <ReportAbuse>
-        <Link to={'/report-abuse'}>Report abuse</Link>
+        <Link to={'/report-abuse'} onClick={(e) => reportAbuse(e)}>Report abuse</Link>
       </ReportAbuse>
     </BoxComment>
   );

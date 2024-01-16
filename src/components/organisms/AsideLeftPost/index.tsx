@@ -149,4 +149,7 @@ const AsideLef = styled.div`
   }
 `;
 
-const IconButtonBox = styled.div``;
+const IconButtonBox = styled.div`
+  width: 100%;
+  text-align: center;
+`;

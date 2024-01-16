@@ -3,8 +3,21 @@ import styled from 'styled-components';
 import styles from '@constants/styles';
 import AsideLeftPost from '@components/organisms/AsideLeftPost';
 import { IFPost } from '@models/IFPosts';
+import AsideRightPost from '@components/organisms/AsideRightPost';
 
-const Layout174 = ({ children, post }: { children: React.ReactNode, post: IFPost }) => {
+const spacing = 20;
+
+const Layout174 = ({
+  children,
+  post,
+  postRelated,
+  creator
+}: {
+  children: React.ReactNode,
+  post: IFPost
+  postRelated: IFPost
+  creator: any
+}) => {
   return (
     <Layout>
       <AsideLeft>
@@ -14,7 +27,7 @@ const Layout174 = ({ children, post }: { children: React.ReactNode, post: IFPost
         {children}
       </Main>
       <AsideRight>
-        right
+        <AsideRightPost user={creator} postRelated={postRelated}/>
       </AsideRight>
     </Layout>
   );
@@ -29,14 +42,14 @@ const Layout = styled.div`
   max-width: ${styles.widthContainer}px;
   padding: 15px;
   margin: auto;
-  gap: 15px;
+  gap: ${spacing}px;
 `;
 
 const AsideLeft = styled.aside`
   flex: 0 0 100%;
 
   @media (min-width: 768px) {
-    flex: 0 0 ${(0.7/12)*100}%;
+    flex: 0 0 ${(0.5/12)*100}%;
     padding-top: 89px;
   }
 
@@ -63,10 +76,10 @@ const Main = styled.main`
   flex: 0 0 100%;
 
   @media (min-width: 768px) {
-    flex: 0 0 calc(${(11.3/12)*100}% - 15px);
+    flex: 0 0 calc(${(11.5/12)*100}% - ${spacing}px);
   }
 
   @media (min-width: 992px) {
-    flex: 0 0  calc(${(7.3/12)*100}% - 30px);
+    flex: 0 0  calc(${(7.5/12)*100}% - ${spacing * 2}px);
   }
 `;
