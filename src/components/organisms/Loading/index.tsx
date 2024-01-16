@@ -25,5 +25,6 @@ const LoadingBox = styled.section<{ $isDarkMode: boolean }>`
   justify-content: center;
   align-content: center;
   align-items: center;
-  background-color: ${({ $isDarkMode }) => $isDarkMode ? '#000000' : '#FFFFFF'};;
+  background-color: ${({ $isDarkMode }) => $isDarkMode ? '#000000' : '#FFFFFF'};
+  overflow: hidden;
 `;
