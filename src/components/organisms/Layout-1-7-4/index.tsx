@@ -41,7 +41,8 @@ const Layout = styled.div`
   width: 100%;
   max-width: ${styles.widthContainer}px;
   padding: 15px;
-  margin: auto;
+  margin-left: auto;
+  margin-right: auto;
   gap: ${spacing}px;
 `;
 

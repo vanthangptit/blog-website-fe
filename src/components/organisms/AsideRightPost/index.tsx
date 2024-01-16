@@ -7,7 +7,7 @@ import { formatDatetimeByMonthYear } from '@utils/formatDatetime';
 /**
  * @param user
  * @constructor
- * @todo: user must haven't any type
+ * @todo: user and postRelated must haven't any type
  */
 
 const AsideRightPost = ({ user, postRelated }: { user: any, postRelated?: any }) => {

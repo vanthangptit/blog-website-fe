@@ -70,6 +70,12 @@ export interface IFPost extends IFDataPostMutable {
   disLikesCount: number
   likes: string[]
   likesCount: number
+  saves: string[]
+  savesCount: number
+  stars: string[]
+  starsCount: number
+  hearts: string[]
+  heartsCount: number
   tags?: string[]
   tagsCount?: number
   id: string
