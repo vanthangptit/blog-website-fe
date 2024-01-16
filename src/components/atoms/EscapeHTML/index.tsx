@@ -1,9 +1,12 @@
 import React from 'react';
 import DOMPurify from 'dompurify';
 
-const EscapeHTML = ({ htmlString }: { htmlString: string }) => {
+const EscapeHTML = ({ htmlString, Element }: { htmlString: string; Element?: any }) => {
   const cleanedHTML = DOMPurify.sanitize(htmlString);
-  return <div dangerouslySetInnerHTML={{ __html: cleanedHTML }} />;
+
+  return Element
+    ? <Element dangerouslySetInnerHTML={{ __html: cleanedHTML }} />
+    : <div dangerouslySetInnerHTML={{ __html: cleanedHTML }} />;
 };
 
 export default EscapeHTML;

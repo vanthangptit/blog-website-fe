@@ -45,7 +45,7 @@ const SinglePost = () => {
             {/** @todo: View likesCount, dislikesCount,... */}
             <SectionTitle title={singlePost.data?.title} />
             {/** @todo: View Tags, Category,...*/}
-            <EscapeHTML htmlString={singlePost.data?.description} />
+            <EscapeHTML htmlString={singlePost.data?.description} Element={Description}/>
           </BoxContent>
           <BoxComment>
             <PostFormComment postId={singlePost?.data?.id} />

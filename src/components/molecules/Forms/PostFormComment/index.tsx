@@ -87,7 +87,7 @@ export default React.memo(PostFormComment);
 
 const BoxComment = styled.div``;
 
-const FormComment = styled.div`
+const FormComment = styled.article`
   width: 100%;
   display: flex;
   gap: 15px;
@@ -102,7 +102,7 @@ const ButtonBox = styled.div`
   text-align: right;
 `;
 
-const Card = styled.div`
+const Card = styled.article`
   margin: 25px 0;
 `;
 
