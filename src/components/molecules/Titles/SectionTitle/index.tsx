@@ -2,7 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 import EscapeHTML from '@components/atoms/EscapeHTML';
 
-const SectionTitle = ({ title, des }: { title: string, des?: string }) => {
+const SectionTitle = ({
+  title,
+  des
+}: {
+  title: string,
+  des?: string
+}) => {
   return (
     <Hgroup>
       <Heading>{title}</Heading>
@@ -19,18 +25,14 @@ const Hgroup = styled.hgroup`
   margin: 15px 0 20px;
 `;
 
-const Heading = styled.h1`
-  font-size: 50px;
+const Heading = styled.h3`
+  font-size: 18px;
   color: ${({ theme }) => theme.primary1};
   font-family: ${({ theme }) => theme.fontMuktaMalarExtraBold};
   line-height: 1.3;
 
-  @media (min-width: 768px) and (max-width: 991px) {
-    font-size: calc(42px + (50 - 42) * (100vw - 768px) / (991 - 768));
-  }
-
-  @media (max-width: 767px) {
-    font-size: 36px;
+  @media (min-width: 768px) {
+    font-size: 22px;
   }
 `;
 

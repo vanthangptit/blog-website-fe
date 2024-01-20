@@ -3,11 +3,24 @@ import { Input } from '@components/atoms/Imput';
 import { MessageError } from '@components/atoms/MessageError';
 import { FormState, RegisterOptions, UseFormRegister } from 'react-hook-form';
 import styled from 'styled-components';
-import { NameFieldRegister } from '@models/IFRegister';
 import { BsEye, BsEyeSlash } from 'react-icons/bs';
-import { NameFieldLogin } from '@models/IFAuthenticated';
-import { NameFieldCreatePost } from '@models/IFPosts';
 import { LabelField } from '@components/atoms/Label';
+
+type NameField =
+  'title' |
+  'shortUrl' |
+  'excerpt' |
+  'writer' |
+  'email' |
+  'password' |
+  'passwordConfirm' |
+  'firstName' |
+  'lastName' |
+  'newPassword' |
+  'address' |
+  'job';
+
+type TypeField = 'email' | 'password' | 'text';
 
 const FormControl = ({
   register,
@@ -27,10 +40,10 @@ const FormControl = ({
   register: UseFormRegister<any>
   formState: FormState<any>
   textEr: string
-  typeField: 'email' | 'password' | 'text' | 'textarea'
-  nameField: NameFieldRegister | NameFieldLogin | NameFieldCreatePost
+  typeField: TypeField
+  nameField: NameField
   label?: string
-  placeholder: string
+  placeholder?: string
   isRequired?: boolean
   $with: string
   $height: string

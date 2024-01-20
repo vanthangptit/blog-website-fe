@@ -22,6 +22,7 @@ function colors(darkMode: boolean): Colors {
     // base
     white,
     black,
+    transparent: 'rgba(255,255,255,0)',
 
     // text
     text1: darkMode ? white : black,
@@ -37,6 +38,7 @@ function colors(darkMode: boolean): Colors {
     bgDarkOpacity: 'rgba(0, 0, 0, 0.7)',
     bgLightOpacity: 'rgba(255, 255, 255, 0.8)',
     bgBoxShadow: 'rgba(0, 0, 0, 0.3)',
+    bgFieldNameChange: darkMode ? '#222222' : '#FAFAFA',
 
     //primary colors
     primary1: darkMode ? white : black,
@@ -53,6 +55,7 @@ function colors(darkMode: boolean): Colors {
 
     inputPlaceholder: '#7F7F7F',
     colorEyes: '#9f9f9f',
+    textFieldNameChange: darkMode ? '#dee2e6' : '#222222',
 
     //gray colors
     gray: '#cccccc',

@@ -18,7 +18,7 @@ export default Loading;
 
 const LoadingBox = styled.section<{ $isDarkMode: boolean }>`
   height: 100vh;
-  width: 100vw;
+  width: 100%;
   min-width: 360px;
   min-height: 360px;
   display: flex;

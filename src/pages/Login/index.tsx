@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { LayoutMiddle } from '@components/atoms/Layout';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { IFLogin, IFLoginResponse } from '@models/IFAuthenticated';
+import { IFLogin } from '@models/IFAuthenticated';
 import SectionTitleForm from '@components/molecules/Titles/TitleForm';
 import FormControl from '@components/molecules/FormControl';
 import { useAuth } from '@hooks/useAuth';

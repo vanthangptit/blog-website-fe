@@ -6,6 +6,7 @@ import Loader from '@components/molecules/Loader';
 export type ButtonType = 'button' | 'submit' | 'reset';
 
 export default ({
+  className,
   buttonType = 'button',
   text,
   isLoading= false,
@@ -13,6 +14,7 @@ export default ({
   disabled,
   size
 }: {
+  className?: string
   buttonType?: ButtonType
   text: string
   isLoading?: boolean
@@ -27,6 +29,7 @@ export default ({
       type={buttonType}
       disabled={disabled}
       $size={size ?? 'md'}
+      className={className}
     >
       <ButtonText>{text}</ButtonText>
       {isLoading && (

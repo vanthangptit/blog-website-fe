@@ -5,11 +5,11 @@ import styled from 'styled-components';
 const Layout354 = ({ children }: { children: React.ReactNode }) => {
   return (
     <Layout>
-        <AsideLeft></AsideLeft>
-        <Main>
-          {children}
-        </Main>
-        <AsideRight></AsideRight>
+      <AsideLeft />
+      <Main>
+        {children}
+      </Main>
+      <AsideRight />
     </Layout>
   )
 };

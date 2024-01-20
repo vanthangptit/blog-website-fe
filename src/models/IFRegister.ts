@@ -1,4 +1,3 @@
-export type NameFieldRegister = 'email' | 'password' | 'firstName' | 'lastName' | 'passwordConfirm';
 
 export interface IFRegister {
   firstName: string

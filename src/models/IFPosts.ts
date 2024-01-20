@@ -1,8 +1,6 @@
 import { IFResponse } from '@models/IFResponse';
 import { IFRequester } from '@models/IFRequester';
 
-export type NameFieldCreatePost = 'title' | 'shortUrl' | 'excerpt' | 'writer';
-
 export interface IFDataPostMutable {
   title: string
   writer: string

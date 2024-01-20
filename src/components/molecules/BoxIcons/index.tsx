@@ -24,7 +24,7 @@ const BoxIcons = ({
   return (
     <IconsBox className={className}>
       {icons?.map((item, key) => (
-        <>
+        <React.Fragment key={key}>
           {item?.numberCount === undefined ? (
             <Icons
               key={key}
@@ -50,7 +50,7 @@ const BoxIcons = ({
               {item?.numberCount && item.numberCount > 0 ? <span>{item.numberCount}</span> : <></>}
             </Icons>
           )}
-        </>
+        </React.Fragment>
       ))}
     </IconsBox>
   );

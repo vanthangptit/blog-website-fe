@@ -5,6 +5,7 @@ export interface Colors {
   // base
   white: Color
   black: Color
+  transparent: Color
 
   // Text
   text1: Color
@@ -36,6 +37,8 @@ export interface Colors {
 
   inputPlaceholder: Color
   colorEyes: Color
+  textFieldNameChange: Color
+  bgFieldNameChange: Color
 
   gray: Color,
   gray1: Color,

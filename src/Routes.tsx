@@ -17,6 +17,8 @@ import CreatePost from '@pages/CreatePost';
 import Categories from '@pages/Categories';
 import CreateCategory from '@pages/CreateCategory';
 import SinglePost from '@pages/SinglePost';
+import NotFound from '@components/molecules/NotFound';
+import MyAccount from '@pages/MyAccount';
 
 const PrivateRoutes = () => {
   const { authenticated } = useContext(AuthContext);
@@ -49,22 +51,23 @@ const Routes = () => {
   return (
     <Router>
       <Route element={<PublicRoutes />}>
+        <Route path='/' element={<Home />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
         <Route path='/post/:shortUrl' element={<SinglePost />} />
       </Route>
 
       <Route element={<PrivateRoutes />}>
-        <Route path='/' element={<Home />} />
         <Route path='/posts' element={<MyPosts />} />
         <Route path='/create-post' element={<CreatePost />} />
         <Route path='/edit-post/:shortUrl' element={<CreatePost />} />
         <Route path='/categories' element={<Categories />} />
         <Route path='/create-category' element={<CreateCategory />} />
         <Route path='/category/:id' element={<CreateCategory />} />
+        <Route path='/user/:id' element={<MyAccount />} />
       </Route>
 
-      <Route path='*' element={<div>Page Not Found</div>} />
+      <Route path='*' element={<NotFound message={'The page you requested was not found.'}/>} />
     </Router>
   );
 };

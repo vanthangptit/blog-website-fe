@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { FormState, Control, ControllerRenderProps } from 'react-hook-form';
 import { MessageError } from '@components/atoms/MessageError';
 
-type NameField = 'visibility';
+type NameField = 'visibility' | 'gender';
 
 export default ({
   control,
@@ -25,13 +25,14 @@ export default ({
   colourOptions: IFColourOption[],
   nameField: NameField
   textEr: string
-  label: string
+  label?: string
   height?: string
   classNamePrefix?: string
 }) => {
   return (
     <SelectBox $height={height}>
-      <LabelField>{label}</LabelField>
+      {label && <LabelField>{label}</LabelField>}
+
       <DivController>
         <Controller
           control={control}

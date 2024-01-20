@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import SectionTitle from '@components/molecules/Titles/SectionTitle';
 import { usePosts } from '@hooks/usePost';
 import { useParams } from 'react-router-dom';
 import Layout174 from '@components/organisms/Layout-1-7-4';
@@ -17,6 +16,7 @@ import {
 } from 'react-icons/bi';
 import BoxIcons from '@components/molecules/BoxIcons';
 import CardAvatar from '@components/molecules/Avatars/CardAvatar';
+import TitlePage from '@components/molecules/Titles/TitlePage';
 
 const SinglePost = () => {
   const { getSinglePostApi, singlePost, isLoading } = usePosts();
@@ -84,7 +84,7 @@ const SinglePost = () => {
             <BoxAssociates>
               <BoxIcons icons={listIcons} size={25} />
             </BoxAssociates>
-            <SectionTitle title={singlePost.data?.title} />
+            <TitlePage title={singlePost.data?.title} />
             {/** @todo: View Tags, Category,...*/}
             <EscapeHTML htmlString={singlePost.data?.description} Element={Description}/>
           </BoxContent>

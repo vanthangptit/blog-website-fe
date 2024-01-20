@@ -20,8 +20,7 @@ const NotFound = ({ message }: { message: string }) => {
   );
 };
 
-export default React.memo(NotFound);
-
+export default NotFound;
 
 const NotFoundComponent = styled.div`
   flex: 1 1 auto;
