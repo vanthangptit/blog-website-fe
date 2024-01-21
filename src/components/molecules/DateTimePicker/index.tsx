@@ -9,13 +9,17 @@ const DateTimePicker = ({
   $height,
   $with,
   date,
-  setDate
+  setDate,
+  $maxDate,
+  $minDate
 }: {
-  $height?: string,
-  $with?: string,
-  placeholder?: string,
-  date: Date | null,
+  $height?: string
+  $with?: string
+  placeholder?: string
+  date: Date | null
   setDate: (data: null | Date) => void
+  $maxDate?: Date
+  $minDate?: Date
 }) => {
   return (
     <DatePickerBox $height={$height} $with={$with}>
@@ -27,8 +31,8 @@ const DateTimePicker = ({
         onChange={(date) => setDate(date)}
         showYearDropdown
         showMonthDropdown
-        maxDate={new Date()}
-        minDate={subYears(new Date(), 100)}
+        maxDate={$maxDate ?? null}
+        minDate={$minDate ? subYears($minDate, 100) : null}
         dropdownMode="select"
         dateFormat="dd/MM/yyyy"
       />
