@@ -5,7 +5,15 @@ import {
 } from '@store/configureStore';
 import * as userStore from '@store/user';
 import { useAuth } from '@hooks/useAuth';
-import { IFEditFirstName, IFEditLastName } from '@models/IFUser';
+import {
+  IFEditFirstName,
+  IFEditLastName,
+  IFEditAddress,
+  IFEditJob,
+  IFEditDescription,
+  IFEditGender,
+  IFEditBirthDay
+} from '@models/IFUser';
 
 export const useUser = () => {
   const dispatch = useAppDispatch();
@@ -30,11 +38,36 @@ export const useUser = () => {
     return dispatch(userStore.editLastName({ data, token: getAuth('accessToken') }));
   };
 
+  const editUserAddress = (data: IFEditAddress) => {
+    return dispatch(userStore.editUserAddress({ data, token: getAuth('accessToken') }));
+  };
+
+  const editUserJob = (data: IFEditJob) => {
+    return dispatch(userStore.editUserJob({ data, token: getAuth('accessToken') }));
+  };
+
+  const editUserDescription = (data: IFEditDescription) => {
+    return dispatch(userStore.editUserDescription({ data, token: getAuth('accessToken') }));
+  };
+
+  const editUserGender = (data: IFEditGender) => {
+    return dispatch(userStore.editUserGender({ data, token: getAuth('accessToken') }));
+  };
+
+  const editUserBirthDay = (data: IFEditBirthDay) => {
+    return dispatch(userStore.editUserBirthDay({ data, token: getAuth('accessToken') }));
+  };
+
   return {
     ...userStores,
     editProfile,
     getProfile,
     editFirstName,
-    editLastName
+    editLastName,
+    editUserAddress,
+    editUserJob,
+    editUserDescription,
+    editUserGender,
+    editUserBirthDay
   };
 };

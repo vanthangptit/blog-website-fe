@@ -23,7 +23,8 @@ const Textarea = ({
   $pattern,
   $rows,
   $cols,
-  $resize
+  $resize,
+  errors
 }: {
   register: UseFormRegister<any>
   formState: FormState<any>
@@ -39,6 +40,11 @@ const Textarea = ({
   $rows?: number
   $cols?: number
   $resize?: boolean
+  errors?: {
+    required?: string
+    pattern?: string
+    length?: string
+  }
 }) => {
   const options: RegisterOptions = {
     required: $isRequired
@@ -66,7 +72,19 @@ const Textarea = ({
         placeholder={placeholder}
         {...register(nameField, options)}
       />
-      {formState.errors[nameField] && <MessageError>{textEr}</MessageError>}
+      {!errors && formState.errors[nameField] && <MessageError>{textEr}</MessageError>}
+
+      {
+        $isRequired && formState.errors[nameField]?.type === 'required' && errors?.required ? (
+          <MessageError>{errors?.required}</MessageError>
+        ) : ($minLength || $maxLength) &&
+        (formState.errors[nameField]?.type === 'minLength' || formState.errors[nameField]?.type === 'maxLength') &&
+          errors?.length ? (
+            <MessageError>{errors?.length}</MessageError>
+          ) : $pattern && formState.errors[nameField]?.type === 'pattern' && errors?.pattern ? (
+            <MessageError>{errors?.pattern}</MessageError>
+          ) : <></>
+      }
     </TextareaBox>
   );
 };

@@ -23,12 +23,22 @@ export const USER = {
   URL_API: {
     PROFILE: `${API_ROOT_URL}users/profile`,
     EDIT_FIRST_NAME: `${API_ROOT_URL}users/firstname`,
-    EDIT_LAST_NAME: `${API_ROOT_URL}users/lastname`
+    EDIT_LAST_NAME: `${API_ROOT_URL}users/lastname`,
+    EDIT_ADDRESS: `${API_ROOT_URL}users/address`,
+    EDIT_JOB: `${API_ROOT_URL}users/job`,
+    EDIT_DESCRIPTION: `${API_ROOT_URL}users/description`,
+    EDIT_GENDER: `${API_ROOT_URL}users/gender`,
+    EDIT_BIRTHDAY: `${API_ROOT_URL}users/birthday`
   },
   ACTION_TYPES: {
     PROFILE: 'APPS/PROFILE',
     EDIT_FIRST_NAME: 'APPS/EDIT_FIRST_NAME',
-    EDIT_LAST_NAME: 'APPS/EDIT_LAST_NAME'
+    EDIT_LAST_NAME: 'APPS/EDIT_LAST_NAME',
+    EDIT_ADDRESS: 'APPS/EDIT_ADDRESS',
+    EDIT_JOB: 'APPS/EDIT_JOB',
+    EDIT_DESCRIPTION: 'APPS/EDIT_DESCRIPTION',
+    EDIT_GENDER: 'APPS/EDIT_GENDER',
+    EDIT_BIRTHDAY: 'APPS/EDIT_BIRTHDAY'
   }
 };
 

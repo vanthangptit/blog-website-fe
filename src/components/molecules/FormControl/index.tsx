@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { BsEye, BsEyeSlash } from 'react-icons/bs';
 import { LabelField } from '@components/atoms/Label';
 
-type NameField =
+export type NameField =
   'title' |
   'shortUrl' |
   'excerpt' |
@@ -20,7 +20,7 @@ type NameField =
   'address' |
   'job';
 
-type TypeField = 'email' | 'password' | 'text';
+export type TypeField = 'email' | 'password' | 'text';
 
 const FormControl = ({
   register,
@@ -35,7 +35,8 @@ const FormControl = ({
   $minLength,
   $maxLength,
   $pattern,
-  label
+  label,
+  errors
 }: {
   register: UseFormRegister<any>
   formState: FormState<any>
@@ -50,6 +51,11 @@ const FormControl = ({
   $minLength?: number
   $maxLength?: number
   $pattern?: any
+  errors?: {
+    required?: string
+    pattern?: string
+    length?: string
+  }
 }) => {
   const [ isHiddenPassword, setHiddenPassword ] = useState<boolean>(true);
   const handleHiddenPassword = () => setHiddenPassword(!isHiddenPassword);
@@ -87,7 +93,19 @@ const FormControl = ({
           </FormIcons>
         )}
       </DivBox>
-      {formState.errors[nameField] && <MessageError>{textEr}</MessageError>}
+      {!errors && formState.errors[nameField] && <MessageError>{textEr}</MessageError>}
+
+      {
+        isRequired && formState.errors[nameField]?.type === 'required' && errors?.required ? (
+          <MessageError>{errors?.required}</MessageError>
+        ) : ($minLength || $maxLength) &&
+          (formState.errors[nameField]?.type === 'minLength' || formState.errors[nameField]?.type === 'maxLength') &&
+          errors?.length ? (
+            <MessageError>{errors?.length}</MessageError>
+          ) : $pattern && formState.errors[nameField]?.type === 'pattern' && errors?.pattern ? (
+            <MessageError>{errors?.pattern}</MessageError>
+          ) : <></>
+      }
     </>
   );
 };

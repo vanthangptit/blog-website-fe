@@ -1,7 +1,7 @@
 export const GENDER = [
+  'Other',
   'Female',
-  'Male',
-  'Other'
+  'Male'
 ].map((label) => ({ label, value: `${label}`.toLowerCase() }));
 
 export const VISIBILITY = [
