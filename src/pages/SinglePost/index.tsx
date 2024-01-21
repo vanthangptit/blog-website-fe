@@ -6,7 +6,7 @@ import NotFound from '@components/molecules/NotFound';
 import BannerPost from '@components/molecules/Banners/BannerPost';
 import { formatDatetime } from '@utils/formatDatetime';
 import styled from 'styled-components';
-import EscapeHTML from '@components/atoms/EscapeHTML';
+import EscapeHTML from '@components/atoms/EscapeHTML/DivEscapeHTML';
 import PostFormComment from '@components/molecules/Forms/PostFormComment';
 import {
   BiDislike,
@@ -17,6 +17,11 @@ import {
 import BoxIcons from '@components/molecules/BoxIcons';
 import CardAvatar from '@components/molecules/Avatars/CardAvatar';
 import TitlePage from '@components/molecules/Titles/TitlePage';
+
+/**
+ * @constructor
+ * @todo: get post related
+ */
 
 const SinglePost = () => {
   const { getSinglePostApi, singlePost, isLoading } = usePosts();
@@ -62,7 +67,7 @@ const SinglePost = () => {
   return !isLoading ? (
     <>
       {singlePost?.data && (
-        <Layout174 post={singlePost?.data} postRelated={singlePost?.data} creator={singlePost.data.user}>
+        <Layout174 post={singlePost?.data} postRelated={undefined} creator={singlePost.data.user}>
           <BoxContent>
             <BoxContentTop>
               <CardAvatar
@@ -86,7 +91,7 @@ const SinglePost = () => {
             </BoxAssociates>
             <TitlePage title={singlePost.data?.title} />
             {/** @todo: View Tags, Category,...*/}
-            <EscapeHTML htmlString={singlePost.data?.description} Element={Description}/>
+            <EscapeHTML htmlString={singlePost.data?.description} />
           </BoxContent>
           <BoxComment>
             <PostFormComment postId={singlePost?.data?.id} />
@@ -131,8 +136,4 @@ const BoxContent = styled.section`
 
 const BoxComment = styled.section`
   padding: 30px 0;
-`;
-
-const Description = styled.div`
-  color: ${( { theme }) => theme.text3};
 `;

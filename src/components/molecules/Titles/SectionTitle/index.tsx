@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import EscapeHTML from '@components/atoms/EscapeHTML';
+import EscapeHTML from '@components/atoms/EscapeHTML/DivEscapeHTML';
 
 const SectionTitle = ({
   title,

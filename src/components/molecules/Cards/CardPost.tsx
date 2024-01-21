@@ -6,7 +6,7 @@ import BoxIcons from '@components/molecules/BoxIcons';
 import { IFPost } from '@models/IFPosts';
 import { useOnClickOutside } from '@hooks/useOnClickOutside';
 import { Row, Column } from '@components/atoms/Layout';
-import EscapeHTML from '@components/atoms/EscapeHTML';
+import EscapeHTML from '@components/atoms/EscapeHTML/DivEscapeHTML';
 
 import { FaRegCommentAlt, FaCommentAlt, FaRegBookmark, FaBookmark  } from 'react-icons/fa';
 import { BiLike, BiSolidLike, BiDislike, BiSolidDislike } from 'react-icons/bi';

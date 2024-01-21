@@ -1,5 +1,7 @@
 import { IFResponse } from '@models/IFResponse';
 import { IFRequester } from '@models/IFRequester';
+import { IUser } from '@models/IFUser';
+import { IFCategory } from '@models/IFCategory';
 
 export interface IFDataPostMutable {
   title: string
@@ -57,8 +59,8 @@ export interface IFAssociatePostRequest extends IFSavesRequest {
 export interface IFPost extends IFDataPostMutable {
   createdAt: string
   updatedAt: string
-  category: any // @todo: interface category
-  user: any // @todo: interface User
+  category: IFCategory
+  user: IUser
   comments: string[]
   commentsCount: number
   daysAgo: string

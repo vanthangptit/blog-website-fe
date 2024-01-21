@@ -4,6 +4,7 @@ import styles from '@constants/styles';
 import AsideLeftPost from '@components/organisms/AsideLeftPost';
 import { IFPost } from '@models/IFPosts';
 import AsideRightPost from '@components/organisms/AsideRightPost';
+import { IUser } from '@models/IFUser';
 
 const spacing = 20;
 
@@ -15,8 +16,8 @@ const Layout174 = ({
 }: {
   children: React.ReactNode,
   post: IFPost
-  postRelated: IFPost
-  creator: any
+  postRelated?: IFPost
+  creator: IUser
 }) => {
   return (
     <Layout>

@@ -1,6 +1,7 @@
 import { IFResponse } from '@models/IFResponse';
 import { IFRequester } from '@models/IFRequester';
 import { IFPost } from '@models/IFPosts';
+import { IUser } from '@models/IFUser';
 
 export interface IFParamsPostIdComment {
   id: string
@@ -20,7 +21,7 @@ export interface IFDataCommentRequest extends IFParamsCommentRequest {
 
 export interface IFComment {
   description: string
-  user: any // @todo: interface User
+  user: IUser
   post: string | IFPost
   likes: string[]
   id: string

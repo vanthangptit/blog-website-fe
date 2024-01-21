@@ -41,13 +41,13 @@ const Avatar = styled.div`
 
 const AvatarLeft = styled.div`
   display: flex;
-  
   img {
     display: flex;
     width: 45px;
     height: 45px;
     overflow: hidden;
     border-radius: 50%;
+    object-fit: cover;
   }
 `;
 
@@ -57,7 +57,6 @@ const AvatarName = styled.h4`
   font-size: 14px;
   font-family: ${({ theme }) => theme.fontRobotoRegular};
   text-transform: capitalize;
-
   a {
     color: ${({ theme }) => theme.text4};
   }

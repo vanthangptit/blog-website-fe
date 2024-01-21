@@ -29,6 +29,7 @@ function colors(darkMode: boolean): Colors {
     text2: darkMode ? black : white,
     text3: darkMode ? '#ced4da' : '#343a40',
     text4: darkMode ? '#dee2e6' : '#6c757d',
+    text5: darkMode ? '#b2b2b2' : '#6c757d',
 
     // backgrounds / greys
     bg0: darkMode ? black : white,

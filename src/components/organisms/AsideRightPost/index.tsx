@@ -3,14 +3,20 @@ import styled from 'styled-components';
 import CardAvatar from '@components/molecules/Avatars/CardAvatar';
 import Button from '@components/molecules/Buttons';
 import { formatDatetimeByMonthYear } from '@utils/formatDatetime';
+import { IUser } from '@models/IFUser';
+import { IFPost } from '@models/IFPosts';
+import SectionTitleH4 from '@components/molecules/Titles/SectionTitleH4';
 
 /**
  * @param user
  * @constructor
- * @todo: user and postRelated must haven't any type
+ * @todo: show postRelated card
+ * @todo: Button follow
  */
 
-const AsideRightPost = ({ user, postRelated }: { user: any, postRelated?: any }) => {
+const AsideRightPost = ({ user, postRelated }: { user: IUser, postRelated?: IFPost }) => {
+  const handleClick = () => true;
+
   return (
     <AsideRight>
       <Box>
@@ -26,6 +32,7 @@ const AsideRightPost = ({ user, postRelated }: { user: any, postRelated?: any })
             size={'sm'}
             text={'Follow'}
             buttonType={'button'}
+            handleClick={handleClick}
           />
         </BoxProfile>
 
@@ -35,23 +42,22 @@ const AsideRightPost = ({ user, postRelated }: { user: any, postRelated?: any })
 
         {(user?.address || user?.job) && (
           <UserInfo>
-            <UserInfoList>
-              {user?.address && (
-                <UserInfoListItem>
-                  <h4>Location</h4>
-                  <p>Hoai Duc, Ha Noi City</p>
-                </UserInfoListItem>
-              )}
-              {user?.job && (
-                <UserInfoListItem>
-                  <h4>Work</h4>
-                  <p>FullStack developer at Dandelions Labs</p>
-                </UserInfoListItem>
-              )}
-            </UserInfoList>
+            {user?.address && (
+              <SectionTitleH4
+                title={'Location'}
+                des={user?.address}
+              />
+            )}
+            {user?.job && (
+              <SectionTitleH4
+                title={'Work'}
+                des={user?.job}
+              />
+            )}
           </UserInfo>
         )}
       </Box>
+
       <Box>
         <BoxProfile>
           <h3>More from <a href={`/profile/${user.id}`} style={{ color: '#bc2e1d' }}>{user?.fullName}</a></h3>
@@ -74,14 +80,6 @@ const Box = styled.div`
   border-radius: 5px;
   border: 1px solid ${({ theme }) => theme.gray3};
   margin-bottom: 25px;
-`;
-
-const UserInfoList = styled.ul`
-  list-style: none;
-`;
-
-const UserInfoListItem = styled.li`
-  padding-bottom: 10px;
 `;
 
 const UserInfo = styled.div`
