@@ -12,7 +12,9 @@ import {
   IFEditJob,
   IFEditDescription,
   IFEditGender,
-  IFEditBirthDay
+  IFEditBirthDay,
+  IFChangePassword,
+  IFProfilePhoto
 } from '@models/IFUser';
 
 export const useUser = () => {
@@ -21,12 +23,6 @@ export const useUser = () => {
   const userStores = useAppSelector((state: RootState) => state.user);
 
   const getProfile = () => {
-    return dispatch(userStore.getProfile({ token: getAuth('accessToken') }));
-  };
-
-  const editProfile = (data: any) => {
-    // eslint-disable-next-line no-console
-    console.log(data);
     return dispatch(userStore.getProfile({ token: getAuth('accessToken') }));
   };
 
@@ -58,9 +54,16 @@ export const useUser = () => {
     return dispatch(userStore.editUserBirthDay({ data, token: getAuth('accessToken') }));
   };
 
+  const changePasswords = (data: IFChangePassword) => {
+    return dispatch(userStore.changePasswords({ data, token: getAuth('accessToken') }));
+  };
+
+  const changeProfilePhoto = (data: IFProfilePhoto) => {
+    return dispatch(userStore.changeProfilePhoto({ data, token: getAuth('accessToken') }));
+  };
+
   return {
     ...userStores,
-    editProfile,
     getProfile,
     editFirstName,
     editLastName,
@@ -68,6 +71,8 @@ export const useUser = () => {
     editUserJob,
     editUserDescription,
     editUserGender,
-    editUserBirthDay
+    editUserBirthDay,
+    changePasswords,
+    changeProfilePhoto
   };
 };

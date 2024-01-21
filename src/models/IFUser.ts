@@ -27,6 +27,7 @@ export interface IUser {
   isAdmin: boolean
   isBlocked: boolean
   isInactive: boolean
+  password?: string
   isLoginGoogle: boolean
   lastActive: string
   lastPostDate: string
@@ -42,7 +43,7 @@ export interface IUser {
   profilePhoto?: string
   description?: string
   address?: string
-  birthDay: Date | null
+  birthDay: string | null
   job?: string
 }
 
@@ -52,8 +53,42 @@ export interface IFEditFirstName {
   firstName: string
 }
 
+export interface IFEditEmail {
+  email: string
+}
+
 export interface IFEditLastName {
   lastName: string
+}
+
+export interface IFEditAddress {
+  address: string
+}
+
+export interface IFEditJob {
+  job: string
+}
+
+export interface IFEditDescription {
+  description: string
+}
+
+export interface IFEditGender {
+  gender: Gender
+}
+
+export interface IFEditBirthDay {
+  birthDay: string
+}
+
+export interface IFChangePassword {
+  password?: string
+  newPassword: string
+  newConfirmPassword: string
+}
+
+export interface IFProfilePhoto {
+  profilePhoto: string
 }
 
 export interface IFEditFirstNameRequest extends IFRequester {
@@ -62,6 +97,34 @@ export interface IFEditFirstNameRequest extends IFRequester {
 
 export interface IFEditLastNameRequest extends IFRequester {
   data: IFEditLastName
+}
+
+export interface IFEditAddressRequest extends IFRequester {
+  data: IFEditAddress
+}
+
+export interface IFEditJobRequest extends IFRequester {
+  data: IFEditJob
+}
+
+export interface IFEditDescriptionRequest extends IFRequester {
+  data: IFEditDescription
+}
+
+export interface IFEditGenderRequest extends IFRequester {
+  data: IFEditGender
+}
+
+export interface IFEditBirthDayRequest extends IFRequester {
+  data: IFEditBirthDay
+}
+
+export interface IFChangePasswordRequest extends IFRequester {
+  data: IFChangePassword
+}
+
+export interface IFProfilePhotoRequest extends IFRequester {
+  data: IFProfilePhoto
 }
 
 export interface IFProfileResponse extends IFResponse {

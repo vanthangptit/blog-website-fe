@@ -10,8 +10,11 @@ import {
   IFEditJobRequest,
   IFEditDescriptionRequest,
   IFEditGenderRequest,
-  IFEditBirthDayRequest
+  IFEditBirthDayRequest,
+  IFChangePasswordRequest,
+  IFProfilePhotoRequest
 } from '@models/IFUser';
+import { IFResponse } from '@models/IFResponse';
 
 interface IFUserState {
   isLoading: boolean
@@ -40,7 +43,7 @@ export const getProfile = createAsyncThunk<any, IFProfileParams>(USER.ACTION_TYP
 
 export const editFirstName = createAsyncThunk<any, IFEditFirstNameRequest>(USER.ACTION_TYPES.EDIT_FIRST_NAME, async ({ token, data }, thunkAPI) => {
   try {
-    const response = await requester.patch(USER.URL_API.EDIT_FIRST_NAME, data, true, token);
+    const response: IFResponse = await requester.patch(USER.URL_API.EDIT_FIRST_NAME, data, true, token);
     if (response.status === 200 || response.statusCode === 200) {
       await thunkAPI.dispatch(getProfile({ token }));
     }
@@ -55,7 +58,7 @@ export const editFirstName = createAsyncThunk<any, IFEditFirstNameRequest>(USER.
 
 export const editLastName = createAsyncThunk<any, IFEditLastNameRequest>(USER.ACTION_TYPES.EDIT_LAST_NAME, async ({ token, data }, thunkAPI) => {
   try {
-    const response = await requester.patch(USER.URL_API.EDIT_LAST_NAME, data, true, token);
+    const response: IFResponse = await requester.patch(USER.URL_API.EDIT_LAST_NAME, data, true, token);
     if (response.status === 200 || response.statusCode === 200) {
       await thunkAPI.dispatch(getProfile({ token }));
     }
@@ -70,7 +73,7 @@ export const editLastName = createAsyncThunk<any, IFEditLastNameRequest>(USER.AC
 
 export const editUserAddress = createAsyncThunk<any, IFEditAddressRequest>(USER.ACTION_TYPES.EDIT_ADDRESS, async ({ token, data }, thunkAPI) => {
   try {
-    const response = await requester.patch(USER.URL_API.EDIT_ADDRESS, data, true, token);
+    const response: IFResponse = await requester.patch(USER.URL_API.EDIT_ADDRESS, data, true, token);
     if (response.status === 200 || response.statusCode === 200) {
       await thunkAPI.dispatch(getProfile({ token }));
     }
@@ -85,7 +88,7 @@ export const editUserAddress = createAsyncThunk<any, IFEditAddressRequest>(USER.
 
 export const editUserJob = createAsyncThunk<any, IFEditJobRequest>(USER.ACTION_TYPES.EDIT_JOB, async ({ token, data }, thunkAPI) => {
   try {
-    const response = await requester.patch(USER.URL_API.EDIT_JOB, data, true, token);
+    const response: IFResponse = await requester.patch(USER.URL_API.EDIT_JOB, data, true, token);
     if (response.status === 200 || response.statusCode === 200) {
       await thunkAPI.dispatch(getProfile({ token }));
     }
@@ -100,7 +103,7 @@ export const editUserJob = createAsyncThunk<any, IFEditJobRequest>(USER.ACTION_T
 
 export const editUserDescription = createAsyncThunk<any, IFEditDescriptionRequest>(USER.ACTION_TYPES.EDIT_DESCRIPTION, async ({ token, data }, thunkAPI) => {
   try {
-    const response = await requester.patch(USER.URL_API.EDIT_DESCRIPTION, data, true, token);
+    const response: IFResponse = await requester.patch(USER.URL_API.EDIT_DESCRIPTION, data, true, token);
     if (response.status === 200 || response.statusCode === 200) {
       await thunkAPI.dispatch(getProfile({ token }));
     }
@@ -115,7 +118,7 @@ export const editUserDescription = createAsyncThunk<any, IFEditDescriptionReques
 
 export const editUserGender = createAsyncThunk<any, IFEditGenderRequest>(USER.ACTION_TYPES.EDIT_GENDER, async ({ token, data }, thunkAPI) => {
   try {
-    const response = await requester.patch(USER.URL_API.EDIT_GENDER, data, true, token);
+    const response: IFResponse = await requester.patch(USER.URL_API.EDIT_GENDER, data, true, token);
     if (response.status === 200 || response.statusCode === 200) {
       await thunkAPI.dispatch(getProfile({ token }));
     }
@@ -130,7 +133,37 @@ export const editUserGender = createAsyncThunk<any, IFEditGenderRequest>(USER.AC
 
 export const editUserBirthDay = createAsyncThunk<any, IFEditBirthDayRequest>(USER.ACTION_TYPES.EDIT_BIRTHDAY, async ({ token, data }, thunkAPI) => {
   try {
-    const response = await requester.patch(USER.URL_API.EDIT_BIRTHDAY, data, true, token);
+    const response: IFResponse = await requester.patch(USER.URL_API.EDIT_BIRTHDAY, data, true, token);
+    if (response.status === 200 || response.statusCode === 200) {
+      await thunkAPI.dispatch(getProfile({ token }));
+    }
+
+    return {
+      ...response
+    };
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue(error.response);
+  }
+});
+
+export const changePasswords = createAsyncThunk<any, IFChangePasswordRequest>(USER.ACTION_TYPES.CHANGE_PASSWORDS, async ({ token, data }, thunkAPI) => {
+  try {
+    const response: IFResponse = await requester.patch(USER.URL_API.CHANGE_PASSWORDS, data, true, token);
+    if (response.status === 200 || response.statusCode === 200) {
+      await thunkAPI.dispatch(getProfile({ token }));
+    }
+
+    return {
+      ...response
+    };
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue(error.response);
+  }
+});
+
+export const changeProfilePhoto = createAsyncThunk<any, IFProfilePhotoRequest>(USER.ACTION_TYPES.CHANGE_PROFILE_PHOTO, async ({ token, data }, thunkAPI) => {
+  try {
+    const response: IFResponse = await requester.patch(USER.URL_API.CHANGE_PROFILE_PHOTO, data, true, token);
     if (response.status === 200 || response.statusCode === 200) {
       await thunkAPI.dispatch(getProfile({ token }));
     }

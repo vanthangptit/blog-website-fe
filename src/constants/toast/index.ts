@@ -4,5 +4,6 @@ export const TOAST = {
   CREATE_CATEGORY: 'Your comment sent successfully!',
   COPY_SUCCESS: 'Copied to clipboard!',
   COPY_FAILURE: 'Could not copy text!',
-  EDIT_PROFILE: 'Updated successfully!'
+  EDIT_PROFILE: 'Updated successfully!',
+  UPLOAD_IMAGE: 'Upload was failed'
 };
