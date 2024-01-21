@@ -23,6 +23,8 @@ const FormUserBirthDay = ({ birthDay }: { birthDay: string | null }) => {
           if (rs.status === 200 || rs.statusCode === 200) {
             toasts('success', TOAST.EDIT_PROFILE);
             setOpen(false);
+          } else if (rs.status === 400 || rs.statusCode === 400) {
+            toasts('error', rs?.message ?? TOAST.ERROR_COMMON);
           } else {
             toasts('error', TOAST.ERROR_COMMON);
           }
@@ -37,17 +39,27 @@ const FormUserBirthDay = ({ birthDay }: { birthDay: string | null }) => {
     setDate( birthDay ? new Date(birthDay) : null);
   }, [ birthDay ]);
 
+  useEffect(() => {
+    if (datetime?.toString() === birthDay) {
+      setIsLoading(true);
+    } else {
+      setIsLoading(false);
+    }
+  }, [ datetime ]);
+
   return (
     <Form onSubmit={(event) => onSubmit(event)}>
       <ToggleField
         isOpen={isOpen}
         setOpen={setOpen}
         label={'Birthday'}
-        value={formatDatetimeByMonthYear(birthDay)}
+        value={formatDatetimeByMonthYear(birthDay ? new Date(birthDay) : null)}
         isLoading={isLoading}
       >
         <div>
           <DateTimePicker
+            $maxDate={new Date()}
+            $minDate={new Date()}
             $height={'45px'}
             $with={'100%'}
             date={datetime}

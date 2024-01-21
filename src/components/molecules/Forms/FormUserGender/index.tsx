@@ -17,6 +17,7 @@ const FormUserGender = ({ gender }: { gender?: Gender }) => {
   const [ isOpen, setOpen ] = useState<boolean>(false);
 
   const {
+    watch,
     setValue,
     handleSubmit,
     control,
@@ -43,6 +44,14 @@ const FormUserGender = ({ gender }: { gender?: Gender }) => {
       setValue('gender', gender);
     }
   }, [ gender ]);
+
+  useEffect(() => {
+    if (watch('gender') !== gender) {
+      setIsLoading(false);
+    } else {
+      setIsLoading(true);
+    }
+  }, [ watch('gender') ]);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>

@@ -1,31 +1,44 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
+import React from 'react';
 import Button from '@components/molecules/Buttons';
+import styled from 'styled-components';
+import SiteAvatar from '@components/molecules/Avatars/SiteAvatar';
 
-const FieldBoxChange = ({
+const ToggleField = ({
   children,
   label,
   value,
-  isLoading= false
+  isLoading= false,
+  isOpen,
+  setOpen,
+  imageUrl
 }: {
   children: React.ReactNode;
   label?: string;
   value?: string
+  imageUrl?: string
   isLoading?: boolean
+  isOpen: boolean
+  setOpen: (open: boolean) => void
 }) => {
-  const [ isOpen, setOpen ] = useState<boolean>(false);
-  const handleOpen = () =>  setOpen(!isOpen);
-
   return (
     <Box>
       <BoxTop $isOpen={isOpen}>
         <BoxTopLeft>
           {label && <FieldName>{label}</FieldName>}
-          {!isOpen && <FieldValue>{value ? value : 'No information'}</FieldValue>}
+          {!isOpen && (
+            <FieldValue>
+              {value ? value : (imageUrl ? (
+                <SiteAvatar
+                  viewerPhoto={imageUrl}
+                  height={40}
+                />
+              ) : 'No information')}
+            </FieldValue>
+          )}
         </BoxTopLeft>
 
         <BoxTopRight>
-          <FieldButton type={'button'} onClick={handleOpen}>
+          <FieldButton type={'button'} onClick={() =>  setOpen(!isOpen)}>
             {isOpen ? 'Close' : 'Change'}
           </FieldButton>
         </BoxTopRight>
@@ -48,7 +61,8 @@ const FieldBoxChange = ({
   );
 };
 
-export default FieldBoxChange;
+export default ToggleField;
+
 
 const ButtonSubmit = styled.div`
   text-align: right;

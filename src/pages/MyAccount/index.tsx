@@ -1,254 +1,72 @@
-import React, { useEffect, useState } from 'react';
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import React, { useContext, useEffect } from 'react';
+import {
+  Tab,
+  Tabs,
+  TabList,
+  TabPanel
+} from 'react-tabs';
 import { Row, Column } from '@components/atoms/Layout';
-import { useLocation, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import Layout12 from '@components/organisms/Layout-12';
-import SingleTitle from '@components/molecules/Titles/SingleTitle';
-import FormControl from '@components/molecules/FormControl';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import Textarea from '@components/atoms/Textarea';
-import Select from '@components/molecules/Select';
-import { GENDER } from '@constants/selects';
-import FieldBoxChange from '@components/molecules/Fields/FieldBoxChange';
-import DateTimePicker from '@components/molecules/DateTimePicker';
-import SectionTitle from '@components/molecules/Titles/SectionTitle';
+import { useUser } from '@hooks/useUser';
+import NotFound from '@components/molecules/NotFound';
+import { UnauthorizedContext } from '@infra/context/UnauthorizedContext';
+import ProfileForm from '@components/organisms/ProfileForm';
+import { TOAST } from '@constants/toast';
 
 const MyAccount = () => {
-  const location: any = useLocation();
-  const { shortUrl } = useParams();
-  const [ datetime, setDate ] = useState<Date | null>(null);
-  const {
-    // setValue,
-    control,
-    handleSubmit,
-    register,
-    formState
-  } = useForm<any>();
-
-  const onSubmit: SubmitHandler<any> = async data => {
-    // eslint-disable-next-line no-console
-    console.log(data);
-  };
+  const { setUnauthorized } = useContext(UnauthorizedContext);
+  const { getProfile, profile } = useUser();
 
   useEffect(() => {
-    // eslint-disable-next-line no-console
-    console.log(location);
-  }, [ shortUrl ]);
-
-  // eslint-disable-next-line no-console
-  console.log(typeof datetime);
+    getProfile()
+      .unwrap()
+      .then((rs) => {
+        if (rs.status === 401 || rs.statusCode === 401) {
+          setUnauthorized(true);
+        }
+      });
+  }, []);
 
   return (
-    <Layout12>
-      <Header>
-        <SingleTitle title={'My Profile'} />
-      </Header>
+    <>
+      {profile?.data && (
+        <Layout12>
+          <Box>
+            <Tabs style={{ width: '100%' }}>
+              <Row>
+                <Column $mdWidth={'35%'}>
+                  <ListInformation>
+                    <TabList>
+                      <Tab>My profile</Tab>
+                      <Tab>Saved posts</Tab>
+                    </TabList>
+                  </ListInformation>
+                </Column>
 
-      <div>
-        <Tabs style={{ width: '100%' }}>
-          <Row>
-            <Column $mdWidth={'35%'}>
-              <ListInformation>
-                <TabList>
-                  <Tab>Person Information</Tab>
-                  <Tab>My futures</Tab>
-                </TabList>
-              </ListInformation>
-            </Column>
+                <Column $mdWidth={'65%'}>
+                  <TabPanel>
+                    <ProfileForm user={profile?.data} />
+                  </TabPanel>
+                  <TabPanel>{TOAST.WARNING_UPDATING}</TabPanel>
+                </Column>
+              </Row>
+            </Tabs>
+          </Box>
+        </Layout12>
+      )}
 
-            <Column $mdWidth={'65%'}>
-              <TabPanel>
-                <FormElement onSubmit={handleSubmit(onSubmit)}>
-                  <Row>
-                    <Column>
-                      <SectionTitle title={'Account information'}/>
-                    </Column>
-                    <Column>
-                      <FieldBoxChange
-                        label={'First name'}
-                      >
-                        <FormControl
-                          register={register}
-                          formState={formState}
-                          textEr={'First name is required'}
-                          typeField={'text'}
-                          nameField={'firstName'}
-                          $with={'100%'}
-                          $height={'45px'}
-                          $minLength={3}
-                          $maxLength={25}
-                          placeholder={'New first name...'}
-                        />
-                      </FieldBoxChange>
-                    </Column>
-                    <Column>
-                      <FieldBoxChange
-                        label={'Last name'}
-                      >
-                        <FormControl
-                          register={register}
-                          formState={formState}
-                          textEr={'Last name is required'}
-                          typeField={'text'}
-                          nameField={'lastName'}
-                          $with={'100%'}
-                          $height={'45px'}
-                          $minLength={3}
-                          $maxLength={25}
-                          placeholder={'New last name...'}
-                        />
-                      </FieldBoxChange>
-                    </Column>
-                    <Column>
-                      <FieldBoxChange
-                        label={'Email'}
-                      >
-                        <FormControl
-                          register={register}
-                          formState={formState}
-                          textEr={'Email is required'}
-                          typeField={'email'}
-                          nameField={'email'}
-                          $with={'100%'}
-                          $height={'45px'}
-                          $minLength={3}
-                          $maxLength={25}
-                          placeholder={'New email...'}
-                        />
-                      </FieldBoxChange>
-                    </Column>
-                    <Column>
-                      <FieldBoxChange
-                        label={'Password'}
-                      >
-                        <FormControl
-                          register={register}
-                          formState={formState}
-                          textEr={'Password is required'}
-                          typeField={'password'}
-                          nameField={'password'}
-                          placeholder={'Password'}
-                          $with={'100%'}
-                          $height={'45px'}
-                        />
-                        <FormControl
-                          register={register}
-                          formState={formState}
-                          textEr={'This field is required'}
-                          typeField={'password'}
-                          nameField={'newPassword'}
-                          $with={'100%'}
-                          $height={'45px'}
-                          placeholder={'New password'}
-                        />
-                      </FieldBoxChange>
-                    </Column>
-                    <Column>
-                      <FieldBoxChange
-                        label={'Description'}
-                      >
-                        <Textarea
-                          register={register}
-                          formState={formState}
-                          nameField={'description'}
-                          placeholder={'Write a small introduction about yourself...'}
-                          textEr={'Description required and must between 25 - 255 characters.'}
-                          $minLength={25}
-                          $maxLength={255}
-                          $isRequired={false}
-                          $rows={3}
-                        />
-                      </FieldBoxChange>
-                    </Column>
-                  </Row>
-                  <Row>
-                    <Column>
-                      <SectionTitle title={'Personal information'}/>
-                    </Column>
-                    <Column>
-                      <FieldBoxChange
-                        label={'Address'}
-                      >
-                        <FormControl
-                          register={register}
-                          formState={formState}
-                          typeField={'text'}
-                          nameField={'address'}
-                          textEr={'Address required and maximum 75 characters.'}
-                          $maxLength={75}
-                          $with={'100%'}
-                          $height={'45px'}
-                          placeholder={'New address...'}
-                        />
-                      </FieldBoxChange>
-                    </Column>
-                    <Column>
-                      <FieldBoxChange
-                        label={'Job'}
-                      >
-                        <FormControl
-                          register={register}
-                          formState={formState}
-                          typeField={'text'}
-                          nameField={'job'}
-                          textEr={'Job required and maximum 255 characters.'}
-                          $maxLength={255}
-                          $with={'100%'}
-                          $height={'45px'}
-                          placeholder={'New job...'}
-                        />
-                      </FieldBoxChange>
-                    </Column>
-                    <Column>
-                      <FieldBoxChange
-                        label={'Gender'}
-                      >
-                        <GroupField>
-                          <Select
-                            colourOptions={GENDER}
-                            nameField={'gender'}
-                            height={'45px'}
-                            control={control}
-                            Controller={Controller}
-                            formState={formState}
-                            textEr={'Error'}
-                            classNamePrefix={'react-select'}
-                          />
-                        </GroupField>
-                      </FieldBoxChange>
-                    </Column>
-                    <Column>
-                      <FieldBoxChange
-                        label={'Birthday'}
-                      >
-                        <div>
-                          <DateTimePicker
-                            $height={'45px'}
-                            $with={'100%'}
-                            date={datetime}
-                            setDate={setDate}
-                            placeholder={'Click to select a date...'}
-                          />
-                        </div>
-                      </FieldBoxChange>
-                    </Column>
-                  </Row>
-                </FormElement>
-              </TabPanel>
-              <TabPanel>2</TabPanel>
-            </Column>
-          </Row>
-        </Tabs>
-      </div>
-    </Layout12>
+      {profile?.statusCode && profile?.statusCode !== 200 && profile?.statusCode !== 401 && (
+        <NotFound message={'SORRY! THIS USER DOES NOT EXISTS'} />
+      )}
+    </>
   );
 };
 
 export default MyAccount;
 
-const Header = styled.div`
-  text-align: center;
+const Box = styled.section`
+  padding: 20px 0;
 `;
 
 const ListInformation = styled.div`
@@ -289,12 +107,4 @@ const ListInformation = styled.div`
       outline: none;
     }
   }
-`;
-
-const FormElement = styled.form`
-  width: 100%;
-`;
-
-const GroupField = styled.div`
-  padding-bottom: 32px;
 `;

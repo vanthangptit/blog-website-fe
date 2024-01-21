@@ -17,7 +17,8 @@ const FormFirstName = ({ firstName }: { firstName: string }) => {
     setValue,
     handleSubmit,
     register,
-    formState
+    formState,
+    watch
   } = useForm<IFEditFirstName>();
 
   const onSubmit: SubmitHandler<IFEditFirstName> = async data => {
@@ -38,6 +39,14 @@ const FormFirstName = ({ firstName }: { firstName: string }) => {
   useEffect(() => {
     setValue('firstName', firstName);
   }, [ firstName ]);
+
+  useEffect(() => {
+    if (watch('firstName') !== firstName) {
+      setIsLoading(false);
+    } else {
+      setIsLoading(true);
+    }
+  }, [ watch('firstName') ]);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>

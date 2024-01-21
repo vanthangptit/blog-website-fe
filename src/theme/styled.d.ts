@@ -18,6 +18,7 @@ export interface Colors {
   bg1: Color
   bg2: Color
   bg3: Color
+  bg4: Color
   bgDarkOpacity: Color
   bgLightOpacity: Color
   bgBoxShadow: Color

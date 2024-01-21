@@ -14,6 +14,7 @@ const FormUserDescription = ({ description }: { description?: string }) => {
   const [ isOpen, setOpen ] = useState<boolean>(false);
 
   const {
+    watch,
     setValue,
     handleSubmit,
     register,
@@ -40,6 +41,14 @@ const FormUserDescription = ({ description }: { description?: string }) => {
       setValue('description', description);
     }
   }, [ description ]);
+
+  useEffect(() => {
+    if (watch('description') !== description) {
+      setIsLoading(false);
+    } else {
+      setIsLoading(true);
+    }
+  }, [ watch('description') ]);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>

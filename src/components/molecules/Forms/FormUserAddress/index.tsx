@@ -14,6 +14,7 @@ const FormUserAddress = ({ address }: { address?: string }) => {
   const [ isOpen, setOpen ] = useState<boolean>(false);
 
   const {
+    watch,
     setValue,
     handleSubmit,
     register,
@@ -40,6 +41,14 @@ const FormUserAddress = ({ address }: { address?: string }) => {
       setValue('address', address);
     }
   }, [ address ]);
+
+  useEffect(() => {
+    if (watch('address') !== address) {
+      setIsLoading(false);
+    } else {
+      setIsLoading(true);
+    }
+  }, [ watch('address') ]);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>

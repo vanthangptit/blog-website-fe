@@ -65,6 +65,7 @@ const Routes = () => {
         <Route path='/create-category' element={<CreateCategory />} />
         <Route path='/category/:id' element={<CreateCategory />} />
         <Route path='/user/:id' element={<MyAccount />} />
+        <Route path='/profile' element={<MyAccount />} />
       </Route>
 
       <Route path='*' element={<NotFound message={'The page you requested was not found.'}/>} />

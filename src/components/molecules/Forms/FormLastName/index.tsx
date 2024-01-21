@@ -13,6 +13,7 @@ const FormLastName = ({ lastName }: { lastName: string }) => {
   const [ isOpen, setOpen ] = useState<boolean>(false);
   const [ isLoading, setIsLoading ] = useState<boolean>(false);
   const {
+    watch,
     setValue,
     handleSubmit,
     register,
@@ -37,6 +38,14 @@ const FormLastName = ({ lastName }: { lastName: string }) => {
   useEffect(() => {
     setValue('lastName', lastName);
   }, [ lastName ]);
+
+  useEffect(() => {
+    if (watch('lastName') !== lastName) {
+      setIsLoading(false);
+    } else {
+      setIsLoading(true);
+    }
+  }, [ watch('lastName') ]);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>

@@ -18,7 +18,8 @@ export type NameField =
   'lastName' |
   'newPassword' |
   'address' |
-  'job';
+  'job' |
+  'newConfirmPassword';
 
 export type TypeField = 'email' | 'password' | 'text';
 
@@ -35,6 +36,7 @@ const FormControl = ({
   $minLength,
   $maxLength,
   $pattern,
+  $validate,
   label,
   errors
 }: {
@@ -51,10 +53,12 @@ const FormControl = ({
   $minLength?: number
   $maxLength?: number
   $pattern?: any
+  $validate?: any
   errors?: {
     required?: string
     pattern?: string
     length?: string
+    validate?: string
   }
 }) => {
   const [ isHiddenPassword, setHiddenPassword ] = useState<boolean>(true);
@@ -73,6 +77,10 @@ const FormControl = ({
 
   if ($pattern) {
     options['pattern'] = $pattern;
+  }
+
+  if ($validate) {
+    options['validate'] = $validate.validate;
   }
 
   return (
@@ -104,7 +112,9 @@ const FormControl = ({
             <MessageError>{errors?.length}</MessageError>
           ) : $pattern && formState.errors[nameField]?.type === 'pattern' && errors?.pattern ? (
             <MessageError>{errors?.pattern}</MessageError>
-          ) : <></>
+          ) : $validate && formState.errors[nameField]?.type === 'validate' && errors?.validate ? (
+            <MessageError>{errors?.validate}</MessageError>
+          ): <></>
       }
     </>
   );

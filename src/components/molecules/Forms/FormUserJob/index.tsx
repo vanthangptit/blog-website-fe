@@ -14,6 +14,7 @@ const FormUserJob = ({ job }: { job?: string }) => {
   const [ isOpen, setOpen ] = useState<boolean>(false);
 
   const {
+    watch,
     setValue,
     handleSubmit,
     register,
@@ -40,6 +41,14 @@ const FormUserJob = ({ job }: { job?: string }) => {
       setValue('job', job);
     }
   }, [ job ]);
+
+  useEffect(() => {
+    if (watch('job') !== job) {
+      setIsLoading(false);
+    } else {
+      setIsLoading(true);
+    }
+  }, [ watch('job') ]);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
