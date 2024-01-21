@@ -9,6 +9,7 @@ import { MessageError } from '@components/atoms/MessageError';
 type NameField = 'visibility' | 'gender';
 
 export default ({
+  valueDefault,
   control,
   Controller,
   formState,
@@ -28,6 +29,7 @@ export default ({
   label?: string
   height?: string
   classNamePrefix?: string
+  valueDefault?: string
 }) => {
   return (
     <SelectBox $height={height}>
@@ -37,11 +39,11 @@ export default ({
         <Controller
           control={control}
           name={nameField}
-          render={({ field: { onChange, value, name } }: { field:  ControllerRenderProps<IFColourOption> }) => {
+          render={({ field: { onChange, value, name } }: { field: ControllerRenderProps<IFColourOption> }) => {
             return (
               <Select
                 classNamePrefix={classNamePrefix ?? ''}
-                value={colourOptions.find((c) => c.value === (value ?? colourOptions[0].value))}
+                value={colourOptions.find((c) => c.value === (value ?? valueDefault ?? colourOptions[0].value))}
                 name={name}
                 options={colourOptions}
                 onChange={(selectedOption: IFColourOption | null) => {
