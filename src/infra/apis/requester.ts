@@ -1,7 +1,7 @@
 import axios, { AxiosResponse, AxiosError, AxiosRequestConfig } from 'axios';
 import { AUTH, POST } from '@constants/apis';
 
-type Method = 'get' | 'post' | 'put' | 'delete';
+type Method = 'get' | 'post' | 'put' | 'patch' | 'delete';
 
 type Props = {
   url: string
@@ -39,6 +39,7 @@ export const getToken = (props: Props) => {
 const get = (url: string, params = {}, config: AxiosRequestConfig) => axios.get(url, { params, ...config });
 const post = (url: string, data = {}, config: AxiosRequestConfig) => axios.post(url, data, { ...config });
 const put = (url: string, data = {}, config: AxiosRequestConfig) => axios.put(url, data, { ...config });
+const patch = (url: string, data = {}, config: AxiosRequestConfig) => axios.patch(url, data, { ...config });
 const del = (url: string, params = {}, config: AxiosRequestConfig) => axios.delete(url, { params, ...config });
 
 const requester: any = {
@@ -69,6 +70,16 @@ const requester: any = {
       .catch((e) => {
         if (retry && e.response.status === 401) {
           return getToken({ method: 'put', url, params: data });
+        }
+        return errorBody(e);
+      });
+  },
+  patch: (url: string, data = {}, retry?: boolean, token?: string) => {
+    return patch(url, data, setConf({ token, isCredentials: verifyCredentials(url, 'patch') }))
+      .then(responseBody)
+      .catch((e) => {
+        if (retry && e.response.status === 401) {
+          return getToken({ method: 'patch', url, params: data });
         }
         return errorBody(e);
       });

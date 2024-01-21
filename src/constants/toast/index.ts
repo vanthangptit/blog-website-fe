@@ -3,5 +3,6 @@ export const TOAST = {
   ERROR_COMMON: 'An error occurred. Please try again!',
   CREATE_CATEGORY: 'Your comment sent successfully!',
   COPY_SUCCESS: 'Copied to clipboard!',
-  COPY_FAILURE: 'Could not copy text!'
+  COPY_FAILURE: 'Could not copy text!',
+  EDIT_PROFILE: 'Updated successfully!'
 };

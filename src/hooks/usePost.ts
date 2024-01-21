@@ -9,7 +9,8 @@ import {
   IFDeletePostRequest,
   IFEditPostRequest,
   IFSinglePostRequest,
-  IFParamsIdRequest, IFAssociateDataRequest
+  IFParamsIdRequest,
+  IFAssociateDataRequest
 } from '@models/IFPosts';
 import { useAuth } from '@hooks/useAuth';
 

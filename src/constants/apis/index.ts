@@ -21,10 +21,14 @@ export const API_CATEGORY = {
 
 export const USER = {
   URL_API: {
-    PROFILE: `${API_ROOT_URL}users/profile`
+    PROFILE: `${API_ROOT_URL}users/profile`,
+    EDIT_FIRST_NAME: `${API_ROOT_URL}users/firstname`,
+    EDIT_LAST_NAME: `${API_ROOT_URL}users/lastname`
   },
   ACTION_TYPES: {
-    PROFILE: 'APPS/PROFILE'
+    PROFILE: 'APPS/PROFILE',
+    EDIT_FIRST_NAME: 'APPS/EDIT_FIRST_NAME',
+    EDIT_LAST_NAME: 'APPS/EDIT_LAST_NAME'
   }
 };
 
