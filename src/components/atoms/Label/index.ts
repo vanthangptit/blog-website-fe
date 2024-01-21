@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const LabelField = styled.label<{ $align?: string }>`
+export const LabelField = styled.label<{ $align?: 'left' | 'center' | 'right' }>`
   display: block;
   font-size: 16px;
   margin-bottom: 12px;
