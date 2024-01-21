@@ -25,7 +25,9 @@ const SiteAvatar = ({ viewerPhoto, height }: { viewerPhoto?: string; height?: nu
 
 export default React.memo(SiteAvatar);
 
-const Avatar = styled.div<{ $height?: number }>`
+const Avatar = styled.figure<{ $height?: number }>`
+  padding: 0;
+  margin: 0;
   flex: 0 0 ${({ $height }) => $height ? ($height + 'px') : '32px'};
   width: ${({ $height }) => $height ? ($height + 'px') : '32px'};
 
@@ -33,5 +35,7 @@ const Avatar = styled.div<{ $height?: number }>`
     height: ${({ $height }) => $height ? ($height + 'px') : '32px'};
     width: ${({ $height }) => $height ? ($height + 'px') : '32px'};
     border-radius: 50%;
+    display: block;
+    object-fit: cover;
   }
 `;
