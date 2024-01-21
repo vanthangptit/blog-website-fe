@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { AiFillEdit } from 'react-icons/ai';
 import { MessageError } from '@components/atoms/MessageError';
 import { validateFileTypes, validationSize } from '@utils/uploadFile';
@@ -12,7 +12,9 @@ const UploadImage = ({
   setImageChanged,
   srcImage,
   messageError,
-  maxWidth = '330px'
+  maxWidth = '330px',
+  imageCircle,
+  $align
 } : {
   label: string
   setFile: (file: any) => void
@@ -22,6 +24,8 @@ const UploadImage = ({
   imageChanged?: boolean
   messageError?: string
   maxWidth?: string
+  imageCircle?: boolean
+  $align?: 'left' | 'center' | 'right'
 }) => {
   const [ validated, setValidated ] = useState<string>();
 
@@ -54,9 +58,9 @@ const UploadImage = ({
 
   return (
     <ImageContainer>
-      <LabelField>{label}</LabelField>
+      <LabelField $align={$align}>{label}</LabelField>
       <DivImage>
-        <UploadImageBox $maxWidth={maxWidth}>
+        <UploadImageBox $maxWidth={maxWidth} $imageCircle={imageCircle}>
           <LabelInput htmlFor={'imageFile'}>
             <IconEdit>
               <AiFillEdit size={38} />
@@ -73,7 +77,7 @@ const UploadImage = ({
           />
           {srcImage && (
             <figure>
-              <PostImage src={srcImage} alt={'Post image'} />
+              <PostImage src={srcImage} alt={'Post image'} $imageCircle={imageCircle} />
             </figure>
           )}
         </UploadImageBox>
@@ -115,7 +119,7 @@ const ImageContainer = styled.article`
 
 const DivImage = styled.div``;
 
-const UploadImageBox = styled.div<{ $maxWidth: string }>`
+const UploadImageBox = styled.div<{ $maxWidth: string; $imageCircle?: boolean }>`
   overflow: hidden;
   display: flex;
   position: relative;
@@ -123,9 +127,20 @@ const UploadImageBox = styled.div<{ $maxWidth: string }>`
   max-width: ${({ $maxWidth }) => $maxWidth};
   border: 1px solid ${({ theme }) => theme.gray6};
   border-radius: 30px;
+
+  figure {
+    padding: 0;
+    margin: 0;
+  }
+
+  ${({ $imageCircle }) =>
+    $imageCircle &&
+    css`
+      border-radius: 50%;
+    `}
 `;
 
-const PostImage = styled.img`
+const PostImage = styled.img<{ $imageCircle?: boolean }>`
   width: 100%;
   height: 100%;
   position: absolute;
@@ -134,6 +149,12 @@ const PostImage = styled.img`
   border-radius: 10px;
   object-fit: cover;
   z-index: 1;
+
+  ${({ $imageCircle }) =>
+    $imageCircle &&
+    css`
+      border-radius: 50%;
+    `}
 `;
 
 const DivImageNote = styled.div`
