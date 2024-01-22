@@ -3,7 +3,7 @@ import Textarea from '@components/atoms/Textarea';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import SiteAvatar from '@components/molecules/Avatars/SiteAvatar';
-import Button from '@components/molecules/Buttons';
+import Button from '@components/molecules/Buttons/ButtonPrimary';
 import { useComment } from '@hooks/useComment';
 import { IFDataComment, IFResponseComment } from '@models/IFComment';
 import { UnauthorizedContext } from '@infra/context/UnauthorizedContext';

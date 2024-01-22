@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from '@components/molecules/Buttons';
+import Button from '@components/molecules/Buttons/ButtonPrimary';
 import { MessageError } from '@components/atoms/MessageError';
 import Modal from '@components/molecules/Modal';
 import styled from 'styled-components';

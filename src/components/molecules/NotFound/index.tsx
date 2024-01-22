@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import TitlePage from '@components/molecules/Titles/TitlePage';
-import Button from '@components/molecules/Buttons';
+import Button from '@components/molecules/Buttons/ButtonPrimary';
 import { useNavigate } from 'react-router-dom';
 
 const NotFound = ({ message }: { message: string }) => {

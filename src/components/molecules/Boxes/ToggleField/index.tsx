@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from '@components/molecules/Buttons';
+import Button from '@components/molecules/Buttons/ButtonPrimary';
 import styled from 'styled-components';
 import SiteAvatar from '@components/molecules/Avatars/SiteAvatar';
 

@@ -11,7 +11,7 @@ import { IFRegister } from '@models/IFRegister';
 import FormControl from '@components/molecules/FormControl';
 import { Link, useNavigate } from 'react-router-dom';
 import { BiLock } from 'react-icons/bi';
-import Button from '@components/molecules/Buttons';
+import Button from '@components/molecules/Buttons/ButtonPrimary';
 import { useAuth } from '@hooks/useAuth';
 import { toasts } from '@utils/toast';
 import { TOAST } from '@constants/toast';

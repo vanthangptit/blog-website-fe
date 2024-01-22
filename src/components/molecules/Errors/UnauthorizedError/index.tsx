@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import Button from '@components/molecules/Buttons';
+import Button from '@components/molecules/Buttons/ButtonPrimary';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import Modal from '@components/molecules/Modal';

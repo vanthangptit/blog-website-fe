@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import FormControl from '@components/molecules/FormControl';
 import { FormState, UseFormRegister, UseFormHandleSubmit } from 'react-hook-form';
 import UploadImage from '@components/molecules/UploadImage';
-import Button from '@components/molecules/Buttons';
+import Button from '@components/molecules/Buttons/ButtonPrimary';
 import { MessageError } from '@components/atoms/MessageError';
 import { CategoryParams } from '@models/IFCategory';
 

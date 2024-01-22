@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import CardAvatar from '@components/molecules/Avatars/CardAvatar';
-import Button from '@components/molecules/Buttons';
+import Button from '@components/molecules/Buttons/ButtonPrimary';
 import { formatDatetimeByMonthYear } from '@utils/formatDatetime';
 import { IUser } from '@models/IFUser';
 import { IFPost } from '@models/IFPosts';

@@ -15,7 +15,7 @@ import UploadImage from '@components/molecules/UploadImage';
 import { usePosts } from '@hooks/usePost';
 import SuccessBox from '@components/molecules/SuccessBox';
 import RichTextEditor from '@components/molecules/RichTextEditor';
-import Button from '@components/molecules/Buttons';
+import Button from '@components/molecules/Buttons/ButtonPrimary';
 import { UnauthorizedContext } from '@infra/context/UnauthorizedContext';
 import { toasts } from '@utils/toast';
 import { TOAST } from '@constants/toast';

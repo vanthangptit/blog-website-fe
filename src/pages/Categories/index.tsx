@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Container, Column, Row } from '@components/atoms/Layout';
 import { useCategories } from '@hooks/useCategories';
-import Button from '@components/molecules/Buttons';
+import Button from '@components/molecules/Buttons/ButtonPrimary';
 import { IFCategory } from '@models/IFCategory';
 import ModalDelete from '@components/organisms/ModalDelete';
 import { UnauthorizedContext } from '@infra/context/UnauthorizedContext';
