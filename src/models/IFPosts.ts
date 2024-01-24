@@ -52,6 +52,8 @@ export interface IFSavesRequest extends IFRequester {
   params: IFParamsId
 }
 
+export interface IFPinRequest extends IFSavesRequest {}
+
 export interface IFAssociatePostRequest extends IFSavesRequest {
   data: IFAssociateDataRequest
 }
@@ -61,6 +63,7 @@ export interface IFSinglePostRequest extends IFRequester {
 }
 
 export interface IFPost extends IFDataPostMutable {
+  isPinned: boolean
   createdAt: string
   updatedAt: string
   category: IFCategory

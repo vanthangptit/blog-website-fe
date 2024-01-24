@@ -50,6 +50,10 @@ export const usePosts = () => {
     return dispatch(postStore.toggleSavesPost({ params, token: getAuth('accessToken') }));
   };
 
+  const togglePinPost = (params: IFParamsId ) => {
+    return dispatch(postStore.togglePinPost({ params, token: getAuth('accessToken') }));
+  };
+
   return {
     ...postsStates,
     createPostApi,
@@ -59,6 +63,7 @@ export const usePosts = () => {
     deletePost,
     getPostsByUser,
     toggleAssociatePost,
-    toggleSavesPost
+    toggleSavesPost,
+    togglePinPost
   };
 };

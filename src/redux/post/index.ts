@@ -9,7 +9,8 @@ import {
   IFResponseAllPost,
   IFDeletePostRequest,
   IFAssociatePostRequest,
-  IFSavesRequest
+  IFSavesRequest,
+  IFPinRequest
 } from '@models/IFPosts';
 import requester from '@infra/apis/requester';
 import { getProfile } from '@store/user';
@@ -104,7 +105,7 @@ export const deletePost = createAsyncThunk<any, IFDeletePostRequest>(POST.ACTION
   }
 });
 
-export const toggleAssociatePosts = createAsyncThunk<any, IFAssociatePostRequest>(POST.ACTION_TYPES.DELETE, async ({ data, params, token }, thunkAPI) => {
+export const toggleAssociatePosts = createAsyncThunk<any, IFAssociatePostRequest>(POST.ACTION_TYPES.ASSOCIATE, async ({ data, params, token }, thunkAPI) => {
   try {
     const response = await requester.post(`${POST.URL_API}/associates/${params.id}`, data, true, token);
 
@@ -116,9 +117,21 @@ export const toggleAssociatePosts = createAsyncThunk<any, IFAssociatePostRequest
   }
 });
 
-export const toggleSavesPost = createAsyncThunk<any, IFSavesRequest>(POST.ACTION_TYPES.DELETE, async ({ params, token }, thunkAPI) => {
+export const toggleSavesPost = createAsyncThunk<any, IFSavesRequest>(POST.ACTION_TYPES.SAVES, async ({ params, token }, thunkAPI) => {
   try {
     const response = await requester.post(`${POST.URL_API}/saves/${params.id}`, {}, true, token);
+
+    return {
+      ...response
+    };
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue(error.response);
+  }
+});
+
+export const togglePinPost = createAsyncThunk<any, IFPinRequest>(POST.ACTION_TYPES.PINNED, async ({ params, token }, thunkAPI) => {
+  try {
+    const response = await requester.post(`${POST.URL_API}/pin/${params.id}`, {}, true, token);
 
     return {
       ...response

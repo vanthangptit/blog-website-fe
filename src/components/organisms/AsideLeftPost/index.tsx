@@ -14,6 +14,7 @@ import {
   BiStar,
   BiSolidStar
 } from 'react-icons/bi';
+import { AiOutlinePushpin, AiFillPushpin } from 'react-icons/ai';
 import { TbHeartPlus } from 'react-icons/tb';
 import { FaBookmark, FaRegBookmark  } from 'react-icons/fa';
 import styled from 'styled-components';
@@ -25,19 +26,30 @@ import { TOAST } from '@constants/toast';
 import { Associate, IFPost } from '@models/IFPosts';
 import { usePosts } from '@hooks/usePost';
 import { UnauthorizedContext } from '@infra/context/UnauthorizedContext';
+import { IUser } from '@models/IFUser';
 
-const AsideLeftPost = ({ post }: { post: IFPost }) => {
+const AsideLeftPost = ({
+  post,
+  user,
+  creator
+}: {
+  post: IFPost
+  user?: IUser
+  creator: IUser
+}) => {
   const { shortUrl } = useParams();
   const { setUnauthorized } = useContext(UnauthorizedContext);
-  const { toggleAssociatePost, toggleSavesPost } = usePosts();
+  const { getSinglePostApi, toggleAssociatePost, toggleSavesPost, togglePinPost } = usePosts();
   const [ isLike, setIsLike ] = useState<boolean>(false);
   const [ isDislike, setIsDislike ] = useState<boolean>(false);
   const [ isHeart, setIsHeart ] = useState<boolean>(false);
   const [ isStart, setIsStart ] = useState<boolean>(false);
   const [ isSave, setIsSave ] = useState<boolean>(false);
+  const [ isPined, setIsPined ] = useState<boolean>(false);
 
   const handleSubmit = (rs: any, setState: any, isValue: boolean) => {
     if (rs.status === 200 || rs.statusCode === 200) {
+      shortUrl && getSinglePostApi({ shortUrl });
       return;
     }
 
@@ -54,6 +66,13 @@ const AsideLeftPost = ({ post }: { post: IFPost }) => {
     toggleSavesPost({ id: post.id })
       .unwrap()
       .then((rs) => handleSubmit(rs, setIsSave, !isSave));
+  };
+
+  const handlePin = () => {
+    setIsPined(!isPined);
+    togglePinPost({ id: post.id })
+      .unwrap()
+      .then((rs) => handleSubmit(rs, setIsPined, !isPined));
   };
 
   const toggleAssociate = (associate: Associate, setState: any, state: boolean) => {
@@ -93,33 +112,49 @@ const AsideLeftPost = ({ post }: { post: IFPost }) => {
   }, [ isLike, isDislike, isHeart, isStart ]);
 
   useEffect(() => {
-    /**
-     * @todo: get user current to set ui default
-     */
-  }, [ shortUrl ]);
+    setIsPined(post.isPinned);
+    setIsSave(user ? post.saves.includes(user._id) : false);
+    setIsStart(user ? post.stars.includes(user._id) : false);
+    setIsHeart(user ? post.hearts.includes(user._id) : false);
+    setIsDislike(user ? post.disLikes.includes(user._id) : false);
+    setIsLike(user ? post.likes.includes(user._id) : false);
+  }, [ shortUrl, user, creator, post ]);
 
   return (
     <AsideLef>
-      <PopupActions
-        iconButton={{
-          Element: TbHeartPlus,
-          sizeDots: 25,
-          title: 'Add Reaction'
-        }}
-        boxIcons={{
-          icons: listIcons,
-          positionLeft: 'calc(100% + 10px)',
-          positionTop: '0px'
-        }}
-      />
-      <IconButtonBox>
-        <IconButton
-          Element={isSave ? FaBookmark : FaRegBookmark}
-          size={18}
-          handleClick={handleSavePost}
-          title={'Save'}
-        />
-      </IconButtonBox>
+      {user && user._id === creator._id ? (
+        <IconButtonBox>
+          <IconButton
+            Element={isPined ? AiFillPushpin : AiOutlinePushpin}
+            size={18}
+            handleClick={handlePin}
+            title={isPined ? 'Pinned' : 'Pin'}
+          />
+        </IconButtonBox>
+      ): (
+        <>
+          <PopupActions
+            iconButton={{
+              Element: TbHeartPlus,
+              sizeDots: 25,
+              title: 'Add Reaction'
+            }}
+            boxIcons={{
+              icons: listIcons,
+              positionLeft: 'calc(100% + 10px)',
+              positionTop: '0px'
+            }}
+          />
+          <IconButtonBox>
+            <IconButton
+              Element={isSave ? FaBookmark : FaRegBookmark}
+              size={18}
+              handleClick={handleSavePost}
+              title={'Save'}
+            />
+          </IconButtonBox>
+        </>
+      )}
       <PopupActions
         threeDot={{
           bgDots: 'transparent',
