@@ -12,23 +12,33 @@ const Layout174 = ({
   children,
   post,
   postRelated,
-  creator
+  creator,
+  user
 }: {
   children: React.ReactNode,
   post: IFPost
-  postRelated?: IFPost
+  postRelated?: IFPost[]
   creator: IUser
+  user?: IUser
 }) => {
   return (
     <Layout>
       <AsideLeft>
-        <AsideLeftPost post={post}/>
+        <AsideLeftPost
+          user={user}
+          creator={creator}
+          post={post}/>
       </AsideLeft>
       <Main>
         {children}
       </Main>
       <AsideRight>
-        <AsideRightPost user={creator} postRelated={postRelated}/>
+        <AsideRightPost
+          user={user}
+          creator={creator}
+          postRelated={postRelated}
+          shortUrl={post.shortUrl}
+        />
       </AsideRight>
     </Layout>
   );

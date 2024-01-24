@@ -27,11 +27,11 @@ export interface IFAssociateDataRequest {
   associate: Associate
 }
 
-export interface IFParamsIdRequest {
+export interface IFParamsId {
   id: string
 }
 
-export interface IFSinglePostRequest {
+export interface IFParamsShortUrl {
   shortUrl: string
 }
 
@@ -41,26 +41,30 @@ export interface IFCreatePostRequest extends IFDataPostMutable {
 
 export interface IFEditPostRequest extends IFRequester {
   data: IFDataPostMutable
-  params: IFSinglePostRequest
+  params: IFParamsShortUrl
 }
 
 export interface IFDeletePostRequest extends IFRequester {
-  id: string
+  params: IFParamsId
 }
 
 export interface IFSavesRequest extends IFRequester {
-  params: IFParamsIdRequest
+  params: IFParamsId
 }
 
 export interface IFAssociatePostRequest extends IFSavesRequest {
   data: IFAssociateDataRequest
 }
 
+export interface IFSinglePostRequest extends IFRequester {
+  params: IFParamsShortUrl
+}
+
 export interface IFPost extends IFDataPostMutable {
   createdAt: string
   updatedAt: string
   category: IFCategory
-  user: IUser
+  creator: IUser
   comments: string[]
   commentsCount: number
   daysAgo: string
@@ -86,7 +90,12 @@ export interface IFResponseCreatePost extends IFResponse {
   data?: IFPost
 }
 
-export interface IFResponseSinglePost extends IFResponseCreatePost {}
+export interface IFResponseSinglePost extends IFResponse {
+  data?: {
+    postRelated: IFPost[]
+    singlePost: IFPost
+  }
+}
 
 export interface IFResponseAllPost extends IFResponse {
   data?: IFPost[]

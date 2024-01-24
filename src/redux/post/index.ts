@@ -12,6 +12,7 @@ import {
   IFSavesRequest
 } from '@models/IFPosts';
 import requester from '@infra/apis/requester';
+import { getProfile } from '@store/user';
 
 interface IFPostState {
   isLoading: boolean
@@ -48,9 +49,12 @@ export const editPostApi = createAsyncThunk<any, IFEditPostRequest>(POST.ACTION_
   }
 });
 
-export const getSinglePostApi = createAsyncThunk<any, IFSinglePostRequest>(POST.ACTION_TYPES.SINGLE, async (params, thunkAPI) => {
+export const getSinglePostApi = createAsyncThunk<any, IFSinglePostRequest>(POST.ACTION_TYPES.SINGLE, async ({ params, token }, thunkAPI) => {
   try {
     const response: IFResponseSinglePost = await requester.get(`${POST.URL_API}/${params.shortUrl}`);
+    if (response.status === 200 || response.statusCode === 200) {
+      await thunkAPI.dispatch(getProfile({ token }));
+    }
 
     return {
       ...response
@@ -84,9 +88,9 @@ export const getPostsByUser = createAsyncThunk<any, { token?: string }>(POST.ACT
   }
 });
 
-export const deletePost = createAsyncThunk<any, IFDeletePostRequest>(POST.ACTION_TYPES.DELETE, async ({ id, token }, thunkAPI) => {
+export const deletePost = createAsyncThunk<any, IFDeletePostRequest>(POST.ACTION_TYPES.DELETE, async ({ params, token }, thunkAPI) => {
   try {
-    const response: IFResponseAllPost = await requester.delete(`${POST.URL_API}/${id}`, {}, true, token);
+    const response: IFResponseAllPost = await requester.delete(`${POST.URL_API}/${params.id}`, {}, true, token);
 
     if (response.status === 200 || response.statusCode === 200) {
       await thunkAPI.dispatch(getPostsByUser({ token }));
@@ -132,21 +136,12 @@ export const appPostSlice = createSlice({
     builder
       .addCase(getSinglePostApi.fulfilled, (state, action: PayloadAction<any>) => {
         state.singlePost = action.payload;
-        state.isLoading = false;
-      })
-      .addCase(getSinglePostApi.pending, (state) => {
-        state.isLoading = true;
       })
       .addCase(getPostsByUser.fulfilled, (state, action: PayloadAction<any>) => {
         state.postsByUser = action.payload;
-        state.isLoading = false;
       })
       .addCase(getAllPost.fulfilled, (state, action: PayloadAction<any>) => {
         state.allPost = action.payload;
-        state.isLoading = false;
-      })
-      .addCase(getAllPost.pending, (state) => {
-        state.isLoading = true;
       });
   }
 });

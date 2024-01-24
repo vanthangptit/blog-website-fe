@@ -6,11 +6,10 @@ import {
 import * as postStore from '@store/post';
 import {
   IFCreatePostRequest,
-  IFDeletePostRequest,
   IFEditPostRequest,
-  IFSinglePostRequest,
-  IFParamsIdRequest,
-  IFAssociateDataRequest
+  IFAssociateDataRequest,
+  IFParamsShortUrl,
+  IFParamsId
 } from '@models/IFPosts';
 import { useAuth } from '@hooks/useAuth';
 
@@ -27,8 +26,8 @@ export const usePosts = () => {
     return dispatch(postStore.editPostApi({ ...params, token: getAuth('accessToken') }));
   };
 
-  const getSinglePostApi = (params: IFSinglePostRequest) => {
-    return dispatch(postStore.getSinglePostApi(params));
+  const getSinglePostApi = (params: IFParamsShortUrl) => {
+    return dispatch(postStore.getSinglePostApi({ params, token: getAuth('accessToken') }));
   };
 
   const getPostsByUser = () => {
@@ -39,15 +38,15 @@ export const usePosts = () => {
     return dispatch(postStore.getAllPost({ token: getAuth('accessToken') }));
   };
 
-  const deletePost = (params: IFDeletePostRequest) => {
-    return dispatch(postStore.deletePost(params));
+  const deletePost = (params: IFParamsId) => {
+    return dispatch(postStore.deletePost({ params, token: getAuth('accessToken') }));
   };
 
-  const toggleAssociatePost = (params: IFParamsIdRequest, data: IFAssociateDataRequest ) => {
+  const toggleAssociatePost = (params: IFParamsId, data: IFAssociateDataRequest ) => {
     return dispatch(postStore.toggleAssociatePosts({ data, params, token: getAuth('accessToken') }));
   };
 
-  const toggleSavesPost = (params: IFParamsIdRequest ) => {
+  const toggleSavesPost = (params: IFParamsId ) => {
     return dispatch(postStore.toggleSavesPost({ params, token: getAuth('accessToken') }));
   };
 

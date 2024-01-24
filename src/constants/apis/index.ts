@@ -30,7 +30,9 @@ export const USER = {
     EDIT_GENDER: `${API_ROOT_URL}users/gender`,
     EDIT_BIRTHDAY: `${API_ROOT_URL}users/birthday`,
     CHANGE_PASSWORDS: `${API_ROOT_URL}users/passwords`,
-    CHANGE_PROFILE_PHOTO: `${API_ROOT_URL}users/profilephoto`
+    CHANGE_PROFILE_PHOTO: `${API_ROOT_URL}users/profilephoto`,
+    FOLLOWING: `${API_ROOT_URL}users/following`,
+    UN_FOLLOW: `${API_ROOT_URL}users/unfollower`
   },
   ACTION_TYPES: {
     PROFILE: 'APPS/PROFILE',
@@ -42,7 +44,9 @@ export const USER = {
     EDIT_GENDER: 'APPS/EDIT_GENDER',
     EDIT_BIRTHDAY: 'APPS/EDIT_BIRTHDAY',
     CHANGE_PASSWORDS: 'APPS/CHANGE_PASSWORDS',
-    CHANGE_PROFILE_PHOTO: 'APPS/CHANGE_PROFILE_PHOTO'
+    CHANGE_PROFILE_PHOTO: 'APPS/CHANGE_PROFILE_PHOTO',
+    FOLLOWING: 'APPS/FOLLOWING',
+    UN_FOLLOW: 'APPS/UN_FOLLOW'
   }
 };
 

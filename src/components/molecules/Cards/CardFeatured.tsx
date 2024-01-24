@@ -39,8 +39,8 @@ const CardFeatured = ({
   }, [ item ]);
 
   const createdAt = useMemo(() => {
-    return moment(item?.user?.createdAt).format('MMM YY');
-  }, [ item?.user?.createdAt ]);
+    return moment(item?.creator?.createdAt).format('MMM YY');
+  }, [ item?.creator?.createdAt ]);
 
   const savePost = () => false;
 
@@ -51,9 +51,9 @@ const CardFeatured = ({
   return (
     <CardBox>
       <CardAvatar
-        link={`/profile/${item?.user?.id}`}
-        imageUrl={item?.user?.profilePhoto}
-        userName={item?.user?.fullName}
+        link={`/profile/${item?.creator?.id}`}
+        imageUrl={item?.creator?.profilePhoto}
+        userName={item?.creator?.fullName}
         createAt={createdAt}
       />
       <CardBoxContent>

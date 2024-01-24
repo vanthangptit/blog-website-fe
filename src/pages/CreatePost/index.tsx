@@ -113,7 +113,7 @@ const CreatePost = () => {
                 ...fields,
                 isPublished,
                 description: valueDescription,
-                imageUrl: srcImage ?? singlePost?.data?.imageUrl ?? ''
+                imageUrl: srcImage ?? singlePost?.data?.singlePost?.imageUrl ?? ''
               },
               params: { shortUrl }
             }).unwrap().then(handleResponse);
@@ -161,12 +161,12 @@ const CreatePost = () => {
         .unwrap()
         .then((rs) => {
           if (rs.status === 200 || rs.statusCode === 200) {
-            setSrcImage(rs.data.imageUrl);
-            setValueDescription(rs.data.description);
-            setValue('title', rs.data.title);
-            setValue('writer', rs.data.writer);
-            setValue('excerpt', rs.data.excerpt);
-            setValue('shortUrl', rs.data.shortUrl);
+            setSrcImage(rs.data.singlePost.imageUrl);
+            setValueDescription(rs.data.singlePost.description);
+            setValue('title', rs.data.singlePost.title);
+            setValue('writer', rs.data.singlePost.writer);
+            setValue('excerpt', rs.data.singlePost.excerpt);
+            setValue('shortUrl', rs.data.singlePost.shortUrl);
             setValue(
               'visibility',
               rs.data.isPublished ? VISIBILITY[1].value : VISIBILITY[0].value

@@ -18,8 +18,8 @@ export interface IUser {
   email: string
   emailVerified?: boolean
   followerCounts: number
-  followers?: string[]
-  following?: string[]
+  followers: string[]
+  following: string[]
   followingCounts: number
   fullName: string
   gender: Gender
@@ -47,7 +47,9 @@ export interface IUser {
   job?: string
 }
 
-export interface IFProfileParams extends IFRequester {}
+export interface IFUserId {
+  userId: string
+}
 
 export interface IFEditFirstName {
   firstName: string
@@ -91,6 +93,10 @@ export interface IFProfilePhoto {
   profilePhoto: string
 }
 
+export interface IFFollowing extends IFUserId {}
+
+export interface IFProfileParams extends IFRequester {}
+
 export interface IFEditFirstNameRequest extends IFRequester {
   data: IFEditFirstName
 }
@@ -126,6 +132,12 @@ export interface IFChangePasswordRequest extends IFRequester {
 export interface IFProfilePhotoRequest extends IFRequester {
   data: IFProfilePhoto
 }
+
+export interface IFFollowingRequest extends IFRequester {
+  params: IFFollowing
+}
+
+export interface IFUnFollowerRequest extends IFFollowingRequest {}
 
 export interface IFProfileResponse extends IFResponse {
   data?: IUser

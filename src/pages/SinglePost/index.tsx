@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { usePosts } from '@hooks/usePost';
 import { useParams } from 'react-router-dom';
 import Layout174 from '@components/organisms/Layout-1-7-4';
@@ -17,19 +17,18 @@ import {
 import BoxIcons from '@components/molecules/BoxIcons';
 import CardAvatar from '@components/molecules/Avatars/CardAvatar';
 import TitlePage from '@components/molecules/Titles/TitlePage';
-
-/**
- * @constructor
- * @todo: get post related
- */
+import { useUser } from '@hooks/useUser';
 
 const SinglePost = () => {
-  const { getSinglePostApi, singlePost, isLoading } = usePosts();
+  const { getSinglePostApi, singlePost } = usePosts();
+  const { profile } = useUser();
   const { shortUrl } = useParams();
+  const [ isLoading, setIsLoading ] = useState<boolean>(false);
 
   useEffect(() => {
     if (shortUrl) {
-      getSinglePostApi({ shortUrl });
+      setIsLoading(true);
+      getSinglePostApi({ shortUrl }).unwrap().then(() => setIsLoading(false));
     }
   }, [ shortUrl ]);
 
@@ -38,50 +37,55 @@ const SinglePost = () => {
       element: BiLike,
       title: 'Like',
       link: '#',
-      numberCount: singlePost?.data ? singlePost?.data.likesCount : 0,
+      numberCount: singlePost?.data ? singlePost?.data.singlePost.likesCount : 0,
       onClick: () => false
     },
     {
       element: BiDislike,
       title: 'Dislike',
       link: '#',
-      numberCount: singlePost?.data ? singlePost?.data.disLikesCount : 0,
+      numberCount: singlePost?.data ? singlePost?.data.singlePost.disLikesCount : 0,
       onClick: () => false
     },
     {
       element: BiHeart,
       title: 'Heart',
       link: '#',
-      numberCount: singlePost?.data ? singlePost?.data.heartsCount : 0,
+      numberCount: singlePost?.data ? singlePost?.data.singlePost.heartsCount : 0,
       onClick: () => false
     },
     {
       element: BiStar,
       title: 'Star',
       link: '#',
-      numberCount: singlePost?.data ? singlePost?.data.starsCount : 0,
+      numberCount: singlePost?.data ? singlePost?.data.singlePost.starsCount : 0,
       onClick: () => false
     }
   ];
 
   return !isLoading ? (
     <>
-      {singlePost?.data && (
-        <Layout174 post={singlePost?.data} postRelated={undefined} creator={singlePost.data.user}>
+      {singlePost?.data && singlePost?.data?.singlePost && (
+        <Layout174
+          post={singlePost?.data.singlePost}
+          postRelated={singlePost?.data?.postRelated}
+          creator={singlePost.data.singlePost.creator}
+          user={profile?.data}
+        >
           <BoxContent>
             <BoxContentTop>
               <CardAvatar
-                link={`/profile/${singlePost.data?.user.id}`}
-                imageUrl={singlePost.data?.user?.profilePhoto}
-                userName={singlePost.data?.user?.fullName}
-                createAt={`Posted on ${formatDatetime(singlePost.data.createdAt) + ' (GMT+7)'}`}
+                link={`/profile/${singlePost.data?.singlePost.creator.id}`}
+                imageUrl={singlePost.data?.singlePost.creator?.profilePhoto}
+                userName={singlePost.data?.singlePost.creator?.fullName}
+                createAt={`Posted on ${formatDatetime(singlePost.data.singlePost.createdAt) + ' (GMT+7)'}`}
               />
             </BoxContentTop>
-            {singlePost.data?.imageUrl && (
+            {singlePost.data?.singlePost.imageUrl && (
               <BoxBanner>
                 <BannerPost
                   clickOutsideToClose={false}
-                  photo={singlePost.data?.imageUrl}
+                  photo={singlePost.data?.singlePost.imageUrl}
                   alt={'Image banner Post'}
                 />
               </BoxBanner>
@@ -89,12 +93,12 @@ const SinglePost = () => {
             <BoxAssociates>
               <BoxIcons icons={listIcons} size={25} />
             </BoxAssociates>
-            <TitlePage title={singlePost.data?.title} />
+            <TitlePage title={singlePost.data?.singlePost.title} />
             {/** @todo: View Tags, Category,...*/}
-            <EscapeHTML htmlString={singlePost.data?.description} />
+            <EscapeHTML htmlString={singlePost.data?.singlePost.description} />
           </BoxContent>
           <BoxComment>
-            <PostFormComment postId={singlePost?.data?.id} />
+            <PostFormComment postId={singlePost?.data?.singlePost.id} />
           </BoxComment>
         </Layout174>
       )}

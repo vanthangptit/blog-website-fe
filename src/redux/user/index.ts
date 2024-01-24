@@ -12,7 +12,9 @@ import {
   IFEditGenderRequest,
   IFEditBirthDayRequest,
   IFChangePasswordRequest,
-  IFProfilePhotoRequest
+  IFProfilePhotoRequest,
+  IFFollowingRequest,
+  IFUnFollowerRequest
 } from '@models/IFUser';
 import { IFResponse } from '@models/IFResponse';
 
@@ -164,6 +166,36 @@ export const changePasswords = createAsyncThunk<any, IFChangePasswordRequest>(US
 export const changeProfilePhoto = createAsyncThunk<any, IFProfilePhotoRequest>(USER.ACTION_TYPES.CHANGE_PROFILE_PHOTO, async ({ token, data }, thunkAPI) => {
   try {
     const response: IFResponse = await requester.patch(USER.URL_API.CHANGE_PROFILE_PHOTO, data, true, token);
+    if (response.status === 200 || response.statusCode === 200) {
+      await thunkAPI.dispatch(getProfile({ token }));
+    }
+
+    return {
+      ...response
+    };
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue(error.response);
+  }
+});
+
+export const followingApi = createAsyncThunk<any, IFFollowingRequest>(USER.ACTION_TYPES.FOLLOWING, async ({ token, params }, thunkAPI) => {
+  try {
+    const response: IFResponse = await requester.post(`${USER.URL_API.FOLLOWING}/${params.userId}`, {}, true, token);
+    if (response.status === 200 || response.statusCode === 200) {
+      await thunkAPI.dispatch(getProfile({ token }));
+    }
+
+    return {
+      ...response
+    };
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue(error.response);
+  }
+});
+
+export const unFollowApi = createAsyncThunk<any, IFUnFollowerRequest>(USER.ACTION_TYPES.UN_FOLLOW, async ({ token, params }, thunkAPI) => {
+  try {
+    const response: IFResponse = await requester.post(`${USER.URL_API.UN_FOLLOW}/${params.userId}`, {}, true, token);
     if (response.status === 200 || response.statusCode === 200) {
       await thunkAPI.dispatch(getProfile({ token }));
     }

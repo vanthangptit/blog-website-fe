@@ -6,65 +6,123 @@ import { formatDatetimeByMonthYear } from '@utils/formatDatetime';
 import { IUser } from '@models/IFUser';
 import { IFPost } from '@models/IFPosts';
 import SectionTitleH4 from '@components/molecules/Titles/SectionTitleH4';
+import { Link, useNavigate } from 'react-router-dom';
+import { useUser } from '@hooks/useUser';
+import { usePosts } from '@hooks/usePost';
+import { toasts } from '@utils/toast';
+import { TOAST } from '@constants/toast';
+import { IFResponse } from '@models/IFResponse';
 
-/**
- * @param user
- * @constructor
- * @todo: show postRelated card
- * @todo: Button follow
- */
+const AsideRightPost = ({
+  shortUrl,
+  creator,
+  user,
+  postRelated
+}: {
+  shortUrl: string,
+  creator: IUser,
+  user?: IUser,
+  postRelated?: IFPost[]
+}) => {
+  const navigate = useNavigate();
+  const { followingApi, unFollowApi } = useUser();
+  const { getSinglePostApi } = usePosts();
 
-const AsideRightPost = ({ user, postRelated }: { user: IUser, postRelated?: IFPost }) => {
-  const handleClick = () => true;
+  const handleResponse = (response: IFResponse) => {
+    if (response.status === 200 || response?.statusCode === 200) {
+      getSinglePostApi({ shortUrl });
+    } else if (response.status === 400 || response?.statusCode === 400) {
+      toasts('error', response?.message);
+    } else {
+      toasts('error', TOAST.ERROR_COMMON);
+    }
+  };
+
+  const handleFollow = () => {
+    followingApi({ userId: creator._id })
+      .unwrap()
+      .then(handleResponse);
+  };
+
+  const handleUnFollow = () => {
+    unFollowApi({ userId: creator._id })
+      .unwrap()
+      .then(handleResponse);
+  };
 
   return (
     <AsideRight>
-      <Box>
-        <BoxProfile>
-          <CardAvatar
-            link={`/profile/${user.id}`}
-            imageUrl={user?.profilePhoto}
-            userName={user?.fullName}
-            createAt={`Joined on ${formatDatetimeByMonthYear(user.createdAt)}`}
-          />
+      {user && user?._id !== creator._id ? (
+        <>
+          <Box>
+            <BoxProfile>
+              <CardAvatar
+                link={`/profile/${creator.id}`}
+                imageUrl={creator?.profilePhoto}
+                userName={creator?.fullName}
+                createAt={`Joined on ${formatDatetimeByMonthYear(creator.createdAt)}`}
+              />
 
+              <Button
+                size={'sm'}
+                text={creator.followers?.indexOf(user?._id) > -1 ? 'Unfollow' : 'Follow'}
+                buttonType={'button'}
+                handleClick={creator.followers?.indexOf(user?._id) > -1 ? handleUnFollow : handleFollow}
+              />
+            </BoxProfile>
+
+            {creator?.description && (
+              <UserInfo>{creator?.description}</UserInfo>
+            )}
+
+            {(creator?.address || creator?.job) && (
+              <UserInfo>
+                {creator?.address && (
+                  <SectionTitleH4
+                    title={'Location'}
+                    des={creator?.address}
+                  />
+                )}
+                {creator?.job && (
+                  <SectionTitleH4
+                    title={'Work'}
+                    des={creator?.job}
+                  />
+                )}
+              </UserInfo>
+            )}
+          </Box>
+        </>
+      ) : (
+        <ButtonEdit>
           <Button
             size={'sm'}
-            text={'Follow'}
+            text={'Edit Post'}
             buttonType={'button'}
-            handleClick={handleClick}
+            handleClick={() => navigate(`/edit-post/${shortUrl}`)}
           />
-        </BoxProfile>
-
-        {user?.description && (
-          <UserInfo>{user?.description}</UserInfo>
-        )}
-
-        {(user?.address || user?.job) && (
-          <UserInfo>
-            {user?.address && (
-              <SectionTitleH4
-                title={'Location'}
-                des={user?.address}
-              />
-            )}
-            {user?.job && (
-              <SectionTitleH4
-                title={'Work'}
-                des={user?.job}
-              />
-            )}
-          </UserInfo>
-        )}
-      </Box>
+        </ButtonEdit>
+      )}
 
       <Box>
-        <BoxProfile>
-          <h3>More from <a href={`/profile/${user.id}`} style={{ color: '#bc2e1d' }}>{user?.fullName}</a></h3>
-          {postRelated && (
-            <h4>Have not post related</h4>
+        <BoxPostsRelated>
+          <h3>
+            {user?._id !== creator._id ? (
+              <>
+                More from <Link to={`/profile/${creator.id}`} style={{ color: '#bc2e1d' }}>{creator?.fullName}</Link>
+              </>
+            ) : (
+              'More posts related'
+            )}
+          </h3>
+          {postRelated && postRelated.length === 0 ? (
+            <PostsRelatedCard>Have not post related</PostsRelatedCard>
+          ) : (
+            <PostsRelatedCard>
+              {/* @todo: Show card of post related */}
+            </PostsRelatedCard>
           )}
-        </BoxProfile>
+        </BoxPostsRelated>
       </Box>
     </AsideRight>
   );
@@ -96,4 +154,19 @@ const BoxProfile = styled.div`
   flex-wrap: wrap;
   padding: 15px;
   background-color: ${({ theme }) => theme.gray3};
+`;
+
+const ButtonEdit = styled.div`
+  margin: 30px 0 25px;
+`;
+
+const BoxPostsRelated = styled.div`
+  h3 {
+    padding: 15px;
+    background-color: ${({ theme }) => theme.gray3};
+  }
+`;
+
+const PostsRelatedCard = styled.div`
+  padding: 15px;
 `;
