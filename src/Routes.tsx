@@ -19,6 +19,7 @@ import CreateCategory from '@pages/CreateCategory';
 import SinglePost from '@pages/SinglePost';
 import NotFound from '@components/molecules/NotFound';
 import MyAccount from '@pages/MyAccount';
+import Settings from '@pages/Settings';
 
 const PrivateRoutes = () => {
   const { authenticated } = useContext(AuthContext);
@@ -66,6 +67,7 @@ const Routes = () => {
         <Route path='/category/:id' element={<CreateCategory />} />
         <Route path='/user/:id' element={<MyAccount />} />
         <Route path='/profile' element={<MyAccount />} />
+        <Route path='/settings' element={<Settings />} />
       </Route>
 
       <Route path='*' element={<NotFound message={'The page you requested was not found.'}/>} />

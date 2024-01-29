@@ -8,7 +8,7 @@ import {
   UseFormRegister
 } from 'react-hook-form';
 
-type nameField = 'excerpt' | 'description';
+type nameField = 'excerpt' | 'description' | 'bio';
 
 const Textarea = ({
   register,

@@ -11,10 +11,17 @@ import Layout12 from '@components/organisms/Layout-12';
 import { useUser } from '@hooks/useUser';
 import NotFound from '@components/molecules/NotFound';
 import { UnauthorizedContext } from '@infra/context/UnauthorizedContext';
-import ProfileForm from '@components/organisms/Account';
 import { TOAST } from '@constants/toast';
+import Profile from '@components/organisms/Profile';
+import Account from '@components/organisms/Account';
+import SiteAvatar from '@components/molecules/Avatars/SiteAvatar';
+import { AVATAR_DEFAULT } from '@constants/aws/s3';
 
-const MyAccount = () => {
+const spacing = '6rem';
+const heightAvatar = 99;
+const borderAvatar = 10;
+
+const Settings = () => {
   const { setUnauthorized } = useContext(UnauthorizedContext);
   const { getProfile, profile } = useUser();
 
@@ -46,13 +53,24 @@ const MyAccount = () => {
                 </Column>
 
                 <Column $mdWidth={'65%'}>
-                  <TabPanel>
-                    <ProfileForm user={profile?.data} />
-                  </TabPanel>
-                  <TabPanel>
-                    <ProfileForm user={profile?.data} />
-                  </TabPanel>
-                  <TabPanel>{TOAST.WARNING_UPDATING}</TabPanel>
+                  <TabsBox>
+                    <Header>
+                      <Avatar>
+                        <SiteAvatar
+                          viewerPhoto={profile?.data?.profilePhoto ?? AVATAR_DEFAULT}
+                          height={heightAvatar}
+                        />
+                      </Avatar>
+                    </Header>
+
+                    <TabPanel>
+                      <Profile user={profile?.data} />
+                    </TabPanel>
+                    <TabPanel>
+                      <Account user={profile?.data} />
+                    </TabPanel>
+                    <TabPanel>{TOAST.WARNING_UPDATING}</TabPanel>
+                  </TabsBox>
                 </Column>
               </Row>
             </Tabs>
@@ -67,7 +85,7 @@ const MyAccount = () => {
   );
 };
 
-export default MyAccount;
+export default Settings;
 
 const Box = styled.section`
   padding: 20px 0;
@@ -111,4 +129,27 @@ const ListInformation = styled.div`
       outline: none;
     }
   }
+`;
+
+const TabsBox = styled.div`
+  width: 100%;
+  padding: ${spacing} 20px 20px;
+  background-image: linear-gradient(${({ theme }) => theme.bg4} ${spacing}, rgba(0, 0, 0, 0) ${spacing});
+  border-radius: 5px 5px 0 0;
+  border: 1px solid ${({ theme }) => theme.bg4};
+`;
+
+
+const Avatar = styled.div`
+  display: inline-flex;
+  border: ${borderAvatar}px solid ${({ theme }) => theme.bg4};
+  border-radius: 50%;
+  width: ${heightAvatar + (borderAvatar * 2) - 1}px;
+  height: ${heightAvatar + (borderAvatar * 2) - 1}px;
+`;
+
+const Header = styled.div`
+  margin-top: -${(heightAvatar + (borderAvatar * 2) - 1) / 2}px;
+  text-align: center;
+  margin-bottom: 25px;
 `;
