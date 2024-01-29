@@ -120,13 +120,6 @@ const BoxContentTop = styled.div`
   justify-content: space-between;
 `;
 
-const CreateAt = styled.div`
-  color: ${( { theme }) => theme.gray6};
-  font-size: 14px;
-  text-align: right;
-  margin-bottom: 15px;
-`;
-
 const BoxBanner = styled.div`
   border-radius: 5px 5px 0 0;
   overflow: hidden;
