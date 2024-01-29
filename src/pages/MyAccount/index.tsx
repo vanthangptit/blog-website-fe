@@ -11,7 +11,7 @@ import Layout12 from '@components/organisms/Layout-12';
 import { useUser } from '@hooks/useUser';
 import NotFound from '@components/molecules/NotFound';
 import { UnauthorizedContext } from '@infra/context/UnauthorizedContext';
-import ProfileForm from '@components/organisms/ProfileForm';
+import ProfileForm from '@components/organisms/ProfileBox';
 import { TOAST } from '@constants/toast';
 
 const MyAccount = () => {
@@ -38,13 +38,17 @@ const MyAccount = () => {
                 <Column $mdWidth={'35%'}>
                   <ListInformation>
                     <TabList>
-                      <Tab>My profile</Tab>
+                      <Tab>Profile</Tab>
+                      <Tab>Account</Tab>
                       <Tab>Saved posts</Tab>
                     </TabList>
                   </ListInformation>
                 </Column>
 
                 <Column $mdWidth={'65%'}>
+                  <TabPanel>
+                    <ProfileForm user={profile?.data} />
+                  </TabPanel>
                   <TabPanel>
                     <ProfileForm user={profile?.data} />
                   </TabPanel>

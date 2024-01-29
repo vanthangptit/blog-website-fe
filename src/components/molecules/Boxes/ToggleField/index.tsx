@@ -79,6 +79,7 @@ const Box = styled.div`
 const BoxTop = styled.div<{ $isOpen: boolean }>`
   display: flex;
   margin-bottom: 10px;
+  gap: 15px;
 `;
 
 const BoxTopLeft = styled.div`

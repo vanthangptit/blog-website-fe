@@ -14,7 +14,9 @@ import {
   IFChangePasswordRequest,
   IFProfilePhotoRequest,
   IFFollowingRequest,
-  IFUnFollowerRequest
+  IFUnFollowerRequest,
+  IFEditSchoolRequest,
+  IFEditAliasRequest
 } from '@models/IFUser';
 import { IFResponse } from '@models/IFResponse';
 
@@ -166,6 +168,36 @@ export const changePasswords = createAsyncThunk<any, IFChangePasswordRequest>(US
 export const changeProfilePhoto = createAsyncThunk<any, IFProfilePhotoRequest>(USER.ACTION_TYPES.CHANGE_PROFILE_PHOTO, async ({ token, data }, thunkAPI) => {
   try {
     const response: IFResponse = await requester.patch(USER.URL_API.CHANGE_PROFILE_PHOTO, data, true, token);
+    if (response.status === 200 || response.statusCode === 200) {
+      await thunkAPI.dispatch(getProfile({ token }));
+    }
+
+    return {
+      ...response
+    };
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue(error.response);
+  }
+});
+
+export const editUserSchool = createAsyncThunk<any, IFEditSchoolRequest>(USER.ACTION_TYPES.SCHOOL, async ({ token, data }, thunkAPI) => {
+  try {
+    const response: IFResponse = await requester.patch(USER.URL_API.SCHOOL, data, true, token);
+    if (response.status === 200 || response.statusCode === 200) {
+      await thunkAPI.dispatch(getProfile({ token }));
+    }
+
+    return {
+      ...response
+    };
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue(error.response);
+  }
+});
+
+export const editUserAlias = createAsyncThunk<any, IFEditAliasRequest>(USER.ACTION_TYPES.ALIAS, async ({ token, data }, thunkAPI) => {
+  try {
+    const response: IFResponse = await requester.patch(USER.URL_API.ALIAS, data, true, token);
     if (response.status === 200 || response.statusCode === 200) {
       await thunkAPI.dispatch(getProfile({ token }));
     }

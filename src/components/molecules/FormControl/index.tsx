@@ -19,7 +19,9 @@ export type NameField =
   'newPassword' |
   'address' |
   'job' |
-  'newConfirmPassword';
+  'newConfirmPassword' |
+  'school' |
+  'alias';
 
 export type TypeField = 'email' | 'password' | 'text';
 

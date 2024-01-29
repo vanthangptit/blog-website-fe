@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { IFEditJob } from '@models/IFUser';
+import { IFEditSchool } from '@models/IFUser';
 import ToggleField from '@components/molecules/Boxes/ToggleField';
 import FormControl from '@components/molecules/FormControl';
 import { Form } from '@components/atoms/Form';
@@ -8,8 +8,8 @@ import { useUser } from '@hooks/useUser';
 import { toasts } from '@utils/toast';
 import { TOAST } from '@constants/toast';
 
-const FormUserJob = ({ job }: { job?: string }) => {
-  const { editUserJob } = useUser();
+const FormUserSchool = ({ school }: { school?: string }) => {
+  const { editUserSchool } = useUser();
   const [ isLoading, setIsLoading ] = useState<boolean>(false);
   const [ isOpen, setOpen ] = useState<boolean>(false);
 
@@ -19,11 +19,11 @@ const FormUserJob = ({ job }: { job?: string }) => {
     handleSubmit,
     register,
     formState
-  } = useForm<IFEditJob>();
+  } = useForm<IFEditSchool>();
 
-  const onSubmit: SubmitHandler<IFEditJob> = async data => {
+  const onSubmit: SubmitHandler<IFEditSchool> = async data => {
     setIsLoading(true);
-    editUserJob(data)
+    editUserSchool(data)
       .unwrap()
       .then((rs) => {
         if (rs.status === 200 || rs.statusCode === 200) {
@@ -37,49 +37,49 @@ const FormUserJob = ({ job }: { job?: string }) => {
   };
 
   useEffect(() => {
-    if (job) {
-      setValue('job', job);
+    if (school) {
+      setValue('school', school);
     }
-  }, [ job ]);
+  }, [ school ]);
 
   useEffect(() => {
-    if (watch('job') !== job) {
+    if (watch('school') !== school) {
       setIsLoading(false);
     } else {
       setIsLoading(true);
     }
-  }, [ watch('job') ]);
+  }, [ watch('school') ]);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <ToggleField
         isOpen={isOpen}
         setOpen={setOpen}
-        label={'Work'}
-        value={job}
+        label={'Education'}
+        value={school}
         isLoading={isLoading}
       >
         <FormControl
           register={register}
           formState={formState}
           errors={{
-            required: 'Job is required',
-            pattern: 'Please enter letter characters, number and [@!?&.,-] special characters',
-            length: 'Job must not exceed 255 characters'
+            required: 'Education is required',
+            pattern: 'Please enter letter characters and numbers.',
+            length: 'Education must not exceed 255 characters'
           }}
-          textEr={'Job is required'}
+          textEr={'Education is required'}
           typeField={'text'}
-          nameField={'job'}
+          nameField={'school'}
           $with={'100%'}
           $height={'45px'}
           $maxLength={255}
-          placeholder={job ?? 'What do you do? Example: Frontend at Dandelions Labs.'}
+          placeholder={school ?? 'Where did you go to school?'}
           isRequired={true}
-          $pattern={/^[a-zA-Z0-9@!?&.,/\-\s]+$/}
+          $pattern={/^[a-zA-Z0-9\-\s]+$/}
         />
       </ToggleField>
     </Form>
   );
 };
 
-export default FormUserJob;
+export default FormUserSchool;

@@ -15,7 +15,9 @@ import {
   IFEditBirthDay,
   IFChangePassword,
   IFProfilePhoto,
-  IFFollowing
+  IFFollowing,
+  IFEditSchool,
+  IFEditAlias
 } from '@models/IFUser';
 
 export const useUser = () => {
@@ -63,6 +65,14 @@ export const useUser = () => {
     return dispatch(userStore.changeProfilePhoto({ data, token: getAuth('accessToken') }));
   };
 
+  const editUserSchool = (data: IFEditSchool) => {
+    return dispatch(userStore.editUserSchool({ data, token: getAuth('accessToken') }));
+  };
+
+  const editUserAlias = (data: IFEditAlias) => {
+    return dispatch(userStore.editUserAlias({ data, token: getAuth('accessToken') }));
+  };
+
   const followingApi = (params: IFFollowing) => {
     return dispatch(userStore.followingApi({ params, token: getAuth('accessToken') }));
   };
@@ -84,6 +94,8 @@ export const useUser = () => {
     changePasswords,
     changeProfilePhoto,
     followingApi,
-    unFollowApi
+    unFollowApi,
+    editUserSchool,
+    editUserAlias
   };
 };

@@ -9,6 +9,9 @@ export type UserAward = 'bronze' | 'silver' | 'gold';
 export type Roles = 'normal' | 'creator' | 'admin';
 
 export interface IUser {
+  school?: string
+  alias: string
+
   lastName: string
   firstName: string
   blocked?: string[]
@@ -93,6 +96,14 @@ export interface IFProfilePhoto {
   profilePhoto: string
 }
 
+export interface IFEditSchool {
+  school: string
+}
+
+export interface IFEditAlias {
+  alias: string
+}
+
 export interface IFFollowing extends IFUserId {}
 
 export interface IFProfileParams extends IFRequester {}
@@ -131,6 +142,14 @@ export interface IFChangePasswordRequest extends IFRequester {
 
 export interface IFProfilePhotoRequest extends IFRequester {
   data: IFProfilePhoto
+}
+
+export interface IFEditSchoolRequest extends IFRequester {
+  data: IFEditSchool
+}
+
+export interface IFEditAliasRequest extends IFRequester {
+  data: IFEditAlias
 }
 
 export interface IFFollowingRequest extends IFRequester {

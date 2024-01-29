@@ -31,6 +31,8 @@ export const USER = {
     EDIT_BIRTHDAY: `${API_ROOT_URL}users/birthday`,
     CHANGE_PASSWORDS: `${API_ROOT_URL}users/passwords`,
     CHANGE_PROFILE_PHOTO: `${API_ROOT_URL}users/profilephoto`,
+    SCHOOL: `${API_ROOT_URL}users/school`,
+    ALIAS: `${API_ROOT_URL}users/alias`,
     FOLLOWING: `${API_ROOT_URL}users/following`,
     UN_FOLLOW: `${API_ROOT_URL}users/unfollower`
   },
@@ -45,6 +47,8 @@ export const USER = {
     EDIT_BIRTHDAY: 'APPS/EDIT_BIRTHDAY',
     CHANGE_PASSWORDS: 'APPS/CHANGE_PASSWORDS',
     CHANGE_PROFILE_PHOTO: 'APPS/CHANGE_PROFILE_PHOTO',
+    SCHOOL: 'APPS/SCHOOL',
+    ALIAS: 'APPS/ALIAS',
     FOLLOWING: 'APPS/FOLLOWING',
     UN_FOLLOW: 'APPS/UN_FOLLOW'
   }
