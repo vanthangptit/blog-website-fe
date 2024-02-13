@@ -51,7 +51,7 @@ const CardFeatured = ({
   return (
     <CardBox>
       <CardAvatar
-        link={`/profile/${item?.creator?.id}`}
+        link={`/user/${item?.creator?.id}`}
         imageUrl={item?.creator?.profilePhoto}
         userName={item?.creator?.fullName}
         createAt={createdAt}

@@ -6,16 +6,17 @@ import Modal from '@components/molecules/Modal';
 import { UnauthorizedContext } from '@infra/context/UnauthorizedContext';
 
 const UnauthorizedError = () => {
-  const { unauthorized } = useContext(UnauthorizedContext);
+  const { unauthorized, setUnauthorized } = useContext(UnauthorizedContext);
   const navigate = useNavigate();
   const onClick = () => navigate('/login');
 
   return (
     <Modal
-      isIconClose={false}
+      isIconClose={true}
       modalIsOpen={!!unauthorized}
       shouldCloseOnOverlayClick={false}
       styles={{ content: { maxWidth: '635px' } }}
+      closeModal={() => setUnauthorized(false)}
     >
       <Unauthorized>
         <UnauthorizedName>HEY!</UnauthorizedName>

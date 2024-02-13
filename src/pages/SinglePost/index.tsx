@@ -75,7 +75,7 @@ const SinglePost = () => {
           <BoxContent>
             <BoxContentTop>
               <CardAvatar
-                link={`/profile/${singlePost.data?.singlePost.creator.id}`}
+                link={`/user/${singlePost.data?.singlePost.creator.id}`}
                 imageUrl={singlePost.data?.singlePost.creator?.profilePhoto}
                 userName={singlePost.data?.singlePost.creator?.fullName}
                 createAt={`Posted on ${formatDatetime(singlePost.data.singlePost.createdAt) + ' (GMT+7)'}`}
@@ -98,7 +98,7 @@ const SinglePost = () => {
             <EscapeHTML htmlString={singlePost.data?.singlePost.description} />
           </BoxContent>
           <BoxComment>
-            <PostFormComment postId={singlePost?.data?.singlePost.id} />
+            <PostFormComment postId={singlePost?.data?.singlePost.id} viewer={profile?.data} />
           </BoxComment>
         </Layout174>
       )}

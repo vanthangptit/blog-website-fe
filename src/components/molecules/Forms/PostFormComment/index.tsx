@@ -12,8 +12,10 @@ import { TOAST } from '@constants/toast';
 import SingleTitle from '@components/molecules/Titles/SingleTitle';
 import CardComment from '@components/molecules/Cards/CardComment';
 import { Link } from 'react-router-dom';
+import { IUser } from '@models/IFUser';
+import { AVATAR_DEFAULT } from '@constants/aws/s3';
 
-const PostFormComment = ({ postId }: { postId: string }) => {
+const PostFormComment = ({ postId, viewer }: { postId: string, viewer?: IUser }) => {
   const { setUnauthorized } = useContext(UnauthorizedContext);
   const { isLoading, createComment, getCommentByPostId, comment } = useComment();
 
@@ -25,7 +27,11 @@ const PostFormComment = ({ postId }: { postId: string }) => {
   } = useForm<IFDataComment>();
 
   const onSubmit: SubmitHandler<IFDataComment> = data => {
-    createComment({ id: postId }, data).unwrap().then(handleResponse);
+    if (viewer) {
+      createComment({ id: postId }, data).unwrap().then(handleResponse);
+    } else {
+      setUnauthorized(true);
+    }
   };
 
   const handleResponse = (rs: IFResponseComment) => {
@@ -54,7 +60,7 @@ const PostFormComment = ({ postId }: { postId: string }) => {
       <SingleTitle title={`Top comments (${comment?.data?.length ?? 0})`} />
 
       <FormComment>
-        <SiteAvatar />
+        <SiteAvatar viewerPhoto={viewer ? viewer?.profilePhoto ?? AVATAR_DEFAULT : undefined}/>
         <FormElement onSubmit={handleSubmit(onSubmit)}>
           <Textarea
             register={register}

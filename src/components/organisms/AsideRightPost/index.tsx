@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import CardAvatar from '@components/molecules/Avatars/CardAvatar';
 import Button from '@components/molecules/Buttons/ButtonPrimary';
@@ -12,6 +12,7 @@ import { usePosts } from '@hooks/usePost';
 import { toasts } from '@utils/toast';
 import { TOAST } from '@constants/toast';
 import { IFResponse } from '@models/IFResponse';
+import { UnauthorizedContext } from '@infra/context/UnauthorizedContext';
 
 const AsideRightPost = ({
   shortUrl,
@@ -27,6 +28,7 @@ const AsideRightPost = ({
   const navigate = useNavigate();
   const { followingApi, unFollowApi } = useUser();
   const { getSinglePostApi } = usePosts();
+  const { setUnauthorized } = useContext(UnauthorizedContext);
 
   const handleResponse = (response: IFResponse) => {
     if (response.status === 200 || response?.statusCode === 200) {
@@ -39,25 +41,42 @@ const AsideRightPost = ({
   };
 
   const handleFollow = () => {
-    followingApi({ userId: creator._id })
-      .unwrap()
-      .then(handleResponse);
+    if (user) {
+      followingApi({ userId: creator._id })
+        .unwrap()
+        .then(handleResponse);
+    } else {
+      setUnauthorized(true);
+    }
   };
 
   const handleUnFollow = () => {
-    unFollowApi({ userId: creator._id })
-      .unwrap()
-      .then(handleResponse);
+    if (user) {
+      unFollowApi({ userId: creator._id })
+        .unwrap()
+        .then(handleResponse);
+    } else {
+      setUnauthorized(true);
+    }
   };
 
   return (
     <AsideRight>
-      {user && user?._id !== creator._id ? (
+      {user && user?._id === creator._id ? (
+        <ButtonEdit>
+          <Button
+            size={'sm'}
+            text={'Edit Post'}
+            buttonType={'button'}
+            handleClick={() => navigate(`/edit-post/${shortUrl}`)}
+          />
+        </ButtonEdit>
+      ) : (
         <>
           <Box>
             <BoxProfile>
               <CardAvatar
-                link={`/profile/${creator.id}`}
+                link={`/user/${creator.id}`}
                 imageUrl={creator?.profilePhoto}
                 userName={creator?.fullName}
                 createAt={`Joined on ${formatDatetimeByMonthYear(creator.createdAt)}`}
@@ -65,9 +84,9 @@ const AsideRightPost = ({
 
               <Button
                 size={'sm'}
-                text={creator.followers?.indexOf(user?._id) > -1 ? 'Unfollow' : 'Follow'}
+                text={creator.followers?.indexOf(user?._id ?? '') > -1 ? 'Unfollow' : 'Follow'}
                 buttonType={'button'}
-                handleClick={creator.followers?.indexOf(user?._id) > -1 ? handleUnFollow : handleFollow}
+                handleClick={creator.followers?.indexOf(user?._id ?? '') > -1 ? handleUnFollow : handleFollow}
               />
             </BoxProfile>
 
@@ -93,15 +112,6 @@ const AsideRightPost = ({
             )}
           </Box>
         </>
-      ) : (
-        <ButtonEdit>
-          <Button
-            size={'sm'}
-            text={'Edit Post'}
-            buttonType={'button'}
-            handleClick={() => navigate(`/edit-post/${shortUrl}`)}
-          />
-        </ButtonEdit>
       )}
 
       <Box>
@@ -109,7 +119,7 @@ const AsideRightPost = ({
           <h3>
             {user?._id !== creator._id ? (
               <>
-                More from <Link to={`/profile/${creator.id}`} style={{ color: '#bc2e1d' }}>{creator?.fullName}</Link>
+                More from <Link to={`/user/${creator.id}`} style={{ color: '#bc2e1d' }}>{creator?.fullName}</Link>
               </>
             ) : (
               'More posts related'

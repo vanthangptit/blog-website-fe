@@ -18,7 +18,7 @@ import Categories from '@pages/Categories';
 import CreateCategory from '@pages/CreateCategory';
 import SinglePost from '@pages/SinglePost';
 import NotFound from '@components/molecules/NotFound';
-import MyAccount from '@pages/MyAccount';
+import UserProfile from '@pages/UserProfile';
 import Settings from '@pages/Settings';
 
 const PrivateRoutes = () => {
@@ -65,7 +65,7 @@ const Routes = () => {
         <Route path='/categories' element={<Categories />} />
         <Route path='/create-category' element={<CreateCategory />} />
         <Route path='/category/:id' element={<CreateCategory />} />
-        <Route path='/user/:id' element={<MyAccount />} />
+        <Route path='/user/:id' element={<UserProfile />} />
         <Route path='/settings' element={<Settings />} />
       </Route>
 

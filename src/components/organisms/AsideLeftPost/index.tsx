@@ -61,25 +61,39 @@ const AsideLeftPost = ({
     }
   };
 
+  const showUnauthorized = () => setTimeout(() => setUnauthorized(true), 300);
+
   const handleSavePost = () => {
-    setIsSave(!isSave);
-    toggleSavesPost({ id: post.id })
-      .unwrap()
-      .then((rs) => handleSubmit(rs, setIsSave, !isSave));
+    if (user) {
+      setIsSave(!isSave);
+      toggleSavesPost({ id: post.id })
+        .unwrap()
+        .then((rs) => handleSubmit(rs, setIsSave, !isSave));
+    } else {
+      showUnauthorized();
+    }
   };
 
   const handlePin = () => {
-    setIsPined(!isPined);
-    togglePinPost({ id: post.id })
-      .unwrap()
-      .then((rs) => handleSubmit(rs, setIsPined, !isPined));
+    if (user) {
+      setIsPined(!isPined);
+      togglePinPost({ id: post.id })
+        .unwrap()
+        .then((rs) => handleSubmit(rs, setIsPined, !isPined));
+    } else {
+      showUnauthorized();
+    }
   };
 
   const toggleAssociate = (associate: Associate, setState: any, state: boolean) => {
-    setState(!state);
-    toggleAssociatePost({ id: post.id }, { associate })
-      .unwrap()
-      .then((rs) => handleSubmit(rs, setIsLike, !state));
+    if (user) {
+      setState(!state);
+      toggleAssociatePost({ id: post.id }, { associate })
+        .unwrap()
+        .then((rs) => handleSubmit(rs, setIsLike, !state));
+    } else {
+      showUnauthorized();
+    }
   };
 
   const listIcons = useMemo(() => {
