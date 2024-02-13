@@ -17,7 +17,9 @@ import {
   IFProfilePhoto,
   IFFollowing,
   IFEditSchool,
-  IFEditAlias
+  IFEditAlias,
+  IFEditBio,
+  IFEditWebsiteUrl
 } from '@models/IFUser';
 
 export const useUser = () => {
@@ -73,6 +75,14 @@ export const useUser = () => {
     return dispatch(userStore.editUserAlias({ data, token: getAuth('accessToken') }));
   };
 
+  const editUserBio = (data: IFEditBio) => {
+    return dispatch(userStore.editUserBio({ data, token: getAuth('accessToken') }));
+  };
+
+  const editUserWebsiteUrl = (data: IFEditWebsiteUrl) => {
+    return dispatch(userStore.editUserWebsiteUrl({ data, token: getAuth('accessToken') }));
+  };
+
   const followingApi = (params: IFFollowing) => {
     return dispatch(userStore.followingApi({ params, token: getAuth('accessToken') }));
   };
@@ -96,6 +106,8 @@ export const useUser = () => {
     followingApi,
     unFollowApi,
     editUserSchool,
-    editUserAlias
+    editUserAlias,
+    editUserBio,
+    editUserWebsiteUrl
   };
 };

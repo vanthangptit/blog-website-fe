@@ -21,7 +21,8 @@ export type NameField =
   'job' |
   'newConfirmPassword' |
   'school' |
-  'alias';
+  'alias' |
+  'websiteUrl';
 
 export type TypeField = 'email' | 'password' | 'text';
 

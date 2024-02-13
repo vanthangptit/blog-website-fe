@@ -22,19 +22,21 @@ export const API_CATEGORY = {
 export const USER = {
   URL_API: {
     PROFILE: `${API_ROOT_URL}users/profile`,
-    EDIT_FIRST_NAME: `${API_ROOT_URL}users/firstname`,
-    EDIT_LAST_NAME: `${API_ROOT_URL}users/lastname`,
-    EDIT_ADDRESS: `${API_ROOT_URL}users/address`,
-    EDIT_JOB: `${API_ROOT_URL}users/job`,
-    EDIT_DESCRIPTION: `${API_ROOT_URL}users/description`,
-    EDIT_GENDER: `${API_ROOT_URL}users/gender`,
-    EDIT_BIRTHDAY: `${API_ROOT_URL}users/birthday`,
-    CHANGE_PASSWORDS: `${API_ROOT_URL}users/passwords`,
-    CHANGE_PROFILE_PHOTO: `${API_ROOT_URL}users/profilephoto`,
-    SCHOOL: `${API_ROOT_URL}users/school`,
-    ALIAS: `${API_ROOT_URL}users/alias`,
-    FOLLOWING: `${API_ROOT_URL}users/following`,
-    UN_FOLLOW: `${API_ROOT_URL}users/unfollower`
+    EDIT_FIRST_NAME: `${API_ROOT_URL}users/update/firstname`,
+    EDIT_LAST_NAME: `${API_ROOT_URL}users/update/lastname`,
+    EDIT_ADDRESS: `${API_ROOT_URL}users/update/address`,
+    EDIT_JOB: `${API_ROOT_URL}users/update/job`,
+    EDIT_DESCRIPTION: `${API_ROOT_URL}users/update/description`,
+    EDIT_GENDER: `${API_ROOT_URL}users/update/gender`,
+    EDIT_BIRTHDAY: `${API_ROOT_URL}users/update/birthday`,
+    CHANGE_PASSWORDS: `${API_ROOT_URL}users/update/passwords`,
+    CHANGE_PROFILE_PHOTO: `${API_ROOT_URL}users/update/profilephoto`,
+    SCHOOL: `${API_ROOT_URL}users/update/school`,
+    ALIAS: `${API_ROOT_URL}users/update/alias`,
+    BIO: `${API_ROOT_URL}users/update/bio`,
+    WEBSITE_URL: `${API_ROOT_URL}users/update/websiteurl`,
+    FOLLOWING: `${API_ROOT_URL}users/follow/following`,
+    UN_FOLLOW: `${API_ROOT_URL}users/follow/unfollower`
   },
   ACTION_TYPES: {
     PROFILE: 'APPS/PROFILE',
@@ -49,6 +51,8 @@ export const USER = {
     CHANGE_PROFILE_PHOTO: 'APPS/CHANGE_PROFILE_PHOTO',
     SCHOOL: 'APPS/SCHOOL',
     ALIAS: 'APPS/ALIAS',
+    BIO: 'APPS/BIO',
+    WEBSITE_URL: 'APPS/WEBSITE_URL',
     FOLLOWING: 'APPS/FOLLOWING',
     UN_FOLLOW: 'APPS/UN_FOLLOW'
   }

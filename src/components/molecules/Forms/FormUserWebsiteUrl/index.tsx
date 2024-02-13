@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { IFEditDescription } from '@models/IFUser';
+import { IFEditWebsiteUrl }  from '@models/IFUser';
 import ToggleField from '@components/molecules/Boxes/ToggleField';
 import { Form } from '@components/atoms/Form';
 import { useUser } from '@hooks/useUser';
 import { toasts } from '@utils/toast';
 import { TOAST } from '@constants/toast';
-import Textarea from '@components/atoms/Textarea';
+import FormControl from '@components/molecules/FormControl';
 
-const FormUserDescription = ({ description }: { description?: string }) => {
-  const { editUserDescription } = useUser();
+const FormUserWebsiteUrl = ({ websiteUrl }: { websiteUrl?: string }) => {
+  const { editUserWebsiteUrl } = useUser();
   const [ isLoading, setIsLoading ] = useState<boolean>(false);
   const [ isOpen, setOpen ] = useState<boolean>(false);
 
@@ -19,11 +19,11 @@ const FormUserDescription = ({ description }: { description?: string }) => {
     handleSubmit,
     register,
     formState
-  } = useForm<IFEditDescription>();
+  } = useForm<IFEditWebsiteUrl>();
 
-  const onSubmit: SubmitHandler<IFEditDescription> = async data => {
+  const onSubmit: SubmitHandler<IFEditWebsiteUrl> = async data => {
     setIsLoading(true);
-    editUserDescription(data)
+    editUserWebsiteUrl(data)
       .unwrap()
       .then((rs) => {
         if (rs.status === 200 || rs.statusCode === 200) {
@@ -37,49 +37,49 @@ const FormUserDescription = ({ description }: { description?: string }) => {
   };
 
   useEffect(() => {
-    if (description) {
-      setValue('description', description);
+    if (websiteUrl) {
+      setValue('websiteUrl', websiteUrl);
     }
-  }, [ description ]);
+  }, [ websiteUrl ]);
 
   useEffect(() => {
-    if (watch('description') !== description) {
+    if (watch('websiteUrl') !== websiteUrl) {
       setIsLoading(false);
     } else {
       setIsLoading(true);
     }
-  }, [ watch('description') ]);
+  }, [ watch('websiteUrl') ]);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <ToggleField
         isOpen={isOpen}
         setOpen={setOpen}
-        label={'Description'}
-        value={description}
+        label={'Website URL'}
+        value={websiteUrl}
         isLoading={isLoading}
       >
-        <Textarea
+        <FormControl
           register={register}
           formState={formState}
-          nameField={'description'}
-          placeholder={'Write a small introduction about yourself...'}
-          textEr={'Description required and must between 25 - 255 characters.'}
-          $minLength={25}
-          $maxLength={500}
-          $isRequired={true}
-          $rows={3}
-          $pattern={/^[a-zA-Z0-9#*()@!?&.,'"/\-\s]+$/}
           errors={{
-            required: 'Description is required',
-            //eslint-disable-next-line
-            pattern: 'Please enter letter characters, number and [#*()@!?&.,\'-\"] special characters',
-            length: 'Description required and must between 25 - 500 characters.'
+            required: 'Website URL is required',
+            pattern: 'Website URL is invalid'
           }}
+          textEr={'Website URL is required'}
+          typeField={'text'}
+          nameField={'websiteUrl'}
+          $with={'100%'}
+          $height={'45px'}
+          $maxLength={255}
+          placeholder={'https://yoursite.com'}
+          isRequired={true}
+          /* eslint-disable */
+          $pattern={/^(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)+$/}
         />
       </ToggleField>
     </Form>
   );
 };
 
-export default FormUserDescription;
+export default FormUserWebsiteUrl;

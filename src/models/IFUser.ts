@@ -11,7 +11,8 @@ export type Roles = 'normal' | 'creator' | 'admin';
 export interface IUser {
   school?: string
   alias: string
-
+  bio?: string
+  websiteUrl?: string
   lastName: string
   firstName: string
   blocked?: string[]
@@ -76,6 +77,14 @@ export interface IFEditJob {
 
 export interface IFEditDescription {
   description: string
+}
+
+export interface IFEditBio {
+  bio: string
+}
+
+export interface IFEditWebsiteUrl {
+  websiteUrl: string
 }
 
 export interface IFEditGender {
@@ -150,6 +159,14 @@ export interface IFEditSchoolRequest extends IFRequester {
 
 export interface IFEditAliasRequest extends IFRequester {
   data: IFEditAlias
+}
+
+export interface IFEditBioRequest extends IFRequester {
+  data: IFEditBio
+}
+
+export interface IFEditWebsiteUrlRequest extends IFRequester {
+  data: IFEditWebsiteUrl
 }
 
 export interface IFFollowingRequest extends IFRequester {

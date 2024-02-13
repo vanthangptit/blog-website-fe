@@ -13,13 +13,15 @@ import { AVATAR_DEFAULT } from '@constants/aws/s3';
 import FormProfilePhoto from '@components/molecules/Forms/FormProfilePhoto';
 import FormUserSchool from '@components/molecules/Forms/FormUserSchool';
 import FormUserAlias from '@components/molecules/Forms/FormUserAlias';
+import FormUserBio from '@components/molecules/Forms/FormUserBio';
+import FormUserWebsiteUrl from '@components/molecules/Forms/FormUserWebsiteUrl';
 
 const Profile = ({ user }: { user: IUser }) => {
   return (
     <>
       <Row>
         <Column>
-          <SectionTitle title={'Account information'}/>
+          <SectionTitle title={'User'}/>
         </Column>
         <Column>
           <FormUserAlias alias={user?.alias} />
@@ -40,10 +42,18 @@ const Profile = ({ user }: { user: IUser }) => {
 
       <Row>
         <Column>
-          <SectionTitle title={'Other information'}/>
+          <SectionTitle title={'Basic'}/>
         </Column>
         <Column>
-          {/*<FormUserBio description={user?.description}/>*/}
+          <FormUserBio bio={user?.bio}/>
+        </Column>
+        <Column>
+          <FormUserWebsiteUrl websiteUrl={user?.websiteUrl}/>
+        </Column>
+      </Row>
+      <Row>
+        <Column>
+          <SectionTitle title={'Personal'}/>
         </Column>
         <Column>
           <FormUserBirthDay birthDay={user?.birthDay ?? null}/>
@@ -53,6 +63,11 @@ const Profile = ({ user }: { user: IUser }) => {
         </Column>
         <Column>
           <FormUserAddress address={user?.address}/>
+        </Column>
+      </Row>
+      <Row>
+        <Column>
+          <SectionTitle title={'Work'}/>
         </Column>
         <Column>
           <FormUserJob job={user?.job}/>

@@ -16,7 +16,9 @@ import {
   IFFollowingRequest,
   IFUnFollowerRequest,
   IFEditSchoolRequest,
-  IFEditAliasRequest
+  IFEditAliasRequest,
+  IFEditBioRequest,
+  IFEditWebsiteUrlRequest
 } from '@models/IFUser';
 import { IFResponse } from '@models/IFResponse';
 
@@ -198,6 +200,36 @@ export const editUserSchool = createAsyncThunk<any, IFEditSchoolRequest>(USER.AC
 export const editUserAlias = createAsyncThunk<any, IFEditAliasRequest>(USER.ACTION_TYPES.ALIAS, async ({ token, data }, thunkAPI) => {
   try {
     const response: IFResponse = await requester.patch(USER.URL_API.ALIAS, data, true, token);
+    if (response.status === 200 || response.statusCode === 200) {
+      await thunkAPI.dispatch(getProfile({ token }));
+    }
+
+    return {
+      ...response
+    };
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue(error.response);
+  }
+});
+
+export const editUserBio = createAsyncThunk<any, IFEditBioRequest>(USER.ACTION_TYPES.BIO, async ({ token, data }, thunkAPI) => {
+  try {
+    const response: IFResponse = await requester.patch(USER.URL_API.BIO, data, true, token);
+    if (response.status === 200 || response.statusCode === 200) {
+      await thunkAPI.dispatch(getProfile({ token }));
+    }
+
+    return {
+      ...response
+    };
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue(error.response);
+  }
+});
+
+export const editUserWebsiteUrl = createAsyncThunk<any, IFEditWebsiteUrlRequest>(USER.ACTION_TYPES.WEBSITE_URL, async ({ token, data }, thunkAPI) => {
+  try {
+    const response: IFResponse = await requester.patch(USER.URL_API.WEBSITE_URL, data, true, token);
     if (response.status === 200 || response.statusCode === 200) {
       await thunkAPI.dispatch(getProfile({ token }));
     }
