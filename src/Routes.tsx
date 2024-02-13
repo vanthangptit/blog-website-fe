@@ -66,7 +66,6 @@ const Routes = () => {
         <Route path='/create-category' element={<CreateCategory />} />
         <Route path='/category/:id' element={<CreateCategory />} />
         <Route path='/user/:id' element={<MyAccount />} />
-        <Route path='/profile' element={<MyAccount />} />
         <Route path='/settings' element={<Settings />} />
       </Route>
 

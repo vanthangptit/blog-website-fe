@@ -36,13 +36,13 @@ const Settings = () => {
   }, []);
 
   return (
-    <>
+    <ContainerBg>
       {profile?.data && (
         <Layout12>
           <Box>
             <Tabs style={{ width: '100%' }}>
               <Row>
-                <Column $mdWidth={'35%'}>
+                <Column $mdWidth={'25%'}>
                   <ListInformation>
                     <TabList>
                       <Tab>Profile</Tab>
@@ -52,7 +52,7 @@ const Settings = () => {
                   </ListInformation>
                 </Column>
 
-                <Column $mdWidth={'65%'}>
+                <Column $mdWidth={'75%'}>
                   <TabsBox>
                     <Header>
                       <Avatar>
@@ -81,11 +81,15 @@ const Settings = () => {
       {profile?.statusCode && profile?.statusCode !== 200 && profile?.statusCode !== 401 && (
         <NotFound message={'SORRY! THIS USER DOES NOT EXISTS'} />
       )}
-    </>
+    </ContainerBg>
   );
 };
 
 export default Settings;
+
+const ContainerBg = styled.div`
+  background-color: rgba(245, 245,245,1);
+`;
 
 const Box = styled.section`
   padding: 20px 0;
@@ -96,8 +100,7 @@ const ListInformation = styled.div`
     list-style: none;
     display: flex;
     justify-content: center;
-    gap: 15px;
-    padding: 0 0 25px;
+    padding: 0 0 10px;
     margin-bottom: 25px;
     color: ${({ theme }) => theme.primary5};
     border-bottom: 1px solid ${({ theme }) => theme.primary4};
@@ -118,15 +121,25 @@ const ListInformation = styled.div`
     }
 
     @media (min-width: 768px) {
-      border: 1px solid ${({ theme }) => theme.primary4};
-      border-radius: 7px;
+      border: none;
       padding: 20px;
       flex-direction: column;
+      padding: 0 0 25px;
+      & li.react-tabs__tab--selected {
+        background-color: ${({ theme }) => theme.white};
+        font-family: ${({ theme }) => theme.fontRobotoBold};
+      }
     }
 
     & li {
+      padding: 8px 10px;
       cursor: pointer;
       outline: none;
+      border-radius: 7px;
+
+      &.react-tabs__tab--selected {
+        font-family: ${({ theme }) => theme.fontRobotoBold};
+      }
     }
   }
 `;
