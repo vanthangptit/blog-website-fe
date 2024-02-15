@@ -14,8 +14,6 @@ import Login from '@pages/Login';
 import Register from '@pages/Register';
 import MyPosts from '@pages/MyPosts';
 import CreatePost from '@pages/CreatePost';
-import Categories from '@pages/Categories';
-import CreateCategory from '@pages/CreateCategory';
 import SinglePost from '@pages/SinglePost';
 import NotFound from '@components/molecules/NotFound';
 import UserProfile from '@pages/UserProfile';
@@ -62,9 +60,6 @@ const Routes = () => {
         <Route path='/posts' element={<MyPosts />} />
         <Route path='/create-post' element={<CreatePost />} />
         <Route path='/edit-post/:shortUrl' element={<CreatePost />} />
-        <Route path='/categories' element={<Categories />} />
-        <Route path='/create-category' element={<CreateCategory />} />
-        <Route path='/category/:id' element={<CreateCategory />} />
         <Route path='/user/:id' element={<UserProfile />} />
         <Route path='/settings' element={<Settings />} />
       </Route>

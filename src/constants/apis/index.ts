@@ -8,17 +8,6 @@ export const AUTH = {
   LOGOUT_URL: `${API_ROOT_URL}auth/logout`
 };
 
-export const API_CATEGORY = {
-  URL_API: `${API_ROOT_URL}categories`,
-  ACTION_TYPES: {
-    GET: 'APPS/GET_CATEGORY',
-    GET_ID: 'APPS/GET_CATEGORY_ID',
-    POST: 'APPS/POST_CATEGORY',
-    PUT: 'APPS/PUT_CATEGORY',
-    DELETE: 'APPS/DELETE_CATEGORY'
-  }
-};
-
 export const USER = {
   URL_API: {
     PROFILE: `${API_ROOT_URL}users/profile`,

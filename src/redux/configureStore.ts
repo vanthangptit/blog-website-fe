@@ -3,13 +3,11 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { combineReducers } from 'redux';
 
 import { appUsersSlice } from './user';
-import { appCategoriesSlice } from './categories';
 import { appPostSlice } from './post';
 import { appCommentSlice } from './comment';
 
 const reducers = combineReducers({
   user: appUsersSlice.reducer,
-  categories: appCategoriesSlice.reducer,
   posts: appPostSlice.reducer,
   comment: appCommentSlice.reducer
 });

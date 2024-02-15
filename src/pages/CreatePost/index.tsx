@@ -20,11 +20,6 @@ import { UnauthorizedContext } from '@infra/context/UnauthorizedContext';
 import { toasts } from '@utils/toast';
 import { TOAST } from '@constants/toast';
 
-/**
- * @todo: Getting the category id
- */
-const cateId = '6587e390da66d8f63cd6fa34';
-
 const CreatePost = () => {
   const { setUnauthorized } = useContext(UnauthorizedContext);
   const location: any = useLocation();
@@ -45,7 +40,6 @@ const CreatePost = () => {
     formState
   } = useForm<IFPostForm>();
 
-  const [ categoryId, setCategoryId ] = useState<string>();
   const [ newShortUrl, setNewShortUrl ] = useState<string>();
   const [ valueDescription, setValueDescription ] = useState<string>('');
   const [ fileUploaded, setFileUpload ] = useState<ManagedUpload.SendData>();
@@ -94,17 +88,13 @@ const CreatePost = () => {
               },
               params: { shortUrl }
             }).unwrap().then(handleResponse);
-          } else if (categoryId) {
+          } else {
             createPostApi({
               ...fields,
               isPublished,
               description: valueDescription,
-              imageUrl: rs.Location,
-              categoryId
+              imageUrl: rs.Location
             }).unwrap().then(handleResponse);
-          } else {
-            setSubmitting(false);
-            toasts('error', TOAST.ERROR_COMMON);
           }
         } else {
           if (shortUrl) {
@@ -154,8 +144,6 @@ const CreatePost = () => {
   }, [ fileUploaded ]);
 
   useEffect(() => {
-    setCategoryId(location?.state?._id ?? cateId);
-
     if (shortUrl) {
       getSinglePostApi({ shortUrl })
         .unwrap()

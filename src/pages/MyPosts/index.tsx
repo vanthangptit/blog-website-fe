@@ -78,7 +78,7 @@ const MyPosts = () => {
         onAfterClose={onAfterClose}
         submitSuccess={submitSuccess}
         handleDelete={deletingPost}
-        textSuccess={'CATEGORY DELETED SUCCESSFULLY'}
+        textSuccess={'POST DELETED SUCCESSFULLY'}
       />
     </Layout>
   );

@@ -94,7 +94,7 @@ const SinglePost = () => {
               <BoxIcons icons={listIcons} size={25} />
             </BoxAssociates>
             <TitlePage title={singlePost.data?.singlePost.title} />
-            {/** @todo: View Tags, Category,...*/}
+            {/** @todo: View Tags,...*/}
             <EscapeHTML htmlString={singlePost.data?.singlePost.description} />
           </BoxContent>
           <BoxComment>

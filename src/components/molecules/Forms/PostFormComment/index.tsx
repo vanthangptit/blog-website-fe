@@ -37,7 +37,7 @@ const PostFormComment = ({ postId, viewer }: { postId: string, viewer?: IUser })
   const handleResponse = (rs: IFResponseComment) => {
     if (rs.status === 200 || rs.statusCode === 200) {
       reset();
-      toasts('success', TOAST.CREATE_CATEGORY);
+      toasts('success', TOAST.CREATE_COMMENT);
     } else if (rs.status === 401 || rs.statusCode === 401) {
       setUnauthorized(true);
     } else {

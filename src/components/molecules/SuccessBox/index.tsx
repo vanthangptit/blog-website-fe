@@ -19,10 +19,6 @@ const SuccessBox = ({
         text={btnText}
         handleClick={onClick}
       />
-
-      {/*
-        @todo: Add button view detail category or anything
-      */}
     </Success>
   );
 };

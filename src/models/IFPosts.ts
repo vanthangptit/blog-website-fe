@@ -1,7 +1,6 @@
 import { IFResponse } from '@models/IFResponse';
 import { IFRequester } from '@models/IFRequester';
 import { IUser } from '@models/IFUser';
-import { IFCategory } from '@models/IFCategory';
 
 export interface IFDataPostMutable {
   title: string
@@ -35,9 +34,7 @@ export interface IFParamsShortUrl {
   shortUrl: string
 }
 
-export interface IFCreatePostRequest extends IFDataPostMutable {
-  categoryId: string
-}
+export interface IFCreatePostRequest extends IFDataPostMutable {}
 
 export interface IFEditPostRequest extends IFRequester {
   data: IFDataPostMutable
@@ -66,7 +63,6 @@ export interface IFPost extends IFDataPostMutable {
   isPinned: boolean
   createdAt: string
   updatedAt: string
-  category: IFCategory
   creator: IUser
   comments: string[]
   commentsCount: number
