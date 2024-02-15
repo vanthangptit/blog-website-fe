@@ -20,13 +20,14 @@ import { FaBookmark, FaRegBookmark  } from 'react-icons/fa';
 import styled from 'styled-components';
 import PopupActions from '@components/molecules/Popups/PopupActions';
 import IconButton from '@components/atoms/IconButton';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { toasts } from '@utils/toast';
 import { TOAST } from '@constants/toast';
 import { Associate, IFPost } from '@models/IFPosts';
 import { usePosts } from '@hooks/usePost';
 import { UnauthorizedContext } from '@infra/context/UnauthorizedContext';
 import { IUser } from '@models/IFUser';
+import Button from '@components/molecules/Buttons/ButtonPrimary';
 
 const AsideLeftPost = ({
   post,
@@ -38,6 +39,7 @@ const AsideLeftPost = ({
   creator: IUser
 }) => {
   const { shortUrl } = useParams();
+  const navigate = useNavigate();
   const { setUnauthorized } = useContext(UnauthorizedContext);
   const { getSinglePostApi, toggleAssociatePost, toggleSavesPost, togglePinPost } = usePosts();
   const [ isLike, setIsLike ] = useState<boolean>(false);
@@ -137,15 +139,25 @@ const AsideLeftPost = ({
   return (
     <AsideLef>
       {user && user._id === creator._id ? (
-        <IconButtonBox>
-          <IconButton
-            Element={isPined ? AiFillPushpin : AiOutlinePushpin}
-            size={18}
-            handleClick={handlePin}
-            title={isPined ? 'Pinned' : 'Pin'}
-          />
-        </IconButtonBox>
-      ): (
+        <React.Fragment>
+          <ButtonEdit>
+            <Button
+              size={'sm'}
+              text={'Edit Post'}
+              buttonType={'button'}
+              handleClick={() => navigate(`/edit-post/${shortUrl}`)}
+            />
+          </ButtonEdit>
+          <IconButtonBox>
+            <IconButton
+              Element={isPined ? AiFillPushpin : AiOutlinePushpin}
+              size={18}
+              handleClick={handlePin}
+              title={isPined ? 'Pinned' : 'Pin'}
+            />
+          </IconButtonBox>
+        </React.Fragment>
+      ) : (
         <>
           <PopupActions
             iconButton={{
@@ -190,7 +202,7 @@ const AsideLef = styled.div`
   gap: 15px;
   align-items: center;
   justify-content: space-around;
-  padding: 15px 0;
+  padding: 15px;
   
   @media (min-width: 768px) {
     flex-direction: column;
@@ -201,4 +213,10 @@ const AsideLef = styled.div`
 const IconButtonBox = styled.div`
   width: 100%;
   text-align: center;
+`;
+
+const ButtonEdit = styled.div`
+  @media (min-width: 768px) {
+    display: none;
+  }
 `;

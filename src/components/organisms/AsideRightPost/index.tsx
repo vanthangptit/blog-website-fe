@@ -168,6 +168,10 @@ const BoxProfile = styled.div`
 
 const ButtonEdit = styled.div`
   margin: 30px 0 25px;
+
+  @media (max-width: 767px) {
+    display: none;
+  }
 `;
 
 const BoxPostsRelated = styled.div`

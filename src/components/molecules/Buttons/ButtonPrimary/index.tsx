@@ -47,6 +47,7 @@ const LoaderBox = styled.span`
 `;
 
 const ButtonText = styled.span`
+  white-space: nowrap;
   display: inline-block;
   padding-top: 3px;
 `;

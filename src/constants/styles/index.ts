@@ -1,5 +1,5 @@
 export default {
-  widthContainer: 1300,
+  widthContainer: 1200,
   heightFooter: 108,
   heightHeader: 0,
   zIndex: {

@@ -61,7 +61,7 @@ const AsideLeft = styled.aside`
   flex: 0 0 100%;
 
   @media (min-width: 768px) {
-    flex: 0 0 ${(0.5/12)*100}%;
+    flex: 0 0 ${(0.4/12)*100}%;
     padding-top: 89px;
   }
 
@@ -80,7 +80,7 @@ const AsideRight = styled.aside`
   flex: 0 0 100%;
 
   @media (min-width: 992px) {
-    flex: 0 0 ${(4/12)*100}%;
+    flex: 0 0 ${(3.6/12)*100}%;
   }
 `;
 
@@ -92,6 +92,6 @@ const Main = styled.main`
   }
 
   @media (min-width: 992px) {
-    flex: 0 0  calc(${(7.5/12)*100}% - ${spacing * 2}px);
+    flex: 0 0  calc(${(8/12)*100}% - ${spacing * 2}px);
   }
 `;
