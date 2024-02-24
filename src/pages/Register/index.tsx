@@ -65,6 +65,7 @@ const Register = () => {
                 placeholder={'First Name'}
                 $with={'100%'}
                 $height={'45px'}
+                autofocus={true}
               />
             </Column>
             <Column $smWidth={'50%'}>

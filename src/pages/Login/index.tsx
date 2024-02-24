@@ -71,6 +71,7 @@ const Login = () => {
             placeholder={'Email'}
             $with={'100%'}
             $height={'45px'}
+            autofocus={true}
           />
           <FormControl
             register={register}

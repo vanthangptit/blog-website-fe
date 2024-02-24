@@ -254,6 +254,7 @@ const CreatePost = () => {
                     $minLength={5}
                     $maxLength={50}
                     label={'TITLE'}
+                    autofocus={true}
                   />
                   <FormControl
                     register={register}

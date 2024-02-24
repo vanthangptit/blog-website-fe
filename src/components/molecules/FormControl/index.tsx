@@ -41,7 +41,8 @@ const FormControl = ({
   $pattern,
   $validate,
   label,
-  errors
+  errors,
+  autofocus
 }: {
   register: UseFormRegister<any>
   formState: FormState<any>
@@ -51,6 +52,7 @@ const FormControl = ({
   label?: string
   placeholder?: string
   isRequired?: boolean
+  autofocus?: boolean
   $with: string
   $height: string
   $minLength?: number
@@ -96,6 +98,7 @@ const FormControl = ({
           $with={$with}
           $height={$height}
           {...register(nameField, options)}
+          autoFocus={!!autofocus}
         />
 
         {typeField === 'password' && (

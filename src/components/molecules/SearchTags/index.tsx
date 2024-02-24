@@ -36,11 +36,11 @@ const SearchTags = ({
   };
 
   const handleAddition = (tag: IFSearchTag) => {
-    setTags([ ...tags, { id: tag.id, text: '# ' + tag.text } ]);
+    setTags([ ...tags, {
+      id: tag.id,
+      text: tag.text.includes('#') ? tag.text : '# ' + tag.text
+    } ]);
   };
-
-  // eslint-disable-next-line no-console
-  console.log(tags);
 
   return (
     <Box>
@@ -56,7 +56,7 @@ const SearchTags = ({
           // handleDrag={handleDrag}
           // handleTagClick={handleTagClick}
           inputFieldPosition='bottom'
-          // autocomplete
+          autofocus={false}
           placeholder={'Add up to 3 tags...'}
           classNames={{
             tags: 'search-tag',

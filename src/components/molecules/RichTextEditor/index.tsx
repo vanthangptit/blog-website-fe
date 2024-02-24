@@ -172,6 +172,10 @@ const TextEditor = styled.div<{ $heightEditor?: string}>`
       max-width: 100%;
       width: auto;
     }
+
+    &.ql-blank::before {
+      color: ${({ theme }) => theme.gray6};;
+    }
   }
 `;
 
@@ -185,6 +189,7 @@ const TextEditorLabel = styled.div`
   text-align: left;
   justify-content: space-between;
   row-gap: 10px;
+  color: ${({ theme }) => theme.text1};
 `;
 
 const ToolbarRichText = styled.div`

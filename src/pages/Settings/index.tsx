@@ -88,7 +88,7 @@ const Settings = () => {
 export default Settings;
 
 const ContainerBg = styled.div`
-  background-color: rgba(245, 245,245,1);
+  // background-color: rgba(245, 245,245,1);
 `;
 
 const Box = styled.section`
@@ -126,7 +126,8 @@ const ListInformation = styled.div`
       flex-direction: column;
       padding: 0 0 25px;
       & li.react-tabs__tab--selected {
-        background-color: ${({ theme }) => theme.white};
+        background-color: ${({ theme }) => theme.bg4};
+        color: ${({ theme }) => theme.black};
         font-family: ${({ theme }) => theme.fontRobotoBold};
       }
     }

@@ -28,7 +28,7 @@ const BtnLink = styled(Link)`
   align-items: center;
   white-space: nowrap;
   flex-wrap: nowrap;
-  color: ${({ theme }) => theme.gray9};
+  color: ${({ theme }) => theme.text1};
   background-color: ${({ theme }) => theme.transparent};
   border-radius: 3px;
   border: 1px solid ${({ theme }) => theme.transparent};

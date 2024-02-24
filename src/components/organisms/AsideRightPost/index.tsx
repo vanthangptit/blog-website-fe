@@ -13,6 +13,7 @@ import { toasts } from '@utils/toast';
 import { TOAST } from '@constants/toast';
 import { IFResponse } from '@models/IFResponse';
 import { UnauthorizedContext } from '@infra/context/UnauthorizedContext';
+import CardPostRelated from '@components/molecules/Cards/CardPostRelated';
 
 const AsideRightPost = ({
   shortUrl,
@@ -125,12 +126,12 @@ const AsideRightPost = ({
               'More posts related'
             )}
           </h3>
-          {postRelated && postRelated.length === 0 ? (
-            <PostsRelatedCard>Have not post related</PostsRelatedCard>
-          ) : (
+          {postRelated && postRelated.length > 0 ? (
             <PostsRelatedCard>
-              {/* @todo: Show card of post related */}
+              {postRelated?.map((post, index) => <CardPostRelated post={post} key={index} />)}
             </PostsRelatedCard>
+          ) : (
+            <PostsRelatedCard>Have not post related</PostsRelatedCard>
           )}
         </BoxPostsRelated>
       </Box>
@@ -182,5 +183,6 @@ const BoxPostsRelated = styled.div`
 `;
 
 const PostsRelatedCard = styled.div`
-  padding: 15px;
+  padding-top: 15px;
+  padding-bottom: 15px;
 `;
