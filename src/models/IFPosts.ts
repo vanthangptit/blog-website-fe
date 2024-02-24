@@ -1,6 +1,7 @@
 import { IFResponse } from '@models/IFResponse';
 import { IFRequester } from '@models/IFRequester';
 import { IUser } from '@models/IFUser';
+import { IFTag } from '@models/IFTags';
 
 export interface IFDataPostMutable {
   title: string
@@ -34,11 +35,13 @@ export interface IFParamsShortUrl {
   shortUrl: string
 }
 
-export interface IFCreatePostRequest extends IFDataPostMutable {}
+export interface IFCreatePostRequest extends IFDataPostMutable {
+  tags: string[]
+}
 
 export interface IFEditPostRequest extends IFRequester {
-  data: IFDataPostMutable
-  params: IFParamsShortUrl
+  data: IFCreatePostRequest
+  params: IFParamsId
 }
 
 export interface IFDeletePostRequest extends IFRequester {
@@ -79,7 +82,7 @@ export interface IFPost extends IFDataPostMutable {
   starsCount: number
   hearts: string[]
   heartsCount: number
-  tags?: string[]
+  tags: IFTag[]
   tagsCount?: number
   id: string
   _id: string
@@ -98,4 +101,8 @@ export interface IFResponseSinglePost extends IFResponse {
 
 export interface IFResponseAllPost extends IFResponse {
   data?: IFPost[]
+}
+
+export interface IFResponseAllTags extends IFResponse {
+  data?: IFTag[]
 }

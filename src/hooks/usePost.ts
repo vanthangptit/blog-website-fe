@@ -54,6 +54,10 @@ export const usePosts = () => {
     return dispatch(postStore.togglePinPost({ params, token: getAuth('accessToken') }));
   };
 
+  const getTags = () => {
+    return dispatch(postStore.getTags({ token: getAuth('accessToken') }));
+  };
+
   return {
     ...postsStates,
     createPostApi,
@@ -64,6 +68,7 @@ export const usePosts = () => {
     getPostsByUser,
     toggleAssociatePost,
     toggleSavesPost,
-    togglePinPost
+    togglePinPost,
+    getTags
   };
 };

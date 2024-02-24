@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const TitlePage = ({ title, des }: { title: string, des?: string }) => {
+const TitlePage = ({ title, des, margin }: { title: string; des?: string; margin?: string }) => {
   return (
-    <SectionTitle>
+    <SectionTitle $margin={margin}>
       <Heading>{title}</Heading>
       {des && (
         <Desc>{des}</Desc>
@@ -14,8 +14,8 @@ const TitlePage = ({ title, des }: { title: string, des?: string }) => {
 
 export default TitlePage;
 
-const SectionTitle = styled.hgroup`
-  margin: 20px 0 45px;
+const SectionTitle = styled.hgroup<{ $margin?: string }>`
+  margin: ${({ $margin }) => $margin ?? '20px 0 45px'};
 `;
 
 const Heading = styled.h1`

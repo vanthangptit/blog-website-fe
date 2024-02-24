@@ -18,6 +18,7 @@ import BoxIcons from '@components/molecules/BoxIcons';
 import CardAvatar from '@components/molecules/Avatars/CardAvatar';
 import TitlePage from '@components/molecules/Titles/TitlePage';
 import { useUser } from '@hooks/useUser';
+import ViewTags from '@components/molecules/ViewTags';
 
 const SinglePost = () => {
   const { getSinglePostApi, singlePost } = usePosts();
@@ -93,8 +94,8 @@ const SinglePost = () => {
             <BoxAssociates>
               <BoxIcons icons={listIcons} size={25} />
             </BoxAssociates>
-            <TitlePage title={singlePost.data?.singlePost.title} />
-            {/** @todo: View Tags,...*/}
+            <TitlePage title={singlePost.data?.singlePost.title} margin={'20px 0 10px'} />
+            <ViewTags tags={singlePost.data?.singlePost.tags} margin={'0 0 30px'} />
             <EscapeHTML htmlString={singlePost.data?.singlePost.description} />
           </BoxContent>
           <BoxComment>

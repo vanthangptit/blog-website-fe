@@ -4,7 +4,7 @@ import { SubmitHandler, useForm, Controller } from 'react-hook-form';
 import { IFPostForm, IFResponseCreatePost } from '@models/IFPosts';
 import FormControl from '@components/molecules/FormControl';
 import { VISIBILITY } from '@constants/selects';
-import Select from '@components/molecules/Select';
+import SelectSingle from '@components/molecules/Select/SingleSelect';
 import { deleteFilesInString, uploadFile } from '@utils/uploadFile';
 import { ManagedUpload } from 'aws-sdk/clients/s3';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
@@ -19,6 +19,8 @@ import Button from '@components/molecules/Buttons/ButtonPrimary';
 import { UnauthorizedContext } from '@infra/context/UnauthorizedContext';
 import { toasts } from '@utils/toast';
 import { TOAST } from '@constants/toast';
+import SearchTags from '@components/molecules/SearchTags';
+import { IFSearchTag } from '@models/IFTags';
 
 const CreatePost = () => {
   const { setUnauthorized } = useContext(UnauthorizedContext);
@@ -29,7 +31,9 @@ const CreatePost = () => {
     createPostApi,
     editPostApi,
     getSinglePostApi,
-    singlePost
+    getTags,
+    singlePost,
+    allTag
   } = usePosts();
 
   const {
@@ -49,11 +53,13 @@ const CreatePost = () => {
   const [ file, setFile ] = useState<any>({
     name: ''
   });
-
+  const [ tags, setTags ] = useState<IFSearchTag[]>();
+  const [ suggestions, setSuggestions ] = useState<IFSearchTag[]>();
   const [ submitting, setSubmitting ] = useState<boolean>(false);
   const [ submitSuccess, setSubmitSuccess ] = useState<boolean>(false);
   const [ uploadImageError, setUploadImageError ] = useState<string>();
   const [ valueDescError, setValueDescError ] = useState<string>();
+  const [ valueTagError, setValueTagError ] = useState<string>();
 
   const handleResponse = (rs: IFResponseCreatePost) => {
     if (rs.status === 200 || rs.statusCode === 200) {
@@ -67,6 +73,9 @@ const CreatePost = () => {
       toasts('error', rs?.message ?? TOAST.ERROR_COMMON);
     }
     setSubmitting(false);
+    setValueDescError(undefined);
+    setValueTagError(undefined);
+    setUploadImageError(undefined);
   };
 
   const onSubmit: SubmitHandler<IFPostForm> = async data => {
@@ -76,7 +85,15 @@ const CreatePost = () => {
       const { visibility, ...fields } = data;
       const isPublished = visibility === VISIBILITY[1].value;
 
-      if (valueDescription && valueDescription.length > 0) {
+      if (!valueDescription || valueDescription?.length === 0) {
+        setSubmitting(false);
+        setValueDescError('Description can not empty');
+        toasts('error', 'Description can not empty');
+      }
+
+      const newTags = tags?.map((tag) => tag.id) ?? [];
+
+      if (newTags.length > 0) {
         if (rs) {
           if (shortUrl) {
             editPostApi({
@@ -84,16 +101,18 @@ const CreatePost = () => {
                 ...fields,
                 isPublished,
                 description: valueDescription,
-                imageUrl: rs.Location
+                imageUrl: rs.Location,
+                tags: newTags
               },
-              params: { shortUrl }
+              params: { id: singlePost?.data?.singlePost?.id ?? '' }
             }).unwrap().then(handleResponse);
           } else {
             createPostApi({
               ...fields,
               isPublished,
               description: valueDescription,
-              imageUrl: rs.Location
+              imageUrl: rs.Location,
+              tags: newTags
             }).unwrap().then(handleResponse);
           }
         } else {
@@ -103,18 +122,21 @@ const CreatePost = () => {
                 ...fields,
                 isPublished,
                 description: valueDescription,
+                tags: newTags,
                 imageUrl: srcImage ?? singlePost?.data?.singlePost?.imageUrl ?? ''
               },
-              params: { shortUrl }
+              params: { id: singlePost?.data?.singlePost?.id ?? '' }
             }).unwrap().then(handleResponse);
           } else {
             setSubmitting(false);
-            toasts('error', TOAST.ERROR_COMMON);
+            setUploadImageError('Image can not be empty');
+            toasts('error', 'Image can not be empty');
           }
         }
       } else {
         setSubmitting(false);
-        setValueDescError('Description can not empty');
+        setValueTagError('Tags can not empty');
+        toasts('error', 'Tags can not empty');
       }
     };
 
@@ -170,6 +192,40 @@ const CreatePost = () => {
     }
   }, [ shortUrl, location ]);
 
+  useEffect(() => {
+    getTags();
+  }, [ location ]);
+
+  useEffect(() => {
+    if (allTag?.data && allTag.data?.length) {
+      const newSuggestions = allTag.data?.map(tag => {
+        return {
+          id: tag.title,
+          text: '# ' + tag.title
+        };
+      });
+
+      setSuggestions(newSuggestions);
+    } else {
+      setSuggestions([]);
+    }
+  }, [ location, allTag ]);
+
+  useEffect(() => {
+    if (singlePost?.data && singlePost.data?.singlePost.tags) {
+      const newTags = singlePost.data?.singlePost.tags?.map(tag => {
+        return {
+          id: tag.title,
+          text: '# ' + tag.title
+        };
+      });
+
+      setTags(newTags);
+    } else {
+      setTags([]);
+    }
+  }, [ location, singlePost ]);
+
   return (
     <LayoutMiddle>
       <Container>
@@ -185,7 +241,7 @@ const CreatePost = () => {
           <>
             <FormElement onSubmit={handleSubmit(onSubmit)}>
               <Row>
-                <Column $smWidth={'50%'}>
+                <Column $smWidth={'54%'}>
                   <FormControl
                     register={register}
                     formState={formState}
@@ -223,7 +279,7 @@ const CreatePost = () => {
                     $minLength={25}
                     $maxLength={255}
                     $isRequired={true}
-                    $rows={13}
+                    $rows={11}
                   />
 
                   <FormControl
@@ -240,8 +296,18 @@ const CreatePost = () => {
                     $pattern={/^[a-zA-Z0-9-_\s]*.{5,50}$/}
                     label={'SHORT URL'}
                   />
+
+                  <SearchTags
+                    label={'TAGS'}
+                    $with={'100%'}
+                    $height={'45px'}
+                    setTags={setTags}
+                    tags={tags ?? []}
+                    suggestions={suggestions ?? []}
+                    valueTagError={valueTagError}
+                  />
                 </Column>
-                <Column $smWidth={'50%'}>
+                <Column $smWidth={'46%'}>
                   <UploadImage
                     label={'UPLOAD IMAGE'}
                     setFile={setFile}
@@ -253,7 +319,7 @@ const CreatePost = () => {
                   />
 
                   <GroupField>
-                    <Select
+                    <SelectSingle
                       colourOptions={VISIBILITY}
                       nameField={'visibility'}
                       label={'VISIBILITY'}

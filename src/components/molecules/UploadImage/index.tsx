@@ -114,7 +114,7 @@ const IconEdit = styled.span`
 `;
 
 const ImageContainer = styled.article`
-  margin-bottom: 40px;
+  margin-bottom: 35px;
 `;
 
 const DivImage = styled.div``;

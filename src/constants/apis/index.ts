@@ -62,6 +62,13 @@ export const POST = {
   }
 };
 
+export const TAG = {
+  URL_API: `${API_ROOT_URL}tags`,
+  ACTION_TYPES: {
+    ALL: 'APPS/ALL_TAG'
+  }
+};
+
 export const COMMENT = {
   URL_API: `${API_ROOT_URL}comments`,
   ACTION_TYPES: {

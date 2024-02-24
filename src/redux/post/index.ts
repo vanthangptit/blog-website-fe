@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { POST } from '@constants/apis';
+import { POST, TAG } from '@constants/apis';
 import {
   IFCreatePostRequest,
   IFResponseCreatePost,
@@ -10,7 +10,8 @@ import {
   IFDeletePostRequest,
   IFAssociatePostRequest,
   IFSavesRequest,
-  IFPinRequest
+  IFPinRequest,
+  IFResponseAllTags
 } from '@models/IFPosts';
 import requester from '@infra/apis/requester';
 import { getProfile } from '@store/user';
@@ -19,6 +20,7 @@ interface IFPostState {
   isLoading: boolean
   singlePost?: IFResponseSinglePost,
   allPost?: IFResponseAllPost,
+  allTag?: IFResponseAllTags,
   postsByUser?: IFResponseAllPost,
 }
 
@@ -40,7 +42,7 @@ export const createPostApi = createAsyncThunk<any, { data: IFCreatePostRequest, 
 
 export const editPostApi = createAsyncThunk<any, IFEditPostRequest>(POST.ACTION_TYPES.PUT, async ({ params, data, token }, thunkAPI) => {
   try {
-    const response: IFResponseCreatePost = await requester.put(`${POST.URL_API}/${params.shortUrl}`, data, true, token);
+    const response: IFResponseCreatePost = await requester.put(`${POST.URL_API}/${params.id}`, data, true, token);
 
     return {
       ...response
@@ -141,6 +143,21 @@ export const togglePinPost = createAsyncThunk<any, IFPinRequest>(POST.ACTION_TYP
   }
 });
 
+/**
+ * @getAllTags
+ */
+export const getTags = createAsyncThunk<any, { token?: string }>(TAG.ACTION_TYPES.ALL, async ({ token }, thunkAPI) => {
+  try {
+    const response: IFResponseAllTags = await requester.get(`${TAG.URL_API}`, {}, true, token);
+
+    return {
+      ...response
+    };
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue(error.response);
+  }
+});
+
 export const appPostSlice = createSlice({
   name: 'appPost',
   initialState,
@@ -155,6 +172,9 @@ export const appPostSlice = createSlice({
       })
       .addCase(getAllPost.fulfilled, (state, action: PayloadAction<any>) => {
         state.allPost = action.payload;
+      })
+      .addCase(getTags.fulfilled, (state, action: PayloadAction<any>) => {
+        state.allTag = action.payload;
       });
   }
 });

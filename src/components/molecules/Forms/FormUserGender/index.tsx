@@ -7,7 +7,7 @@ import { useUser } from '@hooks/useUser';
 import { toasts } from '@utils/toast';
 import { TOAST } from '@constants/toast';
 import { capitalizeFirstLetter } from '@utils/capitalizeFirstLetter';
-import Select from '@components/molecules/Select';
+import Select from '@components/molecules/Select/SingleSelect';
 import { GENDER } from '@constants/selects';
 import styled from 'styled-components';
 
