@@ -6,8 +6,8 @@ import Footer from '@components/organisms/Footer';
 import SwitchToggle from '@components/molecules/Toggler';
 import { themes } from '@constants/theme';
 import UnauthorizedError from '@components/molecules/Errors/UnauthorizedError';
-import { useDarkMode } from '@hooks/useDarkMode';
 import { ToastContainer } from 'react-toastify';
+import { useCookies } from '@hooks/useCookies';
 
 const Layout = ({
   children,
@@ -16,7 +16,7 @@ const Layout = ({
   children: React.ReactNode
   themeToggler: any
 }) => {
-  const [ theme ] = useDarkMode();
+  const { getCookies } = useCookies();
 
   return (
     <>
@@ -28,7 +28,7 @@ const Layout = ({
         {children}
 
         <Footer>
-          <SwitchToggle isDarkMode={theme === themes.darkMode} toggleTheme={themeToggler} />
+          <SwitchToggle isDarkMode={getCookies([ 'theme' ])?.theme === themes.darkMode} toggleTheme={themeToggler} />
         </Footer>
         <UnauthorizedError />
       </BoxBg>
