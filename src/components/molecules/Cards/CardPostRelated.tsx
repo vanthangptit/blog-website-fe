@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 import { IFPost } from '@models/IFPosts';
 
@@ -19,8 +19,7 @@ const CardPostRelated = ({ post }: { post: IFPost }) => {
 export default CardPostRelated;
 
 const Box = styled.div`
-  padding-left: 15px;
-  padding-right: 15px;
+  padding: 15px;
   border-bottom: 1px solid ${({ theme }) => theme.gray2};
   &:last-child {
     border-bottom: 1px solid ${({ theme }) => theme.transparent};
@@ -51,8 +50,13 @@ const BoxTag = styled.span`
   padding: 4px 0;
 `;
 
-const Tag = styled.span`
+const Tag = styled.span<{ $isBold?: boolean }>`
   display: inline-flex;
   white-space: nowrap;
   font-size: 14px;
+  ${({ $isBold }) =>
+    $isBold &&
+    css`
+      font-family: ${({ theme }) => theme.fontRobotoBold};
+  `}
 `;

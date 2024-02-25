@@ -15,7 +15,7 @@ import { Link } from 'react-router-dom';
 import { IUser } from '@models/IFUser';
 import { AVATAR_DEFAULT } from '@constants/aws/s3';
 
-const PostFormComment = ({ postId, viewer }: { postId: string, viewer?: IUser }) => {
+const PostFormComment = ({ creatorId, postId, viewer }: { creatorId: string; postId: string; viewer?: IUser }) => {
   const { setUnauthorized } = useContext(UnauthorizedContext);
   const { isLoading, createComment, getCommentByPostId, comment } = useComment();
 
@@ -88,9 +88,12 @@ const PostFormComment = ({ postId, viewer }: { postId: string, viewer?: IUser })
           <CardComment comment={item} />
         </Card>
       ))}
-      <ReportAbuse>
-        <Link to={'/report-abuse'} onClick={(e) => reportAbuse(e)}>Report abuse</Link>
-      </ReportAbuse>
+
+      {creatorId !== viewer?._id && (
+        <ReportAbuse>
+          <Link to={'/report-abuse'} onClick={(e) => reportAbuse(e)}>Report abuse</Link>
+        </ReportAbuse>
+      )}
     </BoxComment>
   );
 };

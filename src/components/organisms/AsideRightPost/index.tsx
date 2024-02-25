@@ -183,6 +183,5 @@ const BoxPostsRelated = styled.div`
 `;
 
 const PostsRelatedCard = styled.div`
-  padding-top: 15px;
-  padding-bottom: 15px;
+  width: 100%;
 `;

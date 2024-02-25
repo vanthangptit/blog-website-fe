@@ -99,7 +99,11 @@ const SinglePost = () => {
             <EscapeHTML htmlString={singlePost.data?.singlePost.description} />
           </BoxContent>
           <BoxComment>
-            <PostFormComment postId={singlePost?.data?.singlePost.id} viewer={profile?.data} />
+            <PostFormComment
+              postId={singlePost?.data?.singlePost.id}
+              viewer={profile?.data}
+              creatorId={singlePost?.data?.singlePost.creator._id}
+            />
           </BoxComment>
         </Layout174>
       )}

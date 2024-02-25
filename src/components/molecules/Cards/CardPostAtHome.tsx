@@ -50,7 +50,6 @@ const CardPostAtHome = ({ post, margin }: { post: IFPost; margin?: string }) => 
               {reactions === 1 ? '1 Reaction' : `${reactions} Reactions`}
             </Reaction>
           )}
-          <Reaction>11 Reactions</Reaction>
           <CardBottomColumn>
             <CardBottomRead>{post.daysAgo}</CardBottomRead>
             <CardBottomSave>
