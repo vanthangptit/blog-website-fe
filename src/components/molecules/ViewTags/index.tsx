@@ -1,13 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { IFTag } from '@models/IFTags';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-const ViewTags = ({ tags, margin }: { tags: IFTag[]; margin?: string }) => {
+const ViewTags = ({ tags, margin, fontSize }: { tags: IFTag[]; margin?: string, fontSize?: number }) => {
   return (
     <Box $margin={margin}>
       {tags?.map((item, index) => (
-        <BtnLink to={`/t/${item.title}`} key={index}>{ '#' + item.title}</BtnLink>
+        <BtnLink to={`/t/${item.title}`} key={index} $fontSize={fontSize}>{ '#' + item.title}</BtnLink>
       ))}
     </Box>
   );
@@ -23,7 +23,7 @@ const Box = styled.div<{ $margin?: string }>`
   margin: ${({ $margin }) => $margin ?? '0'};
 `;
 
-const BtnLink = styled(Link)`
+const BtnLink = styled(Link)<{ $fontSize?: number }>`
   display: inline-flex;
   align-items: center;
   white-space: nowrap;
@@ -33,10 +33,16 @@ const BtnLink = styled(Link)`
   border-radius: 3px;
   border: 1px solid ${({ theme }) => theme.transparent};
   padding: 4px 8px;
-  font-family: ${({ theme }) => theme.fontRobotoBold};
+  font-family: ${({ theme }) => theme.fontRobotoLight};
   &:hover {
     color: ${({ theme }) => theme.gray9};
     background-color: ${({ theme }) => theme.gray};
     border-color: ${({ theme }) => theme.gray5};
   }
+
+  ${({ $fontSize }) =>
+    $fontSize &&
+    css`
+      font-size: ${$fontSize}px;
+  `}
 `;

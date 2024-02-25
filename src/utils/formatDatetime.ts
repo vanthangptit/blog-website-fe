@@ -10,3 +10,7 @@ export const formatDatetimeByMonthYear = (date: string | Date | null) => {
   }
   return moment(date).format('ll');
 };
+
+export const formatDatetimePostCreated = (date: string) => {
+  return `${moment(date).format('DD/MM/YYYY')}`;
+};

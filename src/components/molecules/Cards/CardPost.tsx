@@ -7,12 +7,14 @@ import { IFPost } from '@models/IFPosts';
 import { useOnClickOutside } from '@hooks/useOnClickOutside';
 import { Row, Column } from '@components/atoms/Layout';
 import EscapeHTML from '@components/atoms/EscapeHTML/DivEscapeHTML';
-
 import { FaRegCommentAlt, FaCommentAlt, FaRegBookmark, FaBookmark  } from 'react-icons/fa';
 import { BiLike, BiSolidLike, BiDislike, BiSolidDislike } from 'react-icons/bi';
 import { BsEye, BsTrash3 } from 'react-icons/bs';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { TbView360, TbView360Off } from 'react-icons/tb';
+import ViewTags from '@components/molecules/ViewTags';
+import { toasts } from '@utils/toast';
+import { TOAST } from '@constants/toast';
 
 const CardPost = ({
   item,
@@ -40,8 +42,7 @@ const CardPost = ({
     ];
   }, [ item ]);
 
-  const savePost = () => false;
-
+  const savePost = () => toasts('warn', TOAST.WARNING_UPDATING);
 
   const showBoxIcons = () => setIsShownBoxIcons(!isShownBoxIcons);
   useOnClickOutside(userBoxNode, isShownBoxIcons ? showBoxIcons : undefined);
@@ -62,7 +63,7 @@ const CardPost = ({
             <EscapeHTML htmlString={item.description} />
           </CardDescription>
 
-          {/*@todo: Add tags*/}
+          <ViewTags tags={item.tags}/>
 
           <CardBottom>
             <CardBottomColumn>

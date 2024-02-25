@@ -7,16 +7,18 @@ const CardAvatar = ({
   link,
   imageUrl,
   userName,
-  createAt
+  createAt,
+  height
 }: {
   link: string;
   imageUrl?: string;
   userName: string;
-  createAt: string
+  createAt: string;
+  height?: number;
 }) => {
   return (
     <Avatar>
-      <AvatarLeft>
+      <AvatarLeft $height={height}>
         <Link to={link}>
           <img src={imageUrl ?? AVATAR_DEFAULT} alt="image profile" />
         </Link>
@@ -39,12 +41,12 @@ const Avatar = styled.div`
   gap: 10px;
 `;
 
-const AvatarLeft = styled.div`
+const AvatarLeft = styled.div<{ $height?: number }>`
   display: flex;
   img {
     display: flex;
-    width: 45px;
-    height: 45px;
+    width: ${({ $height }) => $height ? $height +'px' : '45px'};
+    height: ${({ $height }) => $height ? $height +'px' : '45px'};
     overflow: hidden;
     border-radius: 50%;
     object-fit: cover;
