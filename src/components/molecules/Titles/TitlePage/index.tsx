@@ -22,6 +22,7 @@ const Heading = styled.h1`
   font-size: 48px;
   text-align: center;
   color: ${({ theme }) => theme.primary1};
+  line-height: 1.3;
 
   @media (min-width: 768px) and (max-width: 991px) {
     font-size: calc(32px + (48 - 32) * (100vw - 768px) / (991 - 768));
