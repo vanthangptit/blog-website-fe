@@ -26,13 +26,29 @@ module.exports = {
       'allow': ['info', 'warn', 'error'],
     }],
     'no-debugger': 'off',
-
+    "react/display-name": "off",
     // ** Variables
     'no-use-before-define': ['error', {
       'functions': true,
-      'variables': true
+      'variables': false
     }],
-    'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z]' }],
+    // 'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z]' }],
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': [
+      'error',
+      {
+        argsIgnorePattern: '^_',
+        varsIgnorePattern: '^[A-Z]',
+        caughtErrorsIgnorePattern: '^_'
+      }
+    ],
+    'no-empty-function': 'off',
+    '@typescript-eslint/no-empty-function': [
+      'error',
+      {
+        'allow': ['arrowFunctions']
+      }
+    ],
     'no-useless-return': 'error',
     'eqeqeq': 'error',
 
@@ -77,7 +93,7 @@ module.exports = {
 
     // ** Hooks
     'react-hooks/rules-of-hooks': 'error',
-    'react-hooks/exhaustive-deps': 'warn',
+    'react-hooks/exhaustive-deps': 'off',
     'react/jsx-filename-extension': [
       1,
       {

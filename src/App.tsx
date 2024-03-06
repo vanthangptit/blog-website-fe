@@ -1,24 +1,36 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+import { BrowserRouter } from 'react-router-dom';
+
+import Routes from '@src/Routes';
+import { AuthProvider } from '@src/infra/context/AuthContext';
+import { UnauthorizedProvider } from '@src/infra/context/UnauthorizedContext';
+import Layout from '@components/templates/Layout';
+import { useDarkMode } from '@hooks/useDarkMode';
+import ThemeProvider, { themeMode } from '@src/theme';
+import { themes } from '@constants/theme';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={'https://blog-app-seeder.s3.ap-southeast-1.amazonaws.com/images/avatar.svg'} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const [
+    theme,
+    themeToggler,
+    mountedComponent
+  ] = useDarkMode();
+
+  const themeObject = useMemo(() => themeMode(theme === themes.darkMode), [ theme ]);
+
+  return mountedComponent ? (
+    <ThemeProvider themeObject={themeObject}>
+      <UnauthorizedProvider>
+        <AuthProvider>
+          <BrowserRouter>
+            <Layout themeToggler={themeToggler}>
+              <Routes />
+            </Layout>
+          </BrowserRouter>
+        </AuthProvider>
+      </UnauthorizedProvider>
+    </ThemeProvider>
+  ) : <div />;
 }
 
 export default App;
