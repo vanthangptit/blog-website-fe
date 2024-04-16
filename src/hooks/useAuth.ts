@@ -1,5 +1,5 @@
 import { IFLogin } from '@models/IFAuthenticated';
-import requester from '@infra/apis/requester';
+import requester from '@services/apis/requester';
 import { AUTH } from '@constants/apis';
 import { IFRegister } from '@models/IFRegister';
 

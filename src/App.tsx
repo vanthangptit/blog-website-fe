@@ -2,8 +2,8 @@ import React, { useMemo } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 
 import Routes from '@src/Routes';
-import { AuthProvider } from '@src/infra/context/AuthContext';
-import { UnauthorizedProvider } from '@src/infra/context/UnauthorizedContext';
+import { AuthProvider } from '@src/services/context/AuthContext';
+import { UnauthorizedProvider } from '@src/services/context/UnauthorizedContext';
 import Layout from '@components/templates/Layout';
 import { useDarkMode } from '@hooks/useDarkMode';
 import ThemeProvider, { themeMode } from '@src/theme';

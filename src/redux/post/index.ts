@@ -13,7 +13,7 @@ import {
   IFPinRequest,
   IFResponseAllTags
 } from '@models/IFPosts';
-import requester from '@infra/apis/requester';
+import requester from '@services/apis/requester';
 import { getProfile } from '@store/user';
 
 interface IFPostState {

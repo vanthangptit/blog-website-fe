@@ -25,7 +25,7 @@ import { toasts } from '@utils/toast';
 import { TOAST } from '@constants/toast';
 import { Associate, IFPost } from '@models/IFPosts';
 import { usePosts } from '@hooks/usePost';
-import { UnauthorizedContext } from '@infra/context/UnauthorizedContext';
+import { UnauthorizedContext } from '@services/context/UnauthorizedContext';
 import { IUser } from '@models/IFUser';
 import Button from '@components/molecules/Buttons/ButtonPrimary';
 

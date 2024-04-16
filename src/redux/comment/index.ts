@@ -5,7 +5,7 @@ import {
   IFDataCommentRequest,
   IFResponseComment
 } from '@models/IFComment';
-import requester from '@infra/apis/requester';
+import requester from '@services/apis/requester';
 
 interface IFPostState {
   isLoading: boolean
