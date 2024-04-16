@@ -12,7 +12,7 @@ import { usePosts } from '@hooks/usePost';
 import { toasts } from '@utils/toast';
 import { TOAST } from '@constants/toast';
 import { IFResponse } from '@models/IFResponse';
-import { UnauthorizedContext } from '@infra/context/UnauthorizedContext';
+import { UnauthorizedContext } from '@infra/../../../services/context/UnauthorizedContext';
 import CardPostRelated from '@components/molecules/Cards/CardPostRelated';
 
 const AsideRightPost = ({

@@ -10,7 +10,7 @@ import styled from 'styled-components';
 import Layout12 from '@components/organisms/Layout-12';
 import { useUser } from '@hooks/useUser';
 import NotFound from '@components/molecules/NotFound';
-import { UnauthorizedContext } from '@infra/context/UnauthorizedContext';
+import { UnauthorizedContext } from '@infra/../../services/context/UnauthorizedContext';
 import { TOAST } from '@constants/toast';
 import Profile from '@components/organisms/Profile';
 import Account from '@components/organisms/Account';

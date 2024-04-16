@@ -6,8 +6,8 @@ import {
   Outlet,
   useLocation
 } from 'react-router-dom';
-import { AuthContext } from '@src/infra/context/AuthContext';
-import { UnauthorizedContext } from '@infra/context/UnauthorizedContext';
+import { AuthContext } from '@src/services/context/AuthContext';
+import { UnauthorizedContext } from '@infra/services/context/UnauthorizedContext';
 
 import Home from '@pages/Home';
 import Login from '@pages/Login';

@@ -6,7 +6,7 @@ import SiteAvatar from '@components/molecules/Avatars/SiteAvatar';
 import Button from '@components/molecules/Buttons/ButtonPrimary';
 import { useComment } from '@hooks/useComment';
 import { IFDataComment, IFResponseComment } from '@models/IFComment';
-import { UnauthorizedContext } from '@infra/context/UnauthorizedContext';
+import { UnauthorizedContext } from '@infra/../../../../services/context/UnauthorizedContext';
 import { toasts } from '@utils/toast';
 import { TOAST } from '@constants/toast';
 import SingleTitle from '@components/molecules/Titles/SingleTitle';

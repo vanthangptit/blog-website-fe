@@ -7,7 +7,7 @@ import { IFLogin } from '@models/IFAuthenticated';
 import SectionTitleForm from '@components/molecules/Titles/TitleForm';
 import FormControl from '@components/molecules/FormControl';
 import { useAuth } from '@hooks/useAuth';
-import { AuthContext } from '@infra/context/AuthContext';
+import { AuthContext } from '@infra/../../services/context/AuthContext';
 import { BiLock } from 'react-icons/bi';
 import Button from '@components/molecules/Buttons/ButtonPrimary';
 import { toasts } from '@utils/toast';
